@@ -55,3 +55,18 @@ this decision included:
    there is only one image to pull, the node will be ready far quicker than if
    we need to pull ten images. This can be a difference of two to twenty
    minutes.
+
+#### nginx-ingress and cert-manager
+
+HTTPS is a must, but how we set it up can be chosen? We can either use the a TLS
+termination proxy that also can speak with Let's Encrypt to acquire a
+certificate as part of the JupyterHub Helm chart, referred to as `autohttps`.
+Another option is to use a combination of
+[nginx-ingress](https://hub.helm.sh/charts/stable/nginx-ingress) and
+[cert-manager](https://hub.helm.sh/charts/jetstack/cert-manager).
+
+I think either option could work well to provide TLS termination for JupyterHub
+specifically. But, only nginx-ingress + cert-manager can provide certificates
+and TLS termination for JupyterHub and other services at the same Grafana. It is
+also well tested and have mechanisms to scale in a highly available way. Due to
+this, I'm choosing to use nginx-ingress and cert-manager over autohttps.
