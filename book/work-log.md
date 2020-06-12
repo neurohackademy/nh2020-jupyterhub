@@ -70,3 +70,27 @@ specifically. But, only nginx-ingress + cert-manager can provide certificates
 and TLS termination for JupyterHub and other services at the same Grafana. It is
 also well tested and have mechanisms to scale in a highly available way. Due to
 this, I'm choosing to use nginx-ingress and cert-manager over autohttps.
+
+#### Lecture datasets
+
+A goal is to enable instructors to provide datasets to students for their
+lectures. It is good if it is easy for both the instructors to do this, and the
+students to access it. A storage area that is read/write for instructors and
+read only for students fits this. But, how scalable would such solution be?
+
+Google's managed Filestore [recommends to not have more than 500
+clients](https://cloud.google.com/filestore/docs/limits). We want to scale to
+some thousands of students, but perhaps we don't need to have some thousands of
+NSF clients! If instead of making each student a client of the NSF server, we
+make each Kubernetes node a client, and fit 4-8 users of each node, it becomes
+far more sustainable.
+
+I'm thinking that we could either let Kubernetes nodes copy the NSF data on
+startup from the NSF server and expose it using a [hostPath
+volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) to the
+user Pods, or expose it directly using a hostPath volume. Copying data on
+startup will improve performance, but not allow for updates if the data changes.
+
+We could also write data to object storage and grab it from there or similar,
+but I think for now, a reliable idea is to let the new nodes mount NSF data and
+copy it to a local path which is exposed to users using a hostPath.
