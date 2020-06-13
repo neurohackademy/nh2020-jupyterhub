@@ -94,3 +94,9 @@ startup will improve performance, but not allow for updates if the data changes.
 We could also write data to object storage and grab it from there or similar,
 but I think for now, a reliable idea is to let the new nodes mount NSF data and
 copy it to a local path which is exposed to users using a hostPath.
+
+#### A meta Helm chart mostly depending on other charts
+
+It can often make life easier to have a single Helm chart that depends on other
+helm charts so one can add some kubernetes resources if needed and configure it
+with values as well.

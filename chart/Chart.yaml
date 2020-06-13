@@ -1,0 +1,5 @@
+apiVersion: v2
+name: jupyter-neurohackademy-org
+description: A Helm chart to install all parts that make up the jupyter.neurohackademy.org deployment.
+type: application
+version: 0.1.0
