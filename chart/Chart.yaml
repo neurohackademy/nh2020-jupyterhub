@@ -3,3 +3,33 @@ name: jupyter-neurohackademy-org
 description: A Helm chart to install all parts that make up the jupyter.neurohackademy.org deployment.
 type: application
 version: 0.1.0
+
+dependencies:
+  # JupyterHub
+  - name: jupyterhub
+    version: 0.9.0-n078.ha6fb810
+    repository: https://jupyterhub.github.io/helm-chart/
+
+  # Nginx-Ingress for highly available ingress routing
+  # https://hub.helm.sh/charts/stable/nginx-ingress
+  - name: nginx-ingress
+    version: 1.39.1
+    repository: https://kubernetes-charts.storage.googleapis.com/
+
+  # Cert-Manager for automatic cert acquisition from Let's Encrypt
+  # https://hub.helm.sh/charts/jetstack/cert-manager
+  - name: cert-manager
+    version: v0.15.1
+    repository: https://charts.jetstack.io
+
+  # Prometheus for collection of metrics
+  # https://hub.helm.sh/charts/stable/prometheus
+  - name: prometheus
+    version: 11.4.0
+    repository: https://kubernetes-charts.storage.googleapis.com/
+
+  # Grafana for dashboarding of metrics
+  # https://hub.helm.sh/charts/stable/grafana
+  - name: grafana
+    version: 5.1.4
+    repository: https://kubernetes-charts.storage.googleapis.com/
