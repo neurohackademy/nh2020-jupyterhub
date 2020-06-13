@@ -5,17 +5,22 @@ the steps I take along the way to reach the desired outcome.
 
 ## Statement of work
 
-1. Design for a scalable and configurable Jupyterhub for instruction of NeuroHackademy. The hub has the following desiderata:
+1. Design for a scalable and configurable Jupyterhub for instruction of
+   NeuroHackademy. The hub has the following desiderata:
 
     1. Scale to thousands of users on a Kubernetes cluster.
     1. Gate usage with GitHub authentication.
-    1. Auto-deploy single docker image for the course with hubploy/GitHub actions.
+    1. Auto-deploy single docker image for the course with hubploy/GitHub
+       actions.
 
-2. Implement the solution within a Google Cloud Platform (GCP) project owned and billed by an existing eScience Google Cloud Platform account.
+2. Implement the solution within a Google Cloud Platform (GCP) project owned and
+   billed by an existing eScience Google Cloud Platform account.
 
 3. Maintain the solution and keep it running for the duration of the course.
 
-4. To provide public documentation to help anyone create a similar bootcamp setup in the future, involving technical procedures as well as guidance on architectural decisions, at 2i2c/zero-to bootcamp. 
+4. To provide public documentation to help anyone create a similar bootcamp
+   setup in the future, involving technical procedures as well as guidance on
+   architectural decisions, at 2i2c/zero-to bootcamp. 
 
 ## A place for documentation
 
@@ -25,12 +30,15 @@ be able to document my work from the start.
 
 ## Architecture plans
 
+While working towards a solution, I'll rubber duck some discussion along the
+way.
+
+### Git repos
+
 A single repo to manage: Kubernetes deployment, documentation for
 administrators/instructors/students, and the Jupyter user environment.
 
-### Architectual decisions
-
-#### A single user environment
+### A single user environment
 
 For a course with many lectures, we may have conflicting environment
 constraints. Due to this, it could make sense to allow lecturers build their own
@@ -56,7 +64,7 @@ this decision included:
    we need to pull ten images. This can be a difference of two to twenty
    minutes.
 
-#### nginx-ingress and cert-manager
+### nginx-ingress and cert-manager
 
 HTTPS is a must, but how we set it up can be chosen? We can either use the a TLS
 termination proxy that also can speak with Let's Encrypt to acquire a
@@ -71,7 +79,7 @@ and TLS termination for JupyterHub and other services at the same Grafana. It is
 also well tested and have mechanisms to scale in a highly available way. Due to
 this, I'm choosing to use nginx-ingress and cert-manager over autohttps.
 
-#### Lecture datasets
+### Lecture datasets
 
 A goal is to enable instructors to provide datasets to students for their
 lectures. It is good if it is easy for both the instructors to do this, and the
@@ -95,8 +103,50 @@ We could also write data to object storage and grab it from there or similar,
 but I think for now, a reliable idea is to let the new nodes mount NSF data and
 copy it to a local path which is exposed to users using a hostPath.
 
-#### A meta Helm chart mostly depending on other charts
+### A meta Helm chart mostly depending on other charts
 
 It can often make life easier to have a single Helm chart that depends on other
 helm charts so one can add some kubernetes resources if needed and configure it
 with values as well.
+
+### GCP
+
+I've tried to pin down exactly what to install. The input I have regarding
+resources are verbal, and from my memory I recall the need for about 12GB memory
+per user. Due to the heavy memory need per user, I deem that it may make sense
+to use ultramem nodes with 961GB memory / 40 CPU cores with a 24GB / 1 CPU
+allowing for each user to have at least 0.5 CPU and 12GB memory but potentially
+use far more CPU if other users isn't running work.
+
+- 1 VPC network (new) to avoid the mess in the default VPC network (free)
+- 1 Cloud NAT (free, allows us to keep track of the IP of outbound traffic if we
+  need to whitelist them)
+- 1 SQL instance, n1-standard-2
+- 1 NFS server, 1 TB Filestore
+- 1 Kubernetes cluster, private, k8s version 1.16.9, us-central1
+   - Regional cluster for HA k8s api-server, but nodes only in us-central1-c
+   - 1 n1-standard-8 for JupyterHub etc.
+   - 1 n1-highmem-8 for users, w. 52GB for four 12GB users at all time
+   - 0-X m1-ultramem-40 w. 961GB for eighty 12GB users / node for 80 users /
+     node and 1600 simultaneous users for 20 nodes
+
+
+### GitOps and staging/production splits
+
+I think the main reason to split a single deployment into staging/production is
+to test something in staging before upgrades in production because it is too
+sensitive. But, what kinds of upgrades do we want to test in staging? I reason
+that we only want to test updates of images we build for the user environment.
+
+The statement of work specifies hubploy / GitHub actions and hubploy may imply a
+staging environment though. I think hubploy implies the need for a staging
+environment though, so I'll need to investigate it a bit. If a staging
+environment is configured, I need to decide how much is made common between
+production and staging. Do we use separate k8s clusters, separate namespaces,
+separate grafana/prometheus, etc.
+
+### git secret management
+
+git-crypt and a symmetric key seems sensible to me for this short lived
+deployment, while it may make sense to use SOPS for a long lived solution with
+GitOps to do everything.
