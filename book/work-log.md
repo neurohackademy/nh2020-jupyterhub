@@ -193,3 +193,21 @@ Type                   | name      | CIDR          | Required /x
 primary IP range       | nodes     | 10.60.32.0/20 | /20
 secondary IP range     | services  | 10.60.48.0/20 | /20
 secondary IP range     | pods      | 10.64.0.0/14  | /14
+
+### GCP IAM
+
+I think it is a good practice to create service accounts for various needs, so
+I'm creating one for:
+
+- Hubploy's access to the projects container registry
+- Hubploy's access to the projects GKE cluster
+- The nodes of the GKE cluster
+- The Cloud SQL instance
+- The Filestore instance
+
+### GCP Quotas
+
+I looked through all the quotas, and given the plan to use m1-ultramem-40 nodes
+with ~80 user each on them, I concluded we would fit 2400 users in 30 nodes.
+30*40 is 1200 CPUs and our current CPU quota is 500. So, due to that, it felt
+sensible to request an increase. I requested a quota of 1500 CPUs.
