@@ -150,3 +150,46 @@ separate grafana/prometheus, etc.
 git-crypt and a symmetric key seems sensible to me for this short lived
 deployment, while it may make sense to use SOPS for a long lived solution with
 GitOps to do everything.
+
+### hubploy learning
+
+I've not used hubploy before and had to learn some parts. I found
+[yuvipanda/hubploy-template](https://github.com/yuvipanda/hubploy-template) and
+a PR to [yuvipanda/hubploy](https://github.com/yuvipanda/hubploy/pull/78) to be
+very relevant and two minor
+([1](https://github.com/yuvipanda/hubploy-template/pull/6),
+[2](https://github.com/yuvipanda/hubploy/pull/80)) documentation PRs.
+
+Some conclusions:
+- can be used with Helm 3
+- build docker images using repo2docker configurations
+- accept GCP credentials and push images to google's container registry
+- accept GCP credentials to work against a GKE cluster while making `helm upgrade` with image referenced updated.
+- hubploy does not integrated with git-crypt or sops, but sops seems like the way to go:
+   - https://github.com/berkeley-dsep-infra/datahub/issues/596
+   - https://github.com/2i2c-org/jupyterhub-deploy
+
+### GCP Networking
+
+I opted to setup a dedicated VPC network, so everything in it can be assumed to
+have a meaning of relevance, as compared to adding more parts to the default VPC
+network. Hopefully that will make it easier to understand the setup in the
+future.
+
+Here is the plan for IP ranges, note that the external reservations are IP
+addresses that are intentionally kept free to ensure that we can use VPC network
+peering to another VPC network that will map to that ranges. This is relevant
+because the Kubernetes API-servers in a GKE cluster will reside in another GCP
+project not managed by us, and then VPC network peered into this project. The
+same goes for many other managed services like Filestore and Cloud SQL.
+
+__VPC Network: `neurohackademy`__
+Type                   | name      | CIDR          | Required /x
+---------------------- | --------- | ------------- | -----------
+*Subnet k8s*           |           |               |
+(external reservation) | master    | 10.60.0.0/28  | /28
+(external reservation) | filestore | 10.60.0.16/29 | /29
+(external reservation) | sql       | 10.60.16.0/20 | /20
+primary IP range       | nodes     | 10.60.32.0/20 | /20
+secondary IP range     | services  | 10.60.48.0/20 | /20
+secondary IP range     | pods      | 10.64.0.0/14  | /14
