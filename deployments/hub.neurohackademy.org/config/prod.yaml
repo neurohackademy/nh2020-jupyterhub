@@ -1,0 +1,106 @@
+nfs:
+  # Output from:
+  # gcloud beta filestore instances describe nh-2020 --location=us-east1-b
+  serverIP: <todo>
+  serverName: nh
+  
+jupyterhub:
+  ## ingress: should be enabled if we transition to use nginx-ingress +
+  ## cert-manager.
+  ##
+  # ingress:
+  #   enabled: true
+  #   annotations:
+  #     kubernetes.io/tls-acme: "true"
+  #     kubernetes.io/ingress.class: nginx
+  #   hosts:
+  #     - hub.neurohackademy.org
+  #   tls:
+  #     - secretName: jupyterhub-tls
+  #       hosts:
+  #         - hub.neurohackademy.org
+
+  prePuller:
+    hook:
+      enabled: true
+    continuous:
+      enabled: true
+
+  scheduling:
+    userScheduler:
+      enabled: true
+      replicas: 2
+    podPriority:
+      enabled: true
+    userPlaceholder:
+      enabled: true
+      replicas: 0
+    corePods:
+      nodeAffinity:
+        matchNodePurpose: require
+    userPods:
+      nodeAffinity:
+        matchNodePurpose: require
+
+  singleuser:
+    ## initContainers:
+    ## We may want this to ensure whatever dataset is mounted through NFS is
+    ## readable for jovyan.
+    ##
+    # initContainers:
+    #   - name: volume-mount-hack
+    #     image: busybox
+    #     command:
+    #       - "sh"
+    #       - "-c"
+    #       - "id && chown 1000:1000 /home/jovyan && ls -lhd /home/jovyan"
+    #     securityContext:
+    #       runAsUser: 0
+    #     volumeMounts:
+    #     - name: home
+    #       mountPath: /home/jovyan
+    #       subPath: "home/{username}"
+    ## image:
+    ## hubploy is supposed to override this!
+    image:
+      name: gcr.io/neurohackademy/nh-2020-env
+      tag: latest
+    ## cpu/memory requests:
+    ## We want to fit as many users on a m1-ultramem-40 node but still ensure
+    ## they get up to 24 GB of ram. At this point during setup, we want to also
+    ## allow a user to start on the n1-standard-4 node to save money.
+    cpu:
+      guarantee: 0.975
+      limit: 40
+    memory:
+      guarantee: 0.5G
+      limit: 24G
+    defaultUrl: /lab
+    startTimeout: 900
+
+  hub:
+    extraConfig:
+      # announcements: |
+      #   c.JupyterHub.template_vars.update({
+      #       'announcement': 'Any message we want to pass to instructors?',
+      #   })
+      templates: |
+        c.JupyterHub.template_paths.insert(0, "/etc/jupyterhub/templates")
+      metrics: |
+        # With this setting set to False, the /hub/metrics endpoint will be
+        # publically accessible just like at hub.mybinder.org/hub/metrics is.
+        c.JupyterHub.authenticate_prometheus = False
+
+  proxy:
+    https:
+      enabled: true
+      hosts: [hub.neurohackademy.org]
+    service:
+      type: LoadBalancer
+      loadBalancerIP: 34.75.11.207
+
+  cull:
+    enabled: true
+    timeout: 7200 # 2 hours in seconds
+    maxAge: 0 # Allow pods to run forever
+  

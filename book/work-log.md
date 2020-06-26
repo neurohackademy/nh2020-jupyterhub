@@ -211,3 +211,78 @@ I looked through all the quotas, and given the plan to use m1-ultramem-40 nodes
 with ~80 user each on them, I concluded we would fit 2400 users in 30 nodes.
 30*40 is 1200 CPUs and our current CPU quota is 500. So, due to that, it felt
 sensible to request an increase. I requested a quota of 1500 CPUs.
+
+### GKE
+
+I created a GKE cluster, and this was the gcloud equivalent command. It failed 
+
+```
+gcloud beta container --project "neurohackademy" clusters create "nh-2020" --region "us-east1" --no-enable-basic-auth --cluster-version "1.16.9-gke.6" --machine-type "n1-standard-4" --image-type "COS" --disk-type "pd-standard" --disk-size "100" --node-labels hub.jupyter.org/node-purpose=core --metadata disable-legacy-endpoints=true --service-account "gke-node-core@neurohackademy.iam.gserviceaccount.com" --num-nodes "1" --enable-stackdriver-kubernetes --enable-private-nodes --master-ipv4-cidr "10.60.0.0/28" --enable-ip-alias --network "projects/neurohackademy/global/networks/neurohackademy" --subnetwork "projects/neurohackademy/regions/us-east1/subnetworks/us-east1" --cluster-secondary-range-name "pods" --services-secondary-range-name "services" --default-max-pods-per-node "110" --enable-network-policy --enable-master-authorized-networks --master-authorized-networks 0.0.0.0/0 --addons HorizontalPodAutoscaling,HttpLoadBalancing --no-enable-autoupgrade --enable-autorepair --max-surge-upgrade 1 --max-unavailable-upgrade 0 --node-locations "us-east1-b" && gcloud beta container --project "neurohackademy" node-pools create "user" --cluster "nh-2020" --region "us-east1" --node-version "1.16.9-gke.6" --machine-type "m1-ultramem-40" --image-type "COS" --disk-type "pd-standard" --disk-size "100" --node-labels hub.jupyter.org/node-purpose=user --metadata disable-legacy-endpoints=true --node-taints hub.jupyter.org_dedicated=user:NoSchedule --service-account "gke-node-user@neurohackademy.iam.gserviceaccount.com" --num-nodes "0" --enable-autoscaling --min-nodes "0" --max-nodes "25" --no-enable-autoupgrade --enable-autorepair --max-surge-upgrade 1 --max-unavailable-upgrade 0 --node-locations "us-east1-b"
+```
+
+Apparently only two m1-ultramem-40 nodes were available, which was unexpected. I
+received the following error.
+
+> Google Compute Engine: Not all instances running in IGM after 56.02936237s. Expect 3. Current errors: [GCE_STOCKOUT]: Instance 'gke-nha-2020-user-8565ecfe-phhk' creation failed: The zone 'projects/neurohackademy/zones/us-east1-c' does not have enough resources available to fulfill the request. '(resource type:compute)'.
+
+I learned that there was no easy way to inspect the availability, but
+successfully scaled to 25 nodes on us-central1-a for ~5 minutes brief moment and
+decided to go with that over us-central1-c. I concluded that it cost me about 13
+USD to make that test.
+
+---
+
+I got a response from Google support, they recommended to use us-east1. In the
+[GCP docs about zones and their
+resources](https://cloud.google.com/compute/docs/regions-zones#available) I
+concluded that us-east1-(b,c,d) were allowed zones, but only b and d had
+m1-ultramem-40 nodes. I tried starting up 25 nodes on us-east1-d first but I got
+stuck at 2 and got the GCP_STOCKOUT issue on the rest.
+
+On us-east1-b I managed to startup 25 nodes though, so now I'm going to assume
+the preparation is as good as it get.
+
+### SOPS
+
+Seeing that Yuvi Panda advocated for a transition to SOPS and put in work to
+make hubploy use it among other things, it made sense to set that up instead of
+staying with git-crypt. See for example [this open
+PR](https://github.com/yuvipanda/hubploy/pull/81).
+
+I used [these steps part of SOPS
+documentation](https://github.com/mozilla/sops#encrypting-using-gcp-kms) to
+setup a Google Cloud KMS keyring. Here is [a link to the GCP web
+console](https://console.cloud.google.com/security/kms?project=neurohackademy).
+
+```shell
+# create a keyring
+gcloud kms keyrings create nh-2020 --location global
+gcloud kms keyrings list --location global
+# resulting keyring: projects/neurohackademy/locations/global/keyRings/nh-2020
+
+# create a key
+gcloud kms keys create main --location global --keyring nh-2020 --purpose encryption
+gcloud kms keys list --location global --keyring nh-2020
+# resulting key: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main
+```
+
+```yaml
+# content of .sops.yaml
+creation_rules:
+  - path_regex: .*/secrets/.*
+    gcp_kms: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main
+```
+
+```shell
+# login to a google cloud account
+gcloud auth login
+
+ # request a credentials file for use
+gcloud auth application-default login
+
+# encrypt a new file
+sops --encrypt --in-place deployments/hub.neurohackademy.org/secrets/prod.yaml
+
+# edit the file in memory
+sops deployments/hub.neurohackademy.org/secrets/prod.yaml
+```

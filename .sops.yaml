@@ -1,0 +1,7 @@
+# TODO: Write notes
+# gcloud auth login
+# gcloud auth application-default login
+# sops
+creation_rules:
+  - path_regex: .*/secrets/.*
+    gcp_kms: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main

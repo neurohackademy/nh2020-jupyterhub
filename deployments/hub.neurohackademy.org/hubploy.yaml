@@ -1,0 +1,15 @@
+images:
+  image_name: gcr.io/neurohackademy/nh-2020-env
+  registry:
+    provider: gcloud
+    gcloud:
+      project: neurohackademy
+      service_key: gcr-key.json
+
+cluster:
+  provider: gcloud
+  gcloud:
+    project: neurohackademy
+    service_key: gke-key.json
+    cluster: nh-2020
+    zone: us-east1-b

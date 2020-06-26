@@ -1,0 +1,14 @@
+jupyterhub:
+  hub:
+    extraVolumes:
+      - name: hub-etc-jupyterhub-templates
+        configMap:
+          name: hub-etc-jupyterhub-templates
+      - name: hub-usr-local-share-jupyterhub-static-external
+        configMap:
+          name: hub-usr-local-share-jupyterhub-static-external
+    extraVolumeMounts:
+      - mountPath: /etc/jupyterhub/templates
+        name: hub-etc-jupyterhub-templates
+      - mountPath: /usr/local/share/jupyterhub/static/external
+        name: hub-usr-local-share-jupyterhub-static-external
