@@ -63,7 +63,7 @@ jupyterhub:
     ## image:
     ## hubploy is supposed to override this!
     image:
-      name: gcr.io/neurohackademy/nh-2020-env
+      name: us.gcr.io/neurohackademy/nh-2020-env
       tag: latest
     ## cpu/memory requests:
     ## We want to fit as many users on a m1-ultramem-40 node but still ensure

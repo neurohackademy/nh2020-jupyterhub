@@ -1,5 +1,5 @@
 images:
-  image_name: gcr.io/neurohackademy/nh-2020-env
+  image_name: us.gcr.io/neurohackademy/nh-2020-env
   registry:
     provider: gcloud
     gcloud:

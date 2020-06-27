@@ -286,3 +286,26 @@ sops --encrypt --in-place deployments/hub.neurohackademy.org/secrets/prod.yaml
 # edit the file in memory
 sops deployments/hub.neurohackademy.org/secrets/prod.yaml
 ```
+
+### Hubploy
+
+I created two GCP service accounts, hubploy-gcr and hubploy-gke. I then created
+and downloaded .json keys to act as them and stored them in
+deployments/hub.neurohackademy.org/secrets as gcr-key.json and gke-key.json.
+
+In the [IAM
+panel](https://console.cloud.google.com/iam-admin/iam?project=neurohackademy)
+that couples accounts with permissions, I gave the hubploy-gcr account _Storage
+Admin_ rights to both be able to read and push. I also gave the hubploy-gke
+account right to be a _Kubernetes Engine Cluster Admin_. Initially I tried with
+Storage Object Admin, but then I lacked the `storage.buckets.create` permission
+which is used if a new image name is to be used, due to this, _Storage Admin_ is
+needed.
+
+This allowed the development of hubploy in
+https://github.com/yuvipanda/hubploy/pull/81 which we hopefully will get merged
+soon to work good enough to build images like this.
+
+```shell
+hubploy build hub.neurohackademy.org --check-registry
+```
