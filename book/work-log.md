@@ -309,3 +309,29 @@ soon to work good enough to build images like this.
 ```shell
 hubploy build hub.neurohackademy.org --check-registry
 ```
+
+### Registry access
+
+When a node has a image that it needs, kubelet running on the node will try
+download it. This can fail for various reasons and I ran into two of them.
+
+##### Issue 1 - no public IP to egress from
+
+The private GKE clusters nodes had no public IP, so traffic could not leave
+internet because it then has no return address. This was quickly solved by
+setting up a Cloud NAT on GCP, this is extremely painless.
+
+##### Issue 2 - access to container registry
+
+I made access to the registry public to ensure both GKE can reach it without
+needing to configure imagePullSecrets which is very doable, but to also ensure
+others can pull this from their own computers etc.
+
+ref: https://console.cloud.google.com/gcr/settings?project=neurohackademy
+
+I wonder if it is possible to give public access to individual images. The GCP
+container registry is working tightly against their Cloud Storage where the
+images actually reside. Each image will get their own bucket, and you can give
+permissions specific to buckets, but is that enough to make the image's bucket
+public or will the container registry refuse to list it no matter what because
+access to the container registry itself is not public?

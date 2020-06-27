@@ -12,4 +12,4 @@ cluster:
     project: neurohackademy
     service_key: gke-key.json
     cluster: nh-2020
-    zone: us-east1-b
+    zone: us-east1

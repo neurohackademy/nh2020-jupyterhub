@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hub-files-etc-jupyterhub-templates
+  name: hub-etc-jupyterhub-templates
 data:
   {{- (.Files.Glob "files/etc/jupyterhub/templates/*").AsConfig | nindent 2 }}
 ---

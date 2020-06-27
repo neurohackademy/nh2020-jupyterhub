@@ -7,7 +7,7 @@ version: 0.1.0
 dependencies:
   # JupyterHub
   - name: jupyterhub
-    version: 0.9.0-n078.ha6fb810
+    version: 0.9.0-n110.h2b07aa2
     repository: https://jupyterhub.github.io/helm-chart/
 
   # # Nginx-Ingress for highly available ingress routing

@@ -1,3 +1,5 @@
+**/charts/*.tgz
+Chart.lock
 book/_build
 
 # GitHub's Python .gitignore follows below, available at
