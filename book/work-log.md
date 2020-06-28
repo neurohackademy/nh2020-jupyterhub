@@ -269,8 +269,7 @@ gcloud kms keys list --location global --keyring nh-2020
 ```yaml
 # content of .sops.yaml
 creation_rules:
-  - path_regex: .*/secrets/.*
-    gcp_kms: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main
+  - gcp_kms: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main
 ```
 
 ```shell

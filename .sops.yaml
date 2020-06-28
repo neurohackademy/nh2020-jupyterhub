@@ -1,7 +1,26 @@
-# TODO: Write notes
-# gcloud auth login
-# gcloud auth application-default login
-# sops
+# This is a file that configures SOPS to assume it should use a specific keyring
+# and key if encrypting a new file. If it is to decrypt an existing file, that
+# information will be available as metadata and this is not needed.
+#
+# To authenticate yourself sufficiently:
+#
+#   gcloud auth login
+#   gcloud auth application-default login
+#
+# To setup a new keyring and key:
+#
+#   gcloud kms keyrings create nh-2020 --location global
+#   gcloud kms keyrings list --location global
+#   gcloud kms keys create main --location global --keyring nh-2020 --purpose encryption
+#   gcloud kms keys list --location global --keyring nh-2020
+#
+# To encrypt a new file:
+#
+#   sops --encrypt --in-place deployments/hub.neurohackademy.org/secrets/prod.yaml
+#
+# To edit an encrypted file:
+#
+#   sops deployments/hub.neurohackademy.org/secrets/prod.yaml
+#
 creation_rules:
-  - path_regex: .*/secrets/.*
-    gcp_kms: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main
+  - gcp_kms: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main
