@@ -336,7 +336,7 @@ permissions specific to buckets, but is that enough to make the image's bucket
 public or will the container registry refuse to list it no matter what because
 access to the container registry itself is not public?
 
-#### hubploy deployment commands
+### hubploy deployment commands
 
 Working with hubploy these are the commands is what I've typically used.
 
@@ -344,3 +344,12 @@ Working with hubploy these are the commands is what I've typically used.
 hubploy build hub.neurohackademy.org --check-registry --push
 hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
 ```
+
+### CD: Deployment to GitHub pages for jupyter-book
+
+This text is written in a Markdown file, but is setup to be more readable
+through a Jupyter Book. I wanted this to automatically get published with GitHub
+actions and GitHub pages.
+
+I wrote about two issues that I could resolve fairly quickly in [a GitHub
+issue](https://github.com/neurohackademy/nh-2020/issues/2).
