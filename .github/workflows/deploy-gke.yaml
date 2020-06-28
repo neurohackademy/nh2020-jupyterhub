@@ -23,17 +23,26 @@ jobs:
         python-version: 3.7
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
+        # Secrets configured in https://github.com/neurohackademy/nh-2020/settings/secrets
+        # GCP_SA_KEY is the .json file base64 encoded (cat <file> | base64 -w0)
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
-    - name: Install SOPS and hubploy
+    - name: Install SOPS
       run: |
         curl -sSL https://github.com/mozilla/sops/releases/download/v3.5.0/sops_3.5.0_amd64.deb -o /tmp/sops.deb
         sudo apt-get install /tmp/sops.deb
+    - name: Install hubploy
+      run: |
         pip install https://github.com/yuvipanda/hubploy/archive/master.zip
     - name: "hubploy: build"
+      # FIXME: remove --check-registry when hubploy is able to detect the
+      #        --commit-range automatically or figure out the details on its
+      #        own.
+      #
+      #        ref: https://github.com/neurohackademy/nh-2020/issues/4
       run: |
-        hubploy build hub.neurohackademy.org --push
+        hubploy build hub.neurohackademy.org --push --check-registry
     - name: "hubploy: deploy"
       run: |
         hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
