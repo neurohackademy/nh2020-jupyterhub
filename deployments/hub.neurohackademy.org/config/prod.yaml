@@ -22,7 +22,7 @@ jupyterhub:
 
   prePuller:
     hook:
-      enabled: false
+      enabled: true
     continuous:
       enabled: true
 
