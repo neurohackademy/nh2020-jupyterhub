@@ -225,11 +225,15 @@
             <a href="#issue-2-access-to-container-registry" class="nav-link">Issue 2 - access to container registry</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h4">
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
             <a href="#hubploy-deployment-commands" class="nav-link">hubploy deployment commands</a>
         </li>
     
-            </ul>
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#cd-deployment-to-github-pages-for-jupyter-book" class="nav-link">CD: Deployment to GitHub pages for jupyter-book</a>
         </li>
     
             </ul>
@@ -605,14 +609,22 @@ permissions specific to buckets, but is that enough to make the image’s bucket
 public or will the container registry refuse to list it no matter what because
 access to the container registry itself is not public?</p>
 </div>
+</div>
 <div class="section" id="hubploy-deployment-commands">
-<h4>hubploy deployment commands<a class="headerlink" href="#hubploy-deployment-commands" title="Permalink to this headline">¶</a></h4>
+<h3>hubploy deployment commands<a class="headerlink" href="#hubploy-deployment-commands" title="Permalink to this headline">¶</a></h3>
 <p>Working with hubploy these are the commands is what I’ve typically used.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>hubploy build hub.neurohackademy.org --check-registry --push
 hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
 </pre></div>
 </div>
 </div>
+<div class="section" id="cd-deployment-to-github-pages-for-jupyter-book">
+<h3>CD: Deployment to GitHub pages for jupyter-book<a class="headerlink" href="#cd-deployment-to-github-pages-for-jupyter-book" title="Permalink to this headline">¶</a></h3>
+<p>This text is written in a Markdown file, but is setup to be more readable
+through a Jupyter Book. I wanted this to automatically get published with GitHub
+actions and GitHub pages.</p>
+<p>I wrote about two issues that I could resolve fairly quickly in <a class="reference external" href="https://github.com/neurohackademy/nh-2020/issues/2">a GitHub
+issue</a>.</p>
 </div>
 </div>
 </div>
