@@ -13,7 +13,9 @@ on:
 # - use hubploy to build an image and deploys the Helm chart to GKE
 jobs:
   deploy-gke:
-    runs-on: ubuntu-1804
+    # Available runners: https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners
+    # Ubuntu 18.04 documentation: https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
