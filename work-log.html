@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Work log &#8212; Jupyter environment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/mystnb.js"></script>
+    <script src="_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="About jupyter.neurohackademy.org" href="index.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Jupyter environment</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="">
+    <a href="index.html">About jupyter.neurohackademy.org</a>
+  </li>
+<li class="navbar-special">
+<p class="margin-caption">Architecture</p>
+</li>
+  <li class="active">
+    <a href="">Work log</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/work-log.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#statement-of-work" class="nav-link">Statement of work</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#a-place-for-documentation" class="nav-link">A place for documentation</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#architecture-plans" class="nav-link">Architecture plans</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#git-repos" class="nav-link">Git repos</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#a-single-user-environment" class="nav-link">A single user environment</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#nginx-ingress-and-cert-manager" class="nav-link">nginx-ingress and cert-manager</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#lecture-datasets" class="nav-link">Lecture datasets</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#a-meta-helm-chart-mostly-depending-on-other-charts" class="nav-link">A meta Helm chart mostly depending on other charts</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gcp" class="nav-link">GCP</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gitops-and-staging-production-splits" class="nav-link">GitOps and staging/production splits</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#git-secret-management" class="nav-link">git secret management</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#hubploy-learning" class="nav-link">hubploy learning</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gcp-networking" class="nav-link">GCP Networking</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gcp-iam" class="nav-link">GCP IAM</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gcp-quotas" class="nav-link">GCP Quotas</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gke" class="nav-link">GKE</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#sops" class="nav-link">SOPS</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#hubploy" class="nav-link">Hubploy</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#registry-access" class="nav-link">Registry access</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#issue-1-no-public-ip-to-egress-from" class="nav-link">Issue 1 - no public IP to egress from</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#issue-2-access-to-container-registry" class="nav-link">Issue 2 - access to container registry</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#hubploy-deployment-commands" class="nav-link">hubploy deployment commands</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="work-log">
+<h1>Work log<a class="headerlink" href="#work-log" title="Permalink to this headline">¶</a></h1>
+<p>This is a work log made by Erik Sundell. It is meant to provide insights into
+the steps I take along the way to reach the desired outcome.</p>
+<div class="section" id="statement-of-work">
+<h2>Statement of work<a class="headerlink" href="#statement-of-work" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>Design for a scalable and configurable Jupyterhub for instruction of
+NeuroHackademy. The hub has the following desiderata:</p>
+<ol class="simple">
+<li><p>Scale to thousands of users on a Kubernetes cluster.</p></li>
+<li><p>Gate usage with GitHub authentication.</p></li>
+<li><p>Auto-deploy single docker image for the course with hubploy/GitHub
+actions.</p></li>
+</ol>
+</li>
+<li><p>Implement the solution within a Google Cloud Platform (GCP) project owned and
+billed by an existing eScience Google Cloud Platform account.</p></li>
+<li><p>Maintain the solution and keep it running for the duration of the course.</p></li>
+<li><p>To provide public documentation to help anyone create a similar bootcamp
+setup in the future, involving technical procedures as well as guidance on
+architectural decisions, at 2i2c/zero-to bootcamp.</p></li>
+</ol>
+</div>
+<div class="section" id="a-place-for-documentation">
+<h2>A place for documentation<a class="headerlink" href="#a-place-for-documentation" title="Permalink to this headline">¶</a></h2>
+<p>I created a Jupyter Book which you currently read using the
+<a class="reference external" href="https://github.com/executablebooks/jupyter-book">jupyter-book</a> CLI in order to
+be able to document my work from the start.</p>
+</div>
+<div class="section" id="architecture-plans">
+<h2>Architecture plans<a class="headerlink" href="#architecture-plans" title="Permalink to this headline">¶</a></h2>
+<p>While working towards a solution, I’ll rubber duck some discussion along the
+way.</p>
+<div class="section" id="git-repos">
+<h3>Git repos<a class="headerlink" href="#git-repos" title="Permalink to this headline">¶</a></h3>
+<p>A single repo to manage: Kubernetes deployment, documentation for
+administrators/instructors/students, and the Jupyter user environment.</p>
+</div>
+<div class="section" id="a-single-user-environment">
+<h3>A single user environment<a class="headerlink" href="#a-single-user-environment" title="Permalink to this headline">¶</a></h3>
+<p>For a course with many lectures, we may have conflicting environment
+constraints. Due to this, it could make sense to allow lecturers build their own
+environment. Me and Ariel have opted to not go that route, considerations behind
+this decision included:</p>
+<ol>
+<li><p>A single course will likely not need too much customization of the user
+environment between lectures, so its likely we can avoid conflicting
+dependencies in a single Docker image.</p></li>
+<li><p>Its practically easier to test a single environment to work as intended
+than many.</p></li>
+<li><p>When a user arrives, it should preferably not need to wait for a new server
+(Kubernetes node) to startup, and neither wait for the Docker image it needs
+to be downloaded to that server. With a single or very few docker images, it
+is far easier to ensure the user doesn’t need to wait for a downloaded image
+than with for example ten different.</p>
+<p>When a new Kubernetes node is added the JupyterHub Helm chart allows for
+images to be pre-pulled or downloaded ahead of time before users arrive. If
+there is only one image to pull, the node will be ready far quicker than if
+we need to pull ten images. This can be a difference of two to twenty
+minutes.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="nginx-ingress-and-cert-manager">
+<h3>nginx-ingress and cert-manager<a class="headerlink" href="#nginx-ingress-and-cert-manager" title="Permalink to this headline">¶</a></h3>
+<p>HTTPS is a must, but how we set it up can be chosen? We can either use the a TLS
+termination proxy that also can speak with Let’s Encrypt to acquire a
+certificate as part of the JupyterHub Helm chart, referred to as <code class="docutils literal notranslate"><span class="pre">autohttps</span></code>.
+Another option is to use a combination of
+<a class="reference external" href="https://hub.helm.sh/charts/stable/nginx-ingress">nginx-ingress</a> and
+<a class="reference external" href="https://hub.helm.sh/charts/jetstack/cert-manager">cert-manager</a>.</p>
+<p>I think either option could work well to provide TLS termination for JupyterHub
+specifically. But, only nginx-ingress + cert-manager can provide certificates
+and TLS termination for JupyterHub and other services at the same Grafana. It is
+also well tested and have mechanisms to scale in a highly available way. Due to
+this, I’m choosing to use nginx-ingress and cert-manager over autohttps.</p>
+</div>
+<div class="section" id="lecture-datasets">
+<h3>Lecture datasets<a class="headerlink" href="#lecture-datasets" title="Permalink to this headline">¶</a></h3>
+<p>A goal is to enable instructors to provide datasets to students for their
+lectures. It is good if it is easy for both the instructors to do this, and the
+students to access it. A storage area that is read/write for instructors and
+read only for students fits this. But, how scalable would such solution be?</p>
+<p>Google’s managed Filestore <a class="reference external" href="https://cloud.google.com/filestore/docs/limits">recommends to not have more than 500
+clients</a>. We want to scale to
+some thousands of students, but perhaps we don’t need to have some thousands of
+NSF clients! If instead of making each student a client of the NSF server, we
+make each Kubernetes node a client, and fit 4-8 users of each node, it becomes
+far more sustainable.</p>
+<p>I’m thinking that we could either let Kubernetes nodes copy the NSF data on
+startup from the NSF server and expose it using a <a class="reference external" href="https://kubernetes.io/docs/concepts/storage/volumes/#hostpath">hostPath
+volume</a> to the
+user Pods, or expose it directly using a hostPath volume. Copying data on
+startup will improve performance, but not allow for updates if the data changes.</p>
+<p>We could also write data to object storage and grab it from there or similar,
+but I think for now, a reliable idea is to let the new nodes mount NSF data and
+copy it to a local path which is exposed to users using a hostPath.</p>
+</div>
+<div class="section" id="a-meta-helm-chart-mostly-depending-on-other-charts">
+<h3>A meta Helm chart mostly depending on other charts<a class="headerlink" href="#a-meta-helm-chart-mostly-depending-on-other-charts" title="Permalink to this headline">¶</a></h3>
+<p>It can often make life easier to have a single Helm chart that depends on other
+helm charts so one can add some kubernetes resources if needed and configure it
+with values as well.</p>
+</div>
+<div class="section" id="gcp">
+<h3>GCP<a class="headerlink" href="#gcp" title="Permalink to this headline">¶</a></h3>
+<p>I’ve tried to pin down exactly what to install. The input I have regarding
+resources are verbal, and from my memory I recall the need for about 12GB memory
+per user. Due to the heavy memory need per user, I deem that it may make sense
+to use ultramem nodes with 961GB memory / 40 CPU cores with a 24GB / 1 CPU
+allowing for each user to have at least 0.5 CPU and 12GB memory but potentially
+use far more CPU if other users isn’t running work.</p>
+<ul class="simple">
+<li><p>1 VPC network (new) to avoid the mess in the default VPC network (free)</p></li>
+<li><p>1 Cloud NAT (free, allows us to keep track of the IP of outbound traffic if we
+need to whitelist them)</p></li>
+<li><p>1 SQL instance, n1-standard-2</p></li>
+<li><p>1 NFS server, 1 TB Filestore</p></li>
+<li><p>1 Kubernetes cluster, private, k8s version 1.16.9, us-central1</p>
+<ul>
+<li><p>Regional cluster for HA k8s api-server, but nodes only in us-central1-c</p></li>
+<li><p>1 n1-standard-8 for JupyterHub etc.</p></li>
+<li><p>1 n1-highmem-8 for users, w. 52GB for four 12GB users at all time</p></li>
+<li><p>0-X m1-ultramem-40 w. 961GB for eighty 12GB users / node for 80 users /
+node and 1600 simultaneous users for 20 nodes</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="gitops-and-staging-production-splits">
+<h3>GitOps and staging/production splits<a class="headerlink" href="#gitops-and-staging-production-splits" title="Permalink to this headline">¶</a></h3>
+<p>I think the main reason to split a single deployment into staging/production is
+to test something in staging before upgrades in production because it is too
+sensitive. But, what kinds of upgrades do we want to test in staging? I reason
+that we only want to test updates of images we build for the user environment.</p>
+<p>The statement of work specifies hubploy / GitHub actions and hubploy may imply a
+staging environment though. I think hubploy implies the need for a staging
+environment though, so I’ll need to investigate it a bit. If a staging
+environment is configured, I need to decide how much is made common between
+production and staging. Do we use separate k8s clusters, separate namespaces,
+separate grafana/prometheus, etc.</p>
+</div>
+<div class="section" id="git-secret-management">
+<h3>git secret management<a class="headerlink" href="#git-secret-management" title="Permalink to this headline">¶</a></h3>
+<p>git-crypt and a symmetric key seems sensible to me for this short lived
+deployment, while it may make sense to use SOPS for a long lived solution with
+GitOps to do everything.</p>
+</div>
+<div class="section" id="hubploy-learning">
+<h3>hubploy learning<a class="headerlink" href="#hubploy-learning" title="Permalink to this headline">¶</a></h3>
+<p>I’ve not used hubploy before and had to learn some parts. I found
+<a class="reference external" href="https://github.com/yuvipanda/hubploy-template">yuvipanda/hubploy-template</a> and
+a PR to <a class="reference external" href="https://github.com/yuvipanda/hubploy/pull/78">yuvipanda/hubploy</a> to be
+very relevant and two minor
+(<a class="reference external" href="https://github.com/yuvipanda/hubploy-template/pull/6">1</a>,
+<a class="reference external" href="https://github.com/yuvipanda/hubploy/pull/80">2</a>) documentation PRs.</p>
+<p>Some conclusions:</p>
+<ul class="simple">
+<li><p>can be used with Helm 3</p></li>
+<li><p>build docker images using repo2docker configurations</p></li>
+<li><p>accept GCP credentials and push images to google’s container registry</p></li>
+<li><p>accept GCP credentials to work against a GKE cluster while making <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">upgrade</span></code> with image referenced updated.</p></li>
+<li><p>hubploy does not integrated with git-crypt or sops, but sops seems like the way to go:</p>
+<ul>
+<li><p>https://github.com/berkeley-dsep-infra/datahub/issues/596</p></li>
+<li><p>https://github.com/2i2c-org/jupyterhub-deploy</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="gcp-networking">
+<h3>GCP Networking<a class="headerlink" href="#gcp-networking" title="Permalink to this headline">¶</a></h3>
+<p>I opted to setup a dedicated VPC network, so everything in it can be assumed to
+have a meaning of relevance, as compared to adding more parts to the default VPC
+network. Hopefully that will make it easier to understand the setup in the
+future.</p>
+<p>Here is the plan for IP ranges, note that the external reservations are IP
+addresses that are intentionally kept free to ensure that we can use VPC network
+peering to another VPC network that will map to that ranges. This is relevant
+because the Kubernetes API-servers in a GKE cluster will reside in another GCP
+project not managed by us, and then VPC network peered into this project. The
+same goes for many other managed services like Filestore and Cloud SQL.</p>
+<p><strong>VPC Network: <code class="docutils literal notranslate"><span class="pre">neurohackademy</span></code></strong></p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>name</p></th>
+<th class="head"><p>CIDR</p></th>
+<th class="head"><p>Required /x</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>Subnet k8s</em></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>(external reservation)</p></td>
+<td><p>master</p></td>
+<td><p>10.60.0.0/28</p></td>
+<td><p>/28</p></td>
+</tr>
+<tr class="row-even"><td><p>(external reservation)</p></td>
+<td><p>filestore</p></td>
+<td><p>10.60.0.16/29</p></td>
+<td><p>/29</p></td>
+</tr>
+<tr class="row-odd"><td><p>(external reservation)</p></td>
+<td><p>sql</p></td>
+<td><p>10.60.16.0/20</p></td>
+<td><p>/20</p></td>
+</tr>
+<tr class="row-even"><td><p>primary IP range</p></td>
+<td><p>nodes</p></td>
+<td><p>10.60.32.0/20</p></td>
+<td><p>/20</p></td>
+</tr>
+<tr class="row-odd"><td><p>secondary IP range</p></td>
+<td><p>services</p></td>
+<td><p>10.60.48.0/20</p></td>
+<td><p>/20</p></td>
+</tr>
+<tr class="row-even"><td><p>secondary IP range</p></td>
+<td><p>pods</p></td>
+<td><p>10.64.0.0/14</p></td>
+<td><p>/14</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="gcp-iam">
+<h3>GCP IAM<a class="headerlink" href="#gcp-iam" title="Permalink to this headline">¶</a></h3>
+<p>I think it is a good practice to create service accounts for various needs, so
+I’m creating one for:</p>
+<ul class="simple">
+<li><p>Hubploy’s access to the projects container registry</p></li>
+<li><p>Hubploy’s access to the projects GKE cluster</p></li>
+<li><p>The nodes of the GKE cluster</p></li>
+<li><p>The Cloud SQL instance</p></li>
+<li><p>The Filestore instance</p></li>
+</ul>
+</div>
+<div class="section" id="gcp-quotas">
+<h3>GCP Quotas<a class="headerlink" href="#gcp-quotas" title="Permalink to this headline">¶</a></h3>
+<p>I looked through all the quotas, and given the plan to use m1-ultramem-40 nodes
+with ~80 user each on them, I concluded we would fit 2400 users in 30 nodes.
+30*40 is 1200 CPUs and our current CPU quota is 500. So, due to that, it felt
+sensible to request an increase. I requested a quota of 1500 CPUs.</p>
+</div>
+<div class="section" id="gke">
+<h3>GKE<a class="headerlink" href="#gke" title="Permalink to this headline">¶</a></h3>
+<p>I created a GKE cluster, and this was the gcloud equivalent command. It failed</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcloud</span> <span class="n">beta</span> <span class="n">container</span> <span class="o">--</span><span class="n">project</span> <span class="s2">&quot;neurohackademy&quot;</span> <span class="n">clusters</span> <span class="n">create</span> <span class="s2">&quot;nh-2020&quot;</span> <span class="o">--</span><span class="n">region</span> <span class="s2">&quot;us-east1&quot;</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">enable</span><span class="o">-</span><span class="n">basic</span><span class="o">-</span><span class="n">auth</span> <span class="o">--</span><span class="n">cluster</span><span class="o">-</span><span class="n">version</span> <span class="s2">&quot;1.16.9-gke.6&quot;</span> <span class="o">--</span><span class="n">machine</span><span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;n1-standard-4&quot;</span> <span class="o">--</span><span class="n">image</span><span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;COS&quot;</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;pd-standard&quot;</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="n">size</span> <span class="s2">&quot;100&quot;</span> <span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">labels</span> <span class="n">hub</span><span class="o">.</span><span class="n">jupyter</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">node</span><span class="o">-</span><span class="n">purpose</span><span class="o">=</span><span class="n">core</span> <span class="o">--</span><span class="n">metadata</span> <span class="n">disable</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">endpoints</span><span class="o">=</span><span class="n">true</span> <span class="o">--</span><span class="n">service</span><span class="o">-</span><span class="n">account</span> <span class="s2">&quot;gke-node-core@neurohackademy.iam.gserviceaccount.com&quot;</span> <span class="o">--</span><span class="n">num</span><span class="o">-</span><span class="n">nodes</span> <span class="s2">&quot;1&quot;</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">stackdriver</span><span class="o">-</span><span class="n">kubernetes</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">private</span><span class="o">-</span><span class="n">nodes</span> <span class="o">--</span><span class="n">master</span><span class="o">-</span><span class="n">ipv4</span><span class="o">-</span><span class="n">cidr</span> <span class="s2">&quot;10.60.0.0/28&quot;</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">ip</span><span class="o">-</span><span class="n">alias</span> <span class="o">--</span><span class="n">network</span> <span class="s2">&quot;projects/neurohackademy/global/networks/neurohackademy&quot;</span> <span class="o">--</span><span class="n">subnetwork</span> <span class="s2">&quot;projects/neurohackademy/regions/us-east1/subnetworks/us-east1&quot;</span> <span class="o">--</span><span class="n">cluster</span><span class="o">-</span><span class="n">secondary</span><span class="o">-</span><span class="nb">range</span><span class="o">-</span><span class="n">name</span> <span class="s2">&quot;pods&quot;</span> <span class="o">--</span><span class="n">services</span><span class="o">-</span><span class="n">secondary</span><span class="o">-</span><span class="nb">range</span><span class="o">-</span><span class="n">name</span> <span class="s2">&quot;services&quot;</span> <span class="o">--</span><span class="n">default</span><span class="o">-</span><span class="nb">max</span><span class="o">-</span><span class="n">pods</span><span class="o">-</span><span class="n">per</span><span class="o">-</span><span class="n">node</span> <span class="s2">&quot;110&quot;</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="n">policy</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">master</span><span class="o">-</span><span class="n">authorized</span><span class="o">-</span><span class="n">networks</span> <span class="o">--</span><span class="n">master</span><span class="o">-</span><span class="n">authorized</span><span class="o">-</span><span class="n">networks</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span> <span class="o">--</span><span class="n">addons</span> <span class="n">HorizontalPodAutoscaling</span><span class="p">,</span><span class="n">HttpLoadBalancing</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">enable</span><span class="o">-</span><span class="n">autoupgrade</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">autorepair</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">surge</span><span class="o">-</span><span class="n">upgrade</span> <span class="mi">1</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">unavailable</span><span class="o">-</span><span class="n">upgrade</span> <span class="mi">0</span> <span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">locations</span> <span class="s2">&quot;us-east1-b&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">gcloud</span> <span class="n">beta</span> <span class="n">container</span> <span class="o">--</span><span class="n">project</span> <span class="s2">&quot;neurohackademy&quot;</span> <span class="n">node</span><span class="o">-</span><span class="n">pools</span> <span class="n">create</span> <span class="s2">&quot;user&quot;</span> <span class="o">--</span><span class="n">cluster</span> <span class="s2">&quot;nh-2020&quot;</span> <span class="o">--</span><span class="n">region</span> <span class="s2">&quot;us-east1&quot;</span> <span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">version</span> <span class="s2">&quot;1.16.9-gke.6&quot;</span> <span class="o">--</span><span class="n">machine</span><span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;m1-ultramem-40&quot;</span> <span class="o">--</span><span class="n">image</span><span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;COS&quot;</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="nb">type</span> <span class="s2">&quot;pd-standard&quot;</span> <span class="o">--</span><span class="n">disk</span><span class="o">-</span><span class="n">size</span> <span class="s2">&quot;100&quot;</span> <span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">labels</span> <span class="n">hub</span><span class="o">.</span><span class="n">jupyter</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">node</span><span class="o">-</span><span class="n">purpose</span><span class="o">=</span><span class="n">user</span> <span class="o">--</span><span class="n">metadata</span> <span class="n">disable</span><span class="o">-</span><span class="n">legacy</span><span class="o">-</span><span class="n">endpoints</span><span class="o">=</span><span class="n">true</span> <span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">taints</span> <span class="n">hub</span><span class="o">.</span><span class="n">jupyter</span><span class="o">.</span><span class="n">org_dedicated</span><span class="o">=</span><span class="n">user</span><span class="p">:</span><span class="n">NoSchedule</span> <span class="o">--</span><span class="n">service</span><span class="o">-</span><span class="n">account</span> <span class="s2">&quot;gke-node-user@neurohackademy.iam.gserviceaccount.com&quot;</span> <span class="o">--</span><span class="n">num</span><span class="o">-</span><span class="n">nodes</span> <span class="s2">&quot;0&quot;</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">autoscaling</span> <span class="o">--</span><span class="nb">min</span><span class="o">-</span><span class="n">nodes</span> <span class="s2">&quot;0&quot;</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">nodes</span> <span class="s2">&quot;25&quot;</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">enable</span><span class="o">-</span><span class="n">autoupgrade</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">autorepair</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">surge</span><span class="o">-</span><span class="n">upgrade</span> <span class="mi">1</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">unavailable</span><span class="o">-</span><span class="n">upgrade</span> <span class="mi">0</span> <span class="o">--</span><span class="n">node</span><span class="o">-</span><span class="n">locations</span> <span class="s2">&quot;us-east1-b&quot;</span>
+</pre></div>
+</div>
+<p>Apparently only two m1-ultramem-40 nodes were available, which was unexpected. I
+received the following error.</p>
+<blockquote>
+<div><p>Google Compute Engine: Not all instances running in IGM after 56.02936237s. Expect 3. Current errors: [GCE_STOCKOUT]: Instance ‘gke-nha-2020-user-8565ecfe-phhk’ creation failed: The zone ‘projects/neurohackademy/zones/us-east1-c’ does not have enough resources available to fulfill the request. ‘(resource type:compute)’.</p>
+</div></blockquote>
+<p>I learned that there was no easy way to inspect the availability, but
+successfully scaled to 25 nodes on us-central1-a for ~5 minutes brief moment and
+decided to go with that over us-central1-c. I concluded that it cost me about 13
+USD to make that test.</p>
+<hr class="docutils" />
+<p>I got a response from Google support, they recommended to use us-east1. In the
+<a class="reference external" href="https://cloud.google.com/compute/docs/regions-zones#available">GCP docs about zones and their
+resources</a> I
+concluded that us-east1-(b,c,d) were allowed zones, but only b and d had
+m1-ultramem-40 nodes. I tried starting up 25 nodes on us-east1-d first but I got
+stuck at 2 and got the GCP_STOCKOUT issue on the rest.</p>
+<p>On us-east1-b I managed to startup 25 nodes though, so now I’m going to assume
+the preparation is as good as it get.</p>
+</div>
+<div class="section" id="sops">
+<h3>SOPS<a class="headerlink" href="#sops" title="Permalink to this headline">¶</a></h3>
+<p>Seeing that Yuvi Panda advocated for a transition to SOPS and put in work to
+make hubploy use it among other things, it made sense to set that up instead of
+staying with git-crypt. See for example <a class="reference external" href="https://github.com/yuvipanda/hubploy/pull/81">this open
+PR</a>.</p>
+<p>I used <a class="reference external" href="https://github.com/mozilla/sops#encrypting-using-gcp-kms">these steps part of SOPS
+documentation</a> to
+setup a Google Cloud KMS keyring. Here is <a class="reference external" href="https://console.cloud.google.com/security/kms?project=neurohackademy">a link to the GCP web
+console</a>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a keyring</span>
+gcloud kms keyrings create nh-2020 --location global
+gcloud kms keyrings list --location global
+<span class="c1"># resulting keyring: projects/neurohackademy/locations/global/keyRings/nh-2020</span>
+
+<span class="c1"># create a key</span>
+gcloud kms keys create main --location global --keyring nh-2020 --purpose encryption
+gcloud kms keys list --location global --keyring nh-2020
+<span class="c1"># resulting key: projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># content of .sops.yaml</span>
+<span class="nt">creation_rules</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">gcp_kms</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">projects/neurohackademy/locations/global/keyRings/nh-2020/cryptoKeys/main</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># login to a google cloud account</span>
+gcloud auth login
+
+ <span class="c1"># request a credentials file for use</span>
+gcloud auth application-default login
+
+<span class="c1"># encrypt a new file</span>
+sops --encrypt --in-place deployments/hub.neurohackademy.org/secrets/prod.yaml
+
+<span class="c1"># edit the file in memory</span>
+sops deployments/hub.neurohackademy.org/secrets/prod.yaml
+</pre></div>
+</div>
+</div>
+<div class="section" id="hubploy">
+<h3>Hubploy<a class="headerlink" href="#hubploy" title="Permalink to this headline">¶</a></h3>
+<p>I created two GCP service accounts, hubploy-gcr and hubploy-gke. I then created
+and downloaded .json keys to act as them and stored them in
+deployments/hub.neurohackademy.org/secrets as gcr-key.json and gke-key.json.</p>
+<p>In the <a class="reference external" href="https://console.cloud.google.com/iam-admin/iam?project=neurohackademy">IAM
+panel</a>
+that couples accounts with permissions, I gave the hubploy-gcr account <em>Storage
+Admin</em> rights to both be able to read and push. I also gave the hubploy-gke
+account right to be a <em>Kubernetes Engine Admin</em>. Initially I tried with Storage
+Object Admin, but then I lacked the <code class="docutils literal notranslate"><span class="pre">storage.buckets.create</span></code> permission which is
+used if a new image name is to be used, due to this, <em>Storage Admin</em> is needed.
+I also tried with <em>Kubernetes Engine Cluster Admin</em> but did not get the rights
+to work with Kubernetes Secrets then.</p>
+<p>This allowed the development of hubploy in
+https://github.com/yuvipanda/hubploy/pull/81 which we hopefully will get merged
+soon to work good enough to build images like this.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>hubploy build hub.neurohackademy.org --check-registry
+</pre></div>
+</div>
+</div>
+<div class="section" id="registry-access">
+<h3>Registry access<a class="headerlink" href="#registry-access" title="Permalink to this headline">¶</a></h3>
+<p>When a node has a image that it needs, kubelet running on the node will try
+download it. This can fail for various reasons and I ran into two of them.</p>
+<div class="section" id="issue-1-no-public-ip-to-egress-from">
+<h4>Issue 1 - no public IP to egress from<a class="headerlink" href="#issue-1-no-public-ip-to-egress-from" title="Permalink to this headline">¶</a></h4>
+<p>The private GKE clusters nodes had no public IP, so traffic could not leave
+internet because it then has no return address. This was quickly solved by
+setting up a Cloud NAT on GCP, this is extremely painless.</p>
+</div>
+<div class="section" id="issue-2-access-to-container-registry">
+<h4>Issue 2 - access to container registry<a class="headerlink" href="#issue-2-access-to-container-registry" title="Permalink to this headline">¶</a></h4>
+<p>I made access to the registry public to ensure both GKE can reach it without
+needing to configure imagePullSecrets which is very doable, but to also ensure
+others can pull this from their own computers etc.</p>
+<p>ref: https://console.cloud.google.com/gcr/settings?project=neurohackademy</p>
+<p>I wonder if it is possible to give public access to individual images. The GCP
+container registry is working tightly against their Cloud Storage where the
+images actually reside. Each image will get their own bucket, and you can give
+permissions specific to buckets, but is that enough to make the image’s bucket
+public or will the container registry refuse to list it no matter what because
+access to the container registry itself is not public?</p>
+</div>
+<div class="section" id="hubploy-deployment-commands">
+<h4>hubploy deployment commands<a class="headerlink" href="#hubploy-deployment-commands" title="Permalink to this headline">¶</a></h4>
+<p>Working with hubploy these are the commands is what I’ve typically used.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>hubploy build hub.neurohackademy.org --check-registry --push
+hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">About jupyter.neurohackademy.org</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Erik Sundell<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="_static/js/index.js"></script>
+    
+  </body>
+</html>
