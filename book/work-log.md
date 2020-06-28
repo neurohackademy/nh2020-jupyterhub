@@ -297,10 +297,11 @@ In the [IAM
 panel](https://console.cloud.google.com/iam-admin/iam?project=neurohackademy)
 that couples accounts with permissions, I gave the hubploy-gcr account _Storage
 Admin_ rights to both be able to read and push. I also gave the hubploy-gke
-account right to be a _Kubernetes Engine Cluster Admin_. Initially I tried with
-Storage Object Admin, but then I lacked the `storage.buckets.create` permission
-which is used if a new image name is to be used, due to this, _Storage Admin_ is
-needed.
+account right to be a _Kubernetes Engine Admin_. Initially I tried with Storage
+Object Admin, but then I lacked the `storage.buckets.create` permission which is
+used if a new image name is to be used, due to this, _Storage Admin_ is needed.
+I also tried with _Kubernetes Engine Cluster Admin_ but did not get the rights
+to work with Kubernetes Secrets then.
 
 This allowed the development of hubploy in
 https://github.com/yuvipanda/hubploy/pull/81 which we hopefully will get merged
@@ -335,3 +336,12 @@ images actually reside. Each image will get their own bucket, and you can give
 permissions specific to buckets, but is that enough to make the image's bucket
 public or will the container registry refuse to list it no matter what because
 access to the container registry itself is not public?
+
+#### hubploy deployment commands
+
+Working with hubploy these are the commands is what I've typically used.
+
+```shell
+hubploy build hub.neurohackademy.org --check-registry --push
+hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
+```
