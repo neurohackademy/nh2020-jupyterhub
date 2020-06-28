@@ -33,7 +33,7 @@ jobs:
         pip install https://github.com/yuvipanda/hubploy/archive/master.zip
     - name: "hubploy: build"
       run: |
-        hubploy build hub.neurohackademy.org --check-registry --push
+        hubploy build hub.neurohackademy.org --push
     - name: "hubploy: deploy"
       run: |
         hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
