@@ -14,6 +14,10 @@ cluster using [.github/workflows/deploy-gke](github/workflows/deploy-gke).
 [yuvipanda/hubploy](https://github.com/yuvipanda/hubploy) are tools used to do
 this.
 
+Access is to https://hub.neurohackademy.org is managed through the Access
+Control Lists available at
+[chart/files/etc/jupyterhub/acl](chart/files/etc/jupyterhub/acl).
+
 ## Documentation
 
 Documentation about this infrastructure is automatically built and published at
