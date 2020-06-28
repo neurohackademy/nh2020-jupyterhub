@@ -6,32 +6,31 @@ on:
     branches:
     - master
 
-# This job installs dependencies, build the book, and pushes it to `gh-pages`
+# This job:
+# - installs gcloud and configures it to use a GCP SA allowed to decrypt
+#   encrypted GCR / GKE credentials
+# - installs sops and hubploy
+# - use hubploy to build an image and deploys the Helm chart to GKE
 jobs:
-  deploy-book:
-    runs-on: ubuntu-latest
+  deploy-gke:
+    runs-on: ubuntu-1804
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
-    - name: Download SOPS
-      uses: wei/wget@v1
-      with:
-        args: -O /tmp/sops.deb https://github.com/mozilla/sops/releases/download/v3.5.0/sops_3.5.0_amd64.deb
-    - name: Install SOPS
+    - name: Install SOPS and hubploy
       run: |
-        sudo apt install /tmp/sops.deb
-    - uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Install hubploy
-      run: |
+        curl -sSL https://github.com/mozilla/sops/releases/download/v3.5.0/sops_3.5.0_amd64.deb -o /tmp/sops.deb
+        sudo apt-get install /tmp/sops.deb
         pip install https://github.com/yuvipanda/hubploy/archive/master.zip
-    - name: hubploy build
+    - name: "hubploy: build"
       run: |
         hubploy build hub.neurohackademy.org --check-registry --push
-    - name: hubploy deploy
+    - name: "hubploy: deploy"
       run: |
         hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
