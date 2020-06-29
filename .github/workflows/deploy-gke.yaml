@@ -34,7 +34,7 @@ jobs:
         sudo apt-get install /tmp/sops.deb
     - name: Install hubploy
       run: |
-        pip install https://github.com/yuvipanda/hubploy/archive/master.zip
+        pip install https://github.com/consideratio/hubploy/archive/fix-github-action-commit-range-issue.zip
     - name: "hubploy: build"
       run: |
         hubploy build hub.neurohackademy.org --push
