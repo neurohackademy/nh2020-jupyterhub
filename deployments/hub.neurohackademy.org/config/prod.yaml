@@ -22,7 +22,7 @@ jupyterhub:
 
   prePuller:
     hook:
-      enabled: true
+      enabled: false
     continuous:
       enabled: true
 
@@ -128,4 +128,26 @@ jupyterhub:
     enabled: true
     timeout: 7200 # 2 hours in seconds
     maxAge: 0 # Allow pods to run forever
-  
+
+# Reference on the Grafana Helm chart's configuration options:
+# https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
+grafana:
+  # Reference on Grafana's configuration options:
+  # http://docs.grafana.org/installation/configuration
+  grafani.ini:
+    log:
+      level: debug
+    server:
+      domain: hub.neurohackademy.com
+      # NOTE: Don't use %(protocol)s in root_url, but hardcode https. If not, it
+      #       will when redirecting the user to external authentication set with
+      #       a redirect back query parameter to use http instead of https,
+      #       which will be wrong. This is because the TLS termination is done
+      #       without Grafanas knowledge by the ingress controller. If we would
+      #       specify protocol to be https, then it would want to do the TLS
+      #       termination itself so that also would fail.
+      root_url: 'https://%(domain)s/services/grafana'
+      serve_from_sub_path: true
+      enforce_domain: true
+      enable_gzip: true
+      router_logging: true

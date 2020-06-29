@@ -1,0 +1,72 @@
+# Reference on the configuration options:
+# https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
+grafana:
+
+  # NOTE: We need Recreate when using a persistence PVC. If we use an external
+  # database, we can do a RollingUpdate instead.
+  deploymentStrategy:
+    type: Recreate
+
+  persistence:
+    type: pvc
+    enabled: true
+
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 1Gi
+
+# Reference on the configuration options:
+# https://github.com/helm/charts/blob/master/stable/prometheus/values.yaml
+prometheus:
+  # the actual prometheus server that polls various sources for metrics etc.
+  server:
+    enabled: true
+
+    # data retention period
+    retention: 90d
+
+    # NOTE: We prefer StatefulSet to be used when using a persistence PVC. If we
+    #       use an external database, we can use a Deployment with rolling
+    #       updates instead. Until then, we should shut down one pod and then
+    #       start up another, which a StatefulSet will do by default and a
+    #       Deployment will Recreate as an upgradeStrategy will also do.
+    statefulSet:
+      enabled: true
+    persistentVolume:
+      enabled: true
+
+    resources:
+      limits:
+        cpu: 1
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 1Gi
+
+  # alertmanager is meant to be able to alert using email etc. Grafana can also
+  # do this by itself to some degree at least as I understand it.
+  alertmanager:
+    enabled: false
+
+  # kube-state-metrics exports information coming from the kubernetes api-server
+  # about the state of kubernetes resources. It can list the state of pods etc.
+  #
+  # ref: https://github.com/helm/charts/tree/master/stable/kube-state-metrics
+  kubeStateMetrics:
+    enabled: true
+
+  nodeExporter:
+    enabled: true
+    # NOTE: We want to be able to scrape metrics on all nodes, even GPU nodes
+    #       etc.
+    tolerations:
+      - operator: "Exists"
+
+  # pushgateway is meant to buffer metrics pushed to it from short lived sources
+  # and expose them later for prometheus in their place.
+  pushgateway:
+    enabled: false
