@@ -27,18 +27,17 @@ jobs:
         # GCP_SA_KEY is the .json file base64 encoded (cat <file> | base64 -w0)
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
+        # Required for hubploy's use with SOPS
         export_default_credentials: true
+        # Required for hubploy's inspection of git history
+        fetch-depth: 0
     - name: Install SOPS
       run: |
         curl -sSL https://github.com/mozilla/sops/releases/download/v3.5.0/sops_3.5.0_amd64.deb -o /tmp/sops.deb
         sudo apt-get install /tmp/sops.deb
     - name: Install hubploy
       run: |
-        pip install https://github.com/consideratio/hubploy/archive/fix-github-action-commit-range-issue.zip
-    - name: "debug hubploy error"
-      run: |
-        git status
-        git --no-pager log
+        pip install https://github.com/yuvipanda/hubploy/archive/master.zip
     - name: "hubploy: build"
       run: |
         hubploy build hub.neurohackademy.org --push
