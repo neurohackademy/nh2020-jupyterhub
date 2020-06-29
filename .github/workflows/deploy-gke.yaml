@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+      with:
+        # Required for hubploy's inspection of git history
+        fetch-depth: 0
     - uses: actions/setup-python@v1
       with:
         python-version: 3.7
@@ -29,8 +32,6 @@ jobs:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         # Required for hubploy's use with SOPS
         export_default_credentials: true
-        # Required for hubploy's inspection of git history
-        fetch-depth: 0
     - name: Install SOPS
       run: |
         curl -sSL https://github.com/mozilla/sops/releases/download/v3.5.0/sops_3.5.0_amd64.deb -o /tmp/sops.deb
