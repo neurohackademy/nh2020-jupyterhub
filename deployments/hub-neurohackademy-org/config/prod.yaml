@@ -134,11 +134,11 @@ jupyterhub:
 grafana:
   # Reference on Grafana's configuration options:
   # http://docs.grafana.org/installation/configuration
-  grafani.ini:
+  grafana.ini:
     log:
       level: debug
     server:
-      domain: hub.neurohackademy.com
+      domain: hub.neurohackademy.org
       # NOTE: Don't use %(protocol)s in root_url, but hardcode https. If not, it
       #       will when redirecting the user to external authentication set with
       #       a redirect back query parameter to use http instead of https,
