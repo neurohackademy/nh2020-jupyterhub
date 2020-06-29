@@ -5,6 +5,9 @@ nfs:
   serverName: nh
   
 jupyterhub:
+  debug:
+    enabled: true
+
   ## ingress: should be enabled if we transition to use nginx-ingress +
   ## cert-manager.
   ##
