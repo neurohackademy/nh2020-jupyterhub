@@ -36,13 +36,8 @@ jobs:
       run: |
         pip install https://github.com/yuvipanda/hubploy/archive/master.zip
     - name: "hubploy: build"
-      # FIXME: remove --check-registry when hubploy is able to detect the
-      #        --commit-range automatically or figure out the details on its
-      #        own.
-      #
-      #        ref: https://github.com/neurohackademy/nh-2020/issues/4
       run: |
-        hubploy build hub.neurohackademy.org --push --check-registry
+        hubploy build hub.neurohackademy.org --push
     - name: "hubploy: deploy"
       run: |
         hubploy deploy --namespace default --cleanup-on-fail hub.neurohackademy.org chart prod
