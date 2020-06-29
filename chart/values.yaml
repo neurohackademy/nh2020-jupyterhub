@@ -12,6 +12,11 @@ grafana:
     type: pvc
     enabled: true
 
+  service:
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/path: "/services/grafana/metrics"
+
   resources:
     limits:
       cpu: 1
