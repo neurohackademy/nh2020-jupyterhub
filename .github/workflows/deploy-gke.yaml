@@ -35,6 +35,10 @@ jobs:
     - name: Install hubploy
       run: |
         pip install https://github.com/consideratio/hubploy/archive/fix-github-action-commit-range-issue.zip
+    - name: "debug hubploy error"
+      run: |
+        git status
+        git --no-pager log
     - name: "hubploy: build"
       run: |
         hubploy build hub.neurohackademy.org --push
