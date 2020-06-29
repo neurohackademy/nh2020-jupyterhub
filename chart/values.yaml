@@ -1,3 +1,55 @@
+# Access Control List for JupyterHub, will be written to a file mounted in
+# /etc/jupyterhub/acl.yaml and parsed by custom authenticator logic.
+acl.yaml: {}
+
+jupyterhub:
+  hub:
+    extraConfig:
+      00-acl-parsing: |
+        import os
+        from functools import lru_cache
+
+        import yaml
+
+        @lru_cache()
+        def _load_acl():
+            """
+            Load a mounted Access Control List (ACL) from disk.
+            
+            Note that @lru_cache memoizes this function so it only runs once.
+            """
+            acl = {}
+            path = "/etc/jupyterhub/acl.yaml"
+            if os.path.exists(path):
+                print(f"Loading Access Control List (ACL) from {path}")
+                with open(path) as f:
+                    acl = yaml.safe_load(f)
+                    for group, usernames in acl.items(): 
+                        acl[group] = [username.lower() for username in usernames]
+            else:
+                print(f"No Access Control List (ACL) at {path}")
+            return acl
+        
+        c.Authenticator.admin_users = _load_acl()["admins"]
+        c.Authenticator.whitelist = {
+            *_load_acl()["admins"],
+            *_load_acl()["instructors"],
+            *_load_acl()["participants"]
+        }
+
+        # Helper functions for logic in spawner hooks etc that may want to act
+        # based on this information.
+        @lru_cache()
+        def is_admin(username):
+            return username in _load_acl()["admins"]
+        @lru_cache()
+        def is_instructor(username):
+            return username in _load_acl()["instructors"]
+        @lru_cache()
+        def is_participant(username):
+            return username in _load_acl()["participants"]
+
+
 # Reference on the configuration options:
 # https://github.com/helm/charts/blob/master/stable/grafana/values.yaml
 grafana:

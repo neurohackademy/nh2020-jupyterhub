@@ -1,3 +1,13 @@
+# JupyterHub Access Control List, not only does it decide what users will be
+# allowed access, but it will also be used to influence logic in a
+# pre_spawn_hook that can attach storage etc depending on user type.
+acl.yaml:
+  admins:
+    - arokem
+    - consideRatio
+  instructors: []
+  participants: []
+
 nfs:
   # Output from:
   # gcloud beta filestore instances describe nh-2020 --location=us-east1-b
@@ -85,20 +95,21 @@ jupyterhub:
 
   hub:
     extraVolumes:
+      - name: hub-etc-jupyterhub-acl
+        secret:
+          secretName: hub-etc-jupyterhub-acl
       - name: hub-etc-jupyterhub-templates
         configMap:
           name: hub-etc-jupyterhub-templates
-      - name: hub-etc-jupyterhub-acl
-        configMap:
-          name: hub-etc-jupyterhub-acl
       - name: hub-usr-local-share-jupyterhub-static-external
         configMap:
           name: hub-usr-local-share-jupyterhub-static-external
     extraVolumeMounts:
+      - mountPath: /etc/jupyterhub/acl.yaml
+        name: hub-etc-jupyterhub-acl
+        subPath: acl.yaml
       - mountPath: /etc/jupyterhub/templates
         name: hub-etc-jupyterhub-templates
-      - mountPath: /etc/jupyterhub/acl
-        name: hub-etc-jupyterhub-acl
       - mountPath: /usr/local/share/jupyterhub/static/external
         name: hub-usr-local-share-jupyterhub-static-external
     extraConfig:
@@ -106,18 +117,38 @@ jupyterhub:
       #   c.JupyterHub.template_vars.update({
       #       'announcement': 'Any message we want to pass to instructors?',
       #   })
-      authenticator: |
+      auth: |
+        # Don't wait for users to press the orange button to login.
         c.Authenticator.auto_login = True
-      kubespawner: |
-        c.KubeSpawner.extra_container_config = {
-            "workingDir": "/home/jovyan",
-        }
       templates: |
+        # Help JupyterHub find the templates we may mount
         c.JupyterHub.template_paths.insert(0, "/etc/jupyterhub/templates")
       metrics: |
         # With this setting set to False, the /hub/metrics endpoint will be
         # publically accessible just like at hub.mybinder.org/hub/metrics is.
         c.JupyterHub.authenticate_prometheus = False
+      spawn: |
+        # Override the working directory of /src/repo which repo2docker have set
+        # to /home/jovyan instead, where we mount of files.
+        c.KubeSpawner.extra_container_config = {
+            "workingDir": "/home/jovyan",
+        }
+
+        # Invoke logic before we spawn the user based on username
+        async def pre_spawn_hook(spawner):
+            username = spawner.user.name
+
+            # Configure the pod's labels
+            spawner.extra_labels.update({
+                "hub.neurohackademy.org/is-admin": str(is_admin(username)).lower(),
+                "hub.neurohackademy.org/is-instructor": str(is_instructor(username)).lower(),
+                "hub.neurohackademy.org/is-participant": str(is_participant(username)).lower(),
+            })
+
+            # Configure the pod's container's environment variables
+            spawner.environment.update({})
+
+        c.KubeSpawner.pre_spawn_hook = pre_spawn_hook
 
   proxy:
     https:
