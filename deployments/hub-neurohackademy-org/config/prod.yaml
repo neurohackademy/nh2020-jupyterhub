@@ -54,7 +54,7 @@ jupyterhub:
       enabled: true
     userPlaceholder:
       enabled: true
-      replicas: 0
+      replicas: 1
     corePods:
       nodeAffinity:
         matchNodePurpose: require
