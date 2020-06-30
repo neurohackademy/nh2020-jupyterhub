@@ -60,9 +60,7 @@ jupyterhub:
         matchNodePurpose: require
     userPods:
       nodeAffinity:
-        # TODO: before course starts, ensure to require this to not end up on
-        # the core nodes with far less memory available.
-        matchNodePurpose: prefer
+        matchNodePurpose: require
 
   singleuser:
     ## cmd: set this to start-singleuser.sh if we use a docker-stacks image,
