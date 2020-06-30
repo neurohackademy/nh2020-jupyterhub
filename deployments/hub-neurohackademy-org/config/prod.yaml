@@ -72,13 +72,12 @@ jupyterhub:
     startTimeout: 900
     ## cpu/memory requests:
     ## We want to fit as many users on a m1-ultramem-40 node but still ensure
-    ## they get up to 24 GB of ram. At this point during setup, we want to also
-    ## allow a user to start on the n1-standard-4 node to save money.
+    ## they get up to 24 GB of ram.
     cpu:
-      guarantee: 0.475
+      guarantee: 0.9
       limit: 40
     memory:
-      guarantee: 0.5G
+      guarantee: 24G
       limit: 24G
     # initContainers:
     # We may want this to ensure whatever dataset is mounted through NFS is
