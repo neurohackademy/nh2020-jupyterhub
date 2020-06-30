@@ -5,13 +5,20 @@ acl.yaml:
   admins:
     - arokem
     - consideRatio
-  instructors: []
-  participants: []
+  instructors:
+    - consideRatio
+  participants:
+    - consideRatio-demo
 
 nfs:
-  # Output from:
-  # gcloud beta filestore instances describe nh-2020 --location=us-east1-b
-  serverIP: <todo>
+  enabled: true
+  # Use the output from the command below to set serverIP and serverName.
+  # Inspect fileShares.0.name for the serverName and networks.0.ipAddresses.0
+  # for the serverIP.
+  #
+  #   gcloud beta filestore instances describe nh-2020 --zone=us-east1-b
+  #
+  serverIP: 10.60.0.18
   serverName: nh
   
 jupyterhub:
@@ -70,28 +77,28 @@ jupyterhub:
     ## they get up to 24 GB of ram. At this point during setup, we want to also
     ## allow a user to start on the n1-standard-4 node to save money.
     cpu:
-      guarantee: 0.975
+      guarantee: 0.475
       limit: 40
     memory:
       guarantee: 0.5G
       limit: 24G
-    ## initContainers:
-    ## We may want this to ensure whatever dataset is mounted through NFS is
-    ## readable for jovyan.
-    ##
     # initContainers:
-    #   - name: volume-mount-hack
-    #     image: busybox
-    #     command:
-    #       - "sh"
-    #       - "-c"
-    #       - "id && chown 1000:1000 /home/jovyan && ls -lhd /home/jovyan"
-    #     securityContext:
-    #       runAsUser: 0
-    #     volumeMounts:
-    #     - name: home
-    #       mountPath: /home/jovyan
-    #       subPath: "home/{username}"
+    # We may want this to ensure whatever dataset is mounted through NFS is
+    # readable for jovyan.
+    #
+    initContainers:
+      - name: chown-nfs-mount-to-jovyan
+        image: busybox
+        command:
+          - "sh"
+          - "-c"
+          - "id && chown 1000:1000 /nh/data && ls -lhd /nh/data"
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+          - name: nh
+            mountPath: /nh/data
+            subPath: data
 
   hub:
     extraVolumes:
@@ -134,7 +141,8 @@ jupyterhub:
             "workingDir": "/home/jovyan",
         }
 
-        # Invoke logic before we spawn the user based on username
+        # Invoke logic based on username and its access before we spawn the pod
+        # with the users individual spawner instance.
         async def pre_spawn_hook(spawner):
             username = spawner.user.name
 
@@ -144,6 +152,22 @@ jupyterhub:
                 "hub.neurohackademy.org/is-instructor": str(is_instructor(username)).lower(),
                 "hub.neurohackademy.org/is-participant": str(is_participant(username)).lower(),
             })
+
+            # Configure the pod's storage
+            nh_volume = {
+                "name": "nh",
+                "persistentVolumeClaim": {
+                    "claimName": "nfs-pvc",
+                },
+            }
+            nh_volume_mount = {
+                "name": "nh",
+                "mountPath": "/nh/data",  # where it is made available in container
+                "subPath": "data",        # what in the PVC to mount (must be a relative path)
+                "readOnly": not (is_admin(username) or is_instructor(username)),
+            }
+            spawner.volumes.extend([nh_volume])
+            spawner.volume_mounts.extend([nh_volume_mount])
 
             # Configure the pod's container's environment variables
             spawner.environment.update({})

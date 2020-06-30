@@ -1,3 +1,4 @@
+{{- if .Values.nfs.enabled -}}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -10,3 +11,4 @@ spec:
   nfs:
     server: {{ .Values.nfs.serverIP | quote }}
     path: "/{{ .Values.nfs.serverName }}"
+{{- end }}

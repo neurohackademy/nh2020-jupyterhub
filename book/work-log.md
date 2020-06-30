@@ -353,3 +353,62 @@ actions and GitHub pages.
 
 I wrote about two issues that I could resolve fairly quickly in [a GitHub
 issue](https://github.com/neurohackademy/nh-2020/issues/2).
+
+### A documentation gap
+I've forgot to keep a log between the last entry and the next.
+- CD with hubploy
+- Grafana / Prometheus
+- Work with ACL lists
+
+### NFS server for datasets
+Tracked in [this GitHub issue](https://github.com/neurohackademy/nh-2020/issues/7).
+
+1. I created a NFS server (Google Cloud Filestore instance) named `nh-2020` and
+   a fileshare on it named `nh`.
+
+   To do this, I first activated the Filestore API which I think can be done at
+   [this URL](https://console.cloud.google.com/filestore). Then I added the NFS
+   server with the web interface but I think this command is the equivalent.
+
+   ```
+   gcloud filestore instances create nh-2020 \
+      --location=us-east1 --zone=us-east1-b \
+      --file-share=capacity=1TB,name=nh \
+      --network=name=neurohackademy,reserved-ip-range=10.60.0.16/29
+   ```
+
+2. I got myself the IP of the NFS server which should be part of the IP range I
+   provided. It turned out to be `10.60.0.18`.
+
+   ```
+   gcloud beta filestore instances describe nh-2020 --zone=us-east1-b
+   ```
+
+3. I ensured we had a PersistantVolume (PV) and PersistantVolumeClaim (PVC) k8s
+   resource defined. As an overview, this is the chain of coupling.
+
+   - Filestore VM instance (nh-2020)
+   - NFS server (`10.60.0.18`)
+   - NFS file share (nh)
+   - [PV](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#persistentvolume-v1-core) (nfs-pv)
+      - [nfs / NFSVolumeSource](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#nfsvolumesource-v1-core): path, readOnly, server
+      - [hostPath / HostPathVolumeSource](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#hostpathvolumesource-v1-core)
+   - [PVC](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#persistentvolumeclaim-v1-core) (nfs-pvc)
+   - Pod [Volume](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#volume-v1-core) (nh)
+   - Container [VolumeMount](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#volumemount-v1-core) (nh)
+      - mountPath, readOnly, subPath, subPathExpr
+
+4. Questions to self:
+   - where to specify read only access for participants? Probably on the
+     VolumeMount for the container with the readOnly boolean.
+   - where to specify folders to access? Probably on the volumeMount using
+     subPath.
+
+### GCP Health check alerting
+
+1. Create an Uptime Check [here](https://console.cloud.google.com/monitoring/uptime?project=neurohackademy).
+2. Create an Alerting Policy [here](https://console.cloud.google.com/monitoring/alerting?project=neurohackademy).
+
+### Spawn options to not always use an expensive machine
+
+
