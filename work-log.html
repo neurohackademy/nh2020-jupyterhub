@@ -236,6 +236,22 @@
             <a href="#cd-deployment-to-github-pages-for-jupyter-book" class="nav-link">CD: Deployment to GitHub pages for jupyter-book</a>
         </li>
     
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#a-documentation-gap" class="nav-link">A documentation gap</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#nfs-server-for-datasets" class="nav-link">NFS server for datasets</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#gcp-health-check-alerting" class="nav-link">GCP Health check alerting</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#spawn-options-to-not-always-use-an-expensive-machine" class="nav-link">Spawn options to not always use an expensive machine</a>
+        </li>
+    
             </ul>
         </li>
     
@@ -625,6 +641,78 @@ through a Jupyter Book. I wanted this to automatically get published with GitHub
 actions and GitHub pages.</p>
 <p>I wrote about two issues that I could resolve fairly quickly in <a class="reference external" href="https://github.com/neurohackademy/nh-2020/issues/2">a GitHub
 issue</a>.</p>
+</div>
+<div class="section" id="a-documentation-gap">
+<h3>A documentation gap<a class="headerlink" href="#a-documentation-gap" title="Permalink to this headline">¶</a></h3>
+<p>I’ve forgot to keep a log between the last entry and the next.</p>
+<ul class="simple">
+<li><p>CD with hubploy</p></li>
+<li><p>Grafana / Prometheus</p></li>
+<li><p>Work with ACL lists</p></li>
+</ul>
+</div>
+<div class="section" id="nfs-server-for-datasets">
+<h3>NFS server for datasets<a class="headerlink" href="#nfs-server-for-datasets" title="Permalink to this headline">¶</a></h3>
+<p>Tracked in <a class="reference external" href="https://github.com/neurohackademy/nh-2020/issues/7">this GitHub issue</a>.</p>
+<ol>
+<li><p>I created a NFS server (Google Cloud Filestore instance) named <code class="docutils literal notranslate"><span class="pre">nh-2020</span></code> and
+a fileshare on it named <code class="docutils literal notranslate"><span class="pre">nh</span></code>.</p>
+<p>To do this, I first activated the Filestore API which I think can be done at
+<a class="reference external" href="https://console.cloud.google.com/filestore">this URL</a>. Then I added the NFS
+server with the web interface but I think this command is the equivalent.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcloud</span> <span class="n">filestore</span> <span class="n">instances</span> <span class="n">create</span> <span class="n">nh</span><span class="o">-</span><span class="mi">2020</span> \
+   <span class="o">--</span><span class="n">location</span><span class="o">=</span><span class="n">us</span><span class="o">-</span><span class="n">east1</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">us</span><span class="o">-</span><span class="n">east1</span><span class="o">-</span><span class="n">b</span> \
+   <span class="o">--</span><span class="n">file</span><span class="o">-</span><span class="n">share</span><span class="o">=</span><span class="n">capacity</span><span class="o">=</span><span class="mi">1</span><span class="n">TB</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">nh</span> \
+   <span class="o">--</span><span class="n">network</span><span class="o">=</span><span class="n">name</span><span class="o">=</span><span class="n">neurohackademy</span><span class="p">,</span><span class="n">reserved</span><span class="o">-</span><span class="n">ip</span><span class="o">-</span><span class="nb">range</span><span class="o">=</span><span class="mf">10.60</span><span class="o">.</span><span class="mf">0.16</span><span class="o">/</span><span class="mi">29</span>
+</pre></div>
+</div>
+</li>
+<li><p>I got myself the IP of the NFS server which should be part of the IP range I
+provided. It turned out to be <code class="docutils literal notranslate"><span class="pre">10.60.0.18</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcloud</span> <span class="n">beta</span> <span class="n">filestore</span> <span class="n">instances</span> <span class="n">describe</span> <span class="n">nh</span><span class="o">-</span><span class="mi">2020</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">us</span><span class="o">-</span><span class="n">east1</span><span class="o">-</span><span class="n">b</span>
+</pre></div>
+</div>
+</li>
+<li><p>I ensured we had a PersistantVolume (PV) and PersistantVolumeClaim (PVC) k8s
+resource defined. As an overview, this is the chain of coupling.</p>
+<ul class="simple">
+<li><p>Filestore VM instance (nh-2020)</p></li>
+<li><p>NFS server (<code class="docutils literal notranslate"><span class="pre">10.60.0.18</span></code>)</p></li>
+<li><p>NFS file share (nh)</p></li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#persistentvolume-v1-core">PV</a> (nfs-pv)</p>
+<ul>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#nfsvolumesource-v1-core">nfs / NFSVolumeSource</a>: path, readOnly, server</p></li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#hostpathvolumesource-v1-core">hostPath / HostPathVolumeSource</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#persistentvolumeclaim-v1-core">PVC</a> (nfs-pvc)</p></li>
+<li><p>Pod <a class="reference external" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#volume-v1-core">Volume</a> (nh)</p></li>
+<li><p>Container <a class="reference external" href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#volumemount-v1-core">VolumeMount</a> (nh)</p>
+<ul>
+<li><p>mountPath, readOnly, subPath, subPathExpr</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Questions to self:</p>
+<ul class="simple">
+<li><p>where to specify read only access for participants? Probably on the
+VolumeMount for the container with the readOnly boolean.</p></li>
+<li><p>where to specify folders to access? Probably on the volumeMount using
+subPath.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="gcp-health-check-alerting">
+<h3>GCP Health check alerting<a class="headerlink" href="#gcp-health-check-alerting" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Create an Uptime Check <a class="reference external" href="https://console.cloud.google.com/monitoring/uptime?project=neurohackademy">here</a>.</p></li>
+<li><p>Create an Alerting Policy <a class="reference external" href="https://console.cloud.google.com/monitoring/alerting?project=neurohackademy">here</a>.</p></li>
+</ol>
+</div>
+<div class="section" id="spawn-options-to-not-always-use-an-expensive-machine">
+<h3>Spawn options to not always use an expensive machine<a class="headerlink" href="#spawn-options-to-not-always-use-an-expensive-machine" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
