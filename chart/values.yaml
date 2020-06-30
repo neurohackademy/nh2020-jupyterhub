@@ -4,6 +4,15 @@ acl.yaml: {}
 
 jupyterhub:
   hub:
+    # ref: https://jupyterhub.readthedocs.io/en/stable/reference/services.html#properties-of-a-service
+    services:
+      grafana:
+        # This will make the CHP proxy let /services/grafana route to the
+        # grafana service in the k8s namespace, which lets us make use of
+        # JupyterHub's HTTPS setup without needing something like nginx-ingress
+        # + cert-manager and additional ingress k8s resources.
+        url: http://grafana
+
     extraConfig:
       00-acl-parsing: |
         import os
