@@ -1,5 +1,5 @@
-![deploy-gke](https://github.com/neurohackademy/nh-2020/workflows/deploy-gke/badge.svg)
-![deploy-book](https://github.com/neurohackademy/nh-2020/workflows/deploy-book/badge.svg)
+![deploy-gke](https://github.com/neurohackademy/nh2020-jupyterhub/workflows/deploy-gke/badge.svg)
+![deploy-book](https://github.com/neurohackademy/nh2020-jupyterhub/workflows/deploy-book/badge.svg)
 
 # Infra and docs for hub.neurohackademy.org
 
@@ -21,7 +21,7 @@ Control Lists available at
 ## Documentation
 
 Documentation about this infrastructure is automatically built and published at
-https://neurohackademy.github.io/nh-2020/ using
+https://neurohackademy.github.io/nh2020-jupyterhub/ using
 [.github/workflows/deploy-book](github/workflows/deploy-book) and the
 documentation in [book](book) built with
 [jupyter-book](https://github.com/executablebooks/jupyter-book).
