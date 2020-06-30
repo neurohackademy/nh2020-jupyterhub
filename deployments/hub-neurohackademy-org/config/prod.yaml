@@ -74,11 +74,11 @@ jupyterhub:
     ## We want to fit as many users on a m1-ultramem-40 node but still ensure
     ## they get up to 24 GB of ram.
     cpu:
-      guarantee: 0.9
-      limit: 40
+      guarantee: 0.36 # guarantee as much as possible for 110 pods (max per
+                      # node) to fit on a 40 CPU machine
+      limit: 16       # allow for a lot more CPU to be used
     memory:
       guarantee: 24G
-      limit: 24G
     # initContainers:
     # We may want this to ensure whatever dataset is mounted through NFS is
     # readable for jovyan.
@@ -138,8 +138,57 @@ jupyterhub:
             "workingDir": "/home/jovyan",
         }
 
-        # Invoke logic based on username and its access before we spawn the pod
-        # with the users individual spawner instance.
+
+
+        # Configure what spawn options users should see
+        # ---------------------------------------------
+        #
+        # NOTE: setting c.KubeSpawner.profile_list directly is easier, but then
+        #       we don't have the option to adjust it based on the individual
+        #       user at a later point in time if we want.
+        #
+        # NOTE: c.KubeSpawner.options_form, defined in the Spawner base class,
+        #       can be set to a fixed value, but it can also be a callable
+        #       function that returns a value. If this returned value is falsy,
+        #       no form will be rendered. In this case, we setup a callable
+        #       function that relies on KubeSpawner's internal logic to create
+        #       an options_form from the profile_list configuration.
+        #
+        #       ref: https://github.com/jupyterhub/jupyterhub/pull/2415
+        #       ref: https://github.com/jupyterhub/jupyterhub/issues/2390
+        #
+        async def dynamic_options_form(self):
+            self.profile_list = [
+                {
+                    'default': True,
+                    'display_name': '24GB RAM and up to 16 CPU',
+                    'kubespawner_override': { 'mem_guarantee': '24G' },
+                },
+                {
+                    'display_name': '12GB RAM and up to 16 CPU',
+                    'kubespawner_override': { 'mem_guarantee': '12G' },
+                },
+                {
+                    'display_name': '6GB RAM and up to 16 CPU',
+                    'kubespawner_override': { 'mem_guarantee':' 6G' },
+                },
+            ]
+
+            # NOTE: We let KubeSpawner inspect profile_list and decide what to
+            #       return, it will return a falsy blank string if there is no
+            #       profile_list, which makes no options form be presented.
+            #
+            # ref: https://github.com/jupyterhub/kubespawner/blob/37a80abb0a6c826e5c118a068fa1cf2725738038/kubespawner/spawner.py#L1885-L1935
+            #
+            return self._options_form_default()
+
+        c.KubeSpawner.options_form = dynamic_options_form
+
+
+
+        # Configure storage details etc. based on the user
+        # ------------------------------------------------
+        #
         async def pre_spawn_hook(spawner):
             username = spawner.user.name
 
