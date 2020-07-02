@@ -5,6 +5,7 @@
 - header: For instructors
 - file: instructor/access
 - file: instructor/storage
+- file: admin/user-environment
 
 - header: For admins
 - file: admin/work-log
