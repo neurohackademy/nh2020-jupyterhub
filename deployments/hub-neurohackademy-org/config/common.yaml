@@ -1,0 +1,15 @@
+# JupyterHub Access Control List, not only does it decide what users will be
+# allowed to login, but it will also be used to influence logic in a
+# pre_spawn_hook that can attach storage etc depending on user type.
+acl.yaml:
+  admins:
+    - arokem        # Ariel Rokem
+    - consideRatio  # Erik Sundell
+
+  # Instructors gain read/write access to the /nh/data folder
+  instructors:
+    - arokem        # Ariel Rokem
+
+  # Instructors gain read access to the /nh/data folder
+  participants:
+    - consideRatio-demo # Erik Sundell, for debugging purposes

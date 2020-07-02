@@ -1,15 +1,3 @@
-# JupyterHub Access Control List, not only does it decide what users will be
-# allowed access, but it will also be used to influence logic in a
-# pre_spawn_hook that can attach storage etc depending on user type.
-acl.yaml:
-  admins:
-    - arokem
-    - consideRatio
-  instructors:
-    - consideRatio
-  participants:
-    - consideRatio-demo
-
 nfs:
   enabled: true
   # Use the output from the command below to set serverIP and serverName.
