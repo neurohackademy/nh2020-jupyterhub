@@ -1,4 +1,10 @@
 - file: index
 
-- header: Architecture
-- file: work-log
+- header: For participants
+
+- header: For instructors
+- file: instructor/access
+- file: instructor/storage
+
+- header: For admins
+- file: admin/work-log
