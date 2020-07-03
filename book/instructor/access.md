@@ -1,7 +1,16 @@
 # Getting access
 
-Access to the JupyterHub and associated storage is controlled by an Access
-Control List (ACL). Please add yourself to the
-[ACL](https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/deployments/hub-neurohackademy-org/config/common.yaml)
-by forking the GitHub repository and proposing a change to the file. In the
-proposed change title (commit message) just write "acl: adding myself".
+Who successfully can login to their GitHub account to the JupyterHub is
+determined by an _Access Control List_ (ACL). While all users listed in the ACL
+will be able to login, admins become JupyterHub administrators and instructors
+get write permissions to shared storage in `/nh/data`.
+
+As an instructor, please add yourself to the
+[ACL](https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/deployments/hub-neurohackademy-org/config/common.yaml).
+
+```{note}
+You add yourself by following the link above. Fork the GitHub repository and
+propose a change to the file where you add your GitHub username to the list.
+Just write "acl: adding myself" in the title of the suggested change (commit
+message).
+```

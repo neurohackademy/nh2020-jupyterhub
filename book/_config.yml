@@ -1,3 +1,14 @@
+# Jupyter Book configuration
+# ref: https://jupyterbook.org/customize/config.html#configuration-reference
+#
 title: Jupyter environment
 author: Erik Sundell
 logo: logo.png
+repository:
+  url: https://github.com/neurohackademy/nh2020-jupyterhub
+  path_to_book: book
+html:
+  use_repository_button: true
+  use_issues_button: true
+  use_edit_page_button: true
+  baseurl: https://neurohackademy.github.io/nh2020-jupyterhub/
