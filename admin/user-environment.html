@@ -28,14 +28,24 @@
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <link rel="canonical" href="https://neurohackademy.github.io/nh2020-jupyterhub/admin/user-environment.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Work log" href="work-log.html" />
-    <link rel="prev" title="Storage for datasets and notebooks" href="../instructor/storage.html" />
+    <link rel="prev" title="Storage" href="../instructor/storage.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
 
+
+<!-- Opengraph tags -->
+<meta property="og:url"         content="https://neurohackademy.github.io/nh2020-jupyterhub/admin/user-environment.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Updating the user environment" />
+<meta property="og:description" content="Updating the user environment  Users visiting https://hub.neurohackademy.org get to work within an instance of a Docker image (Docker container). By updating th" />
+<meta property="og:image"       content="https://neurohackademy.github.io/nh2020-jupyterhub/_static/logo.png" />
+
+<meta name="twitter:card" content="summary">
 
 
   </head>
@@ -66,9 +76,6 @@
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   
   <ul class="nav sidenav_l1">
-  <li class="">
-    <a href="../index.html">About</a>
-  </li>
 <li class="navbar-special">
 <p class="margin-caption">For instructors</p>
 </li>
@@ -76,7 +83,7 @@
     <a href="../instructor/access.html">Getting access</a>
   </li>
   <li class="">
-    <a href="../instructor/storage.html">Storage for datasets and notebooks</a>
+    <a href="../instructor/storage.html">Storage</a>
   </li>
   <li class="active">
     <a href="">Updating the user environment</a>
@@ -91,10 +98,6 @@
 </nav>
 
  <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
 
 </div>
 
@@ -139,6 +142,24 @@
 </div>
         <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/neurohackademy/nh2020-jupyterhub"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/neurohackademy/nh2020-jupyterhub/issues/new?title=Issue%20on%20page%20%2Fadmin/user-environment.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/book/admin/user-environment.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -157,6 +178,13 @@
 </nav>
 
 
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/book/admin/user-environment.md">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
     </div>
 </div>
     <div id="main-content" class="row">
@@ -166,12 +194,24 @@
                 
   <div class="section" id="updating-the-user-environment">
 <h1>Updating the user environment<a class="headerlink" href="#updating-the-user-environment" title="Permalink to this headline">¶</a></h1>
-<p>TODO:</p>
-<ul class="simple">
-<li><p>Will only influence users that restarts their pod.</p></li>
-<li><p>Automatic deploy with GitHub actions, check status of it following merge.</p></li>
-<li><p>Build using repo2docker and the image folder’s configuration files</p></li>
-</ul>
+<p>Users visiting https://hub.neurohackademy.org get to work within an instance of
+a Docker image (Docker container). By updating the image, you can for example
+make participants get a python package you know they may need pre-installed.
+Updating this image isn’t so complicated thanks to automation.</p>
+<p>To update the Docker image, the only thing you have to do is to update <a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/tree/master/deployments/hub-neurohackademy-org/image">this
+configuration</a>
+by submitting a Pull Request. When a PR is merged, automation kicks in. You can
+follow the automation progress
+<a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/actions">here</a>. First the
+tool <a class="reference external" href="https://repo2docker.readthedocs.io"><code class="docutils literal notranslate"><span class="pre">repo2docker</span></code></a> will be used to build a
+new image, if that succeeds https://hub.neurohackademy.org will get updated so
+that any new users starting up following this will make use of the new image.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>A configuration reference is available
+<a class="reference external" href="https://repo2docker.readthedocs.io/en/latest/config_files.html">here</a>, it is
+the same as for BinderHubs like mybinder.org.</p>
+</div>
 </div>
 
 
@@ -183,7 +223,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../instructor/storage.html" title="previous page">Storage for datasets and notebooks</a>
+    <a class='left-prev' id="prev-link" href="../instructor/storage.html" title="previous page">Storage</a>
     <a class='right-next' id="next-link" href="work-log.html" title="next page">Work log</a>
 
     </div>
