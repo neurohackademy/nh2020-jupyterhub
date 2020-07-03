@@ -42,7 +42,7 @@
 <meta property="og:url"         content="https://neurohackademy.github.io/nh2020-jupyterhub/instructor/access.html" />
 <meta property="og:type"        content="article" />
 <meta property="og:title"       content="Getting access" />
-<meta property="og:description" content="Getting access  Who can successfully login to their GitHub account to the JupyterHub is controlled by an Access Control List (ACL).  Admins become JupyterHub ad" />
+<meta property="og:description" content="Getting access  Who successfully can login to their GitHub account to the JupyterHub is determined by an Access Control List (ACL). While all users listed in th" />
 <meta property="og:image"       content="https://neurohackademy.github.io/nh2020-jupyterhub/_static/logo.png" />
 
 <meta name="twitter:card" content="summary">
@@ -194,18 +194,19 @@
                 
   <div class="section" id="getting-access">
 <h1>Getting access<a class="headerlink" href="#getting-access" title="Permalink to this headline">¶</a></h1>
-<p>Who can successfully login to their GitHub account to the JupyterHub is
-controlled by an <em>Access Control List</em> (ACL).</p>
-<ul class="simple">
-<li><p>Admins become JupyterHub administrators</p></li>
-<li><p>Instructors get read/write access to the shared <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code> storage</p></li>
-<li><p>Participants get read to the shared <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code> storage</p></li>
-</ul>
+<p>Who successfully can login to their GitHub account to the JupyterHub is
+determined by an <em>Access Control List</em> (ACL). While all users listed in the ACL
+will be able to login, admins become JupyterHub administrators and instructors
+get write permissions to shared storage in <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code>.</p>
 <p>As an instructor, please add yourself to the
-<a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/deployments/hub-neurohackademy-org/config/common.yaml">ACL</a>.
-You do this by forking the GitHub repository and proposing a change to the file
-where you have added your GitHub username. Just write “acl: adding myself” in
-the title of the suggested change (commit message).</p>
+<a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/deployments/hub-neurohackademy-org/config/common.yaml">ACL</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You add yourself by following the link above. Fork the GitHub repository and
+propose a change to the file where you add your GitHub username to the list.
+Just write “acl: adding myself” in the title of the suggested change (commit
+message).</p>
+</div>
 </div>
 
 

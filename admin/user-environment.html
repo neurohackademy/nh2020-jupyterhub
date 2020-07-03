@@ -198,20 +198,20 @@
 a Docker image (Docker container). By updating the image, you can for example
 make participants get a python package you know they may need pre-installed.
 Updating this image isn’t so complicated thanks to automation.</p>
-<p>To update the Docker image, the only thing you have to do is to update <a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/tree/master/deployments/hub-neurohackademy-org/image">this
-configuration</a>
-by submitting a Pull Request. When a PR is merged, automation kicks in. You can
-follow the automation progress
-<a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/actions">here</a>. First the
-tool <a class="reference external" href="https://repo2docker.readthedocs.io"><code class="docutils literal notranslate"><span class="pre">repo2docker</span></code></a> will be used to build a
-new image, if that succeeds https://hub.neurohackademy.org will get updated so
-that any new users starting up following this will make use of the new image.</p>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>A configuration reference is available
 <a class="reference external" href="https://repo2docker.readthedocs.io/en/latest/config_files.html">here</a>, it is
 the same as for BinderHubs like mybinder.org.</p>
 </div>
+<p>To update the Docker image, the only thing you have to do is to update <a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/tree/master/deployments/hub-neurohackademy-org/image">this
+configuration</a>
+by submitting a Pull Request. If a PR is merged automation will kick in, and you
+can <a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/actions">track it
+here</a>. First the
+tool <a class="reference external" href="https://repo2docker.readthedocs.io"><code class="docutils literal notranslate"><span class="pre">repo2docker</span></code></a> will be used to build a
+new image, if that succeeds https://hub.neurohackademy.org will get updated so
+that any new users starting up following this will make use of the new image.</p>
 </div>
 
 

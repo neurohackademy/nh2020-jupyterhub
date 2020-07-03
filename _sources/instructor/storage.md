@@ -13,7 +13,8 @@ be made available to participants, but exactly how is not yet decided.
 ## Datasets for tutorials
 
 If you want to provide datasets to the participants using the notebooks, there
-are some options to consider.
+are some options to consider. Please feel free to discuss your options with Erik
+Sundell (@consideRatio) or open a GitHub issue about your considerations.
 
 ### Datasets in a git repository (neurohackademy/nh2020-curriculum)
 
