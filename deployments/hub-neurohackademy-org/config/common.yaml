@@ -9,6 +9,7 @@ acl.yaml:
   # Instructors gain read/write access to the /nh/data folder
   instructors:
     - arokem        # Ariel Rokem
+    - emdupre       # Elizabeth DuPre
 
   # Instructors gain read access to the /nh/data folder
   participants:
