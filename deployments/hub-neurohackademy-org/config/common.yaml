@@ -11,6 +11,7 @@ acl.yaml:
     - arokem        # Ariel Rokem
     - emdupre       # Elizabeth DuPre
     - libertyh      # Liberty Hamilton
+    - effigies      # Chris Markiewicz
 
   # Instructors gain read access to the /nh/data folder
   participants:
