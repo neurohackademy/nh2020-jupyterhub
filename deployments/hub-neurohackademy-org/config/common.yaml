@@ -10,6 +10,7 @@ acl.yaml:
   instructors:
     - arokem        # Ariel Rokem
     - emdupre       # Elizabeth DuPre
+    - libertyh      # Liberty Hamilton
 
   # Instructors gain read access to the /nh/data folder
   participants:
