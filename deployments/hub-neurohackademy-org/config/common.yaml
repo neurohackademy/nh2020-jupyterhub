@@ -12,6 +12,7 @@ acl.yaml:
     - emdupre       # Elizabeth DuPre
     - libertyh      # Liberty Hamilton
     - effigies      # Chris Markiewicz
+    - mnarayan      # Manjari Narayan
 
   # Instructors gain read access to the /nh/data folder
   participants:
