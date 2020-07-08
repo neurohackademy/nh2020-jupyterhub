@@ -13,6 +13,7 @@ acl.yaml:
     - libertyh      # Liberty Hamilton
     - effigies      # Chris Markiewicz
     - mnarayan      # Manjari Narayan
+    - kels271828    # Kelsey Maass
 
   # Instructors gain read access to the /nh/data folder
   participants:
