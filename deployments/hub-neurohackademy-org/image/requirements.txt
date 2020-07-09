@@ -1,3 +1,7 @@
 pandas
 nibabel
 nilearn
+dask
+datalad
+numba
+cython
