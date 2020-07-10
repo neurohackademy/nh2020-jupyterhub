@@ -15,6 +15,7 @@ acl.yaml:
     - mnarayan      # Manjari Narayan
     - kels271828    # Kelsey Maass
     - jbpoline      # JB Poline 
+    - saravkin      # Sasha Aravkin
 
   # Instructors gain read access to the /nh/data folder
   participants:
