@@ -97,9 +97,8 @@ jupyterhub:
         configMap:
           name: hub-usr-local-share-jupyterhub-static-external
     extraVolumeMounts:
-      - mountPath: /etc/jupyterhub/acl.yaml
+      - mountPath: /etc/jupyterhub/acl
         name: hub-etc-jupyterhub-acl
-        subPath: acl.yaml
       - mountPath: /etc/jupyterhub/templates
         name: hub-etc-jupyterhub-templates
       - mountPath: /usr/local/share/jupyterhub/static/external
