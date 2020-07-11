@@ -1,5 +1,5 @@
 # Access Control List for JupyterHub, will be written to a file mounted in
-# /etc/jupyterhub/acl.yaml and parsed by custom authenticator logic.
+# /etc/jupyterhub/acl/acl.yaml and parsed by custom authenticator logic.
 acl.yaml: {}
 
 jupyterhub:
@@ -28,7 +28,7 @@ jupyterhub:
             Note that @lru_cache memoizes this function so it only runs once.
             """
             acl = {}
-            path = "/etc/jupyterhub/acl.yaml"
+            path = "/etc/jupyterhub/acl/acl.yaml"
             if os.path.exists(path):
                 print(f"Loading Access Control List (ACL) from {path}")
                 with open(path) as f:
