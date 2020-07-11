@@ -1,8 +1,10 @@
 name: deploy-book
 
-# Only run this when the master branch changes
+# Only run this when the master branch's book folder changes
 on:
   push:
+    paths:
+    - book/**
     branches:
     - master
 
