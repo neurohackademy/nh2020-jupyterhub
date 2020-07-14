@@ -11,4 +11,17 @@ spec:
   nfs:
     server: {{ .Values.nfs.serverIP | quote }}
     path: "/{{ .Values.nfs.serverName }}"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeName: nfs-pv
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Mi
 {{- end }}
