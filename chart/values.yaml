@@ -2,6 +2,9 @@
 # /etc/jupyterhub/acl/acl.yaml and parsed by custom authenticator logic.
 acl.yaml: {}
 
+nfs:
+  enabled: false
+
 jupyterhub:
   hub:
     # ref: https://jupyterhub.readthedocs.io/en/stable/reference/services.html#properties-of-a-service
