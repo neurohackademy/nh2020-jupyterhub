@@ -190,12 +190,13 @@ jupyterhub:
         #
         async def pre_spawn_hook(spawner):
             username = spawner.user.name
+            acl = read_acl()
 
             # Configure the pod's labels
             spawner.extra_labels.update({
-                "hub.neurohackademy.org/is-admin": str(is_admin(username)).lower(),
-                "hub.neurohackademy.org/is-instructor": str(is_instructor(username)).lower(),
-                "hub.neurohackademy.org/is-participant": str(is_participant(username)).lower(),
+                "hub.neurohackademy.org/is-admin": str(username in acl["admins"]).lower(),
+                "hub.neurohackademy.org/is-instructor": str(username in acl["instructors"]).lower(),
+                "hub.neurohackademy.org/is-participant": str(username in acl["participants"]).lower(),
             })
 
             # Configure the pod's storage
@@ -203,7 +204,7 @@ jupyterhub:
                 "name": "nh",
                 "mountPath": "/nh/data",  # where it is made available in container
                 "subPath": "data",        # what in the PVC to mount (must be a relative path)
-                "readOnly": not (is_admin(username) or is_instructor(username)),
+                "readOnly": not (username in acl["admins"] or username in acl["instructors"]),
             }
             spawner.volume_mounts.extend([nh_volume_mount])
 

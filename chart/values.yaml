@@ -19,47 +19,32 @@ jupyterhub:
     extraConfig:
       00-acl-parsing: |
         import os
-        from functools import lru_cache
-
         import yaml
 
-        @lru_cache()
-        def _load_acl():
+        def read_acl(path="/etc/jupyterhub/acl/acl.yaml"):
             """
-            Load a mounted Access Control List (ACL) from disk.
-            
-            Note that @lru_cache memoizes this function so it only runs once.
+            Load a mounted Access Control List (ACL) on startup from disk and
+            return a dictionary with keys representing group names and with sets
+            of usernames as values.
             """
             acl = {}
-            path = "/etc/jupyterhub/acl/acl.yaml"
             if os.path.exists(path):
                 print(f"Loading Access Control List (ACL) from {path}")
                 with open(path) as f:
                     acl = yaml.safe_load(f)
                     for group, usernames in acl.items(): 
-                        acl[group] = [username.lower() for username in usernames]
+                        acl[group] = {username.lower() for username in usernames}
             else:
                 print(f"No Access Control List (ACL) at {path}")
             return acl
-        
-        c.Authenticator.admin_users = _load_acl()["admins"]
-        c.Authenticator.whitelist = {
-            *_load_acl()["admins"],
-            *_load_acl()["instructors"],
-            *_load_acl()["participants"]
-        }
 
-        # Helper functions for logic in spawner hooks etc that may want to act
-        # based on this information.
-        @lru_cache()
-        def is_admin(username):
-            return username in _load_acl()["admins"]
-        @lru_cache()
-        def is_instructor(username):
-            return username in _load_acl()["instructors"]
-        @lru_cache()
-        def is_participant(username):
-            return username in _load_acl()["participants"]
+        acl = read_acl()
+        c.Authenticator.admin_users = acl["admins"]
+        c.Authenticator.whitelist = set.union(
+            acl["admins"],
+            acl["instructors"],
+            acl["participants"],
+        )
 
 
 # Reference on the configuration options:
