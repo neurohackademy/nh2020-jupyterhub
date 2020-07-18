@@ -67,18 +67,19 @@ jupyterhub:
       limit: 16       # allow for a lot more CPU to be used
     memory:
       guarantee: 24G
+    ## extraVolumes is for the pod in general
     extraVolumes:
       - name: nh
         persistentVolumeClaim:
           claimName: nfs-pvc
+    ## extraVolumeMounts is for the pod's main container, not the initContainers
     extraVolumeMounts:
       - name: nh
         mountPath: /nh/curriculum
         subPath: curriculum
-    # initContainers:
-    # We may want this to ensure whatever dataset is mounted through NFS is
-    # readable for jovyan.
-    #
+    ## initContainers:
+    ## We may want this to ensure whatever dataset is mounted through NFS is
+    ## readable for jovyan.
     initContainers:
       - name: chown-nfs-mount-to-jovyan
         image: busybox
@@ -88,11 +89,11 @@ jupyterhub:
           - "chown 1000:1000 /nh/data /nh/curriculum"
         securityContext:
           runAsUser: 0
+        ## volumeMounts mounts the pod's volume defined through extraVolumes
         volumeMounts:
           - name: nh
             mountPath: /nh/data
             subPath: data
-        volumeMounts:
           - name: nh
             mountPath: /nh/curriculum
             subPath: curriculum
