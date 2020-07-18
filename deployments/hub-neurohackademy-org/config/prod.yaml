@@ -67,6 +67,14 @@ jupyterhub:
       limit: 16       # allow for a lot more CPU to be used
     memory:
       guarantee: 24G
+    extraVolumes:
+      - name: nh
+        persistentVolumeClaim:
+          claimName: nfs-pvc
+    extraVolumeMounts:
+      - name: nh
+        mountPath: /nh/curriculum
+        subPath: curriculum
     # initContainers:
     # We may want this to ensure whatever dataset is mounted through NFS is
     # readable for jovyan.
@@ -77,13 +85,17 @@ jupyterhub:
         command:
           - "sh"
           - "-c"
-          - "id && chown 1000:1000 /nh/data && ls -lhd /nh/data"
+          - "chown 1000:1000 /nh/data /nh/curriculum"
         securityContext:
           runAsUser: 0
         volumeMounts:
           - name: nh
             mountPath: /nh/data
             subPath: data
+        volumeMounts:
+          - name: nh
+            mountPath: /nh/curriculum
+            subPath: curriculum
 
   hub:
     extraVolumes:
@@ -187,19 +199,12 @@ jupyterhub:
             })
 
             # Configure the pod's storage
-            nh_volume = {
-                "name": "nh",
-                "persistentVolumeClaim": {
-                    "claimName": "nfs-pvc",
-                },
-            }
             nh_volume_mount = {
                 "name": "nh",
                 "mountPath": "/nh/data",  # where it is made available in container
                 "subPath": "data",        # what in the PVC to mount (must be a relative path)
                 "readOnly": not (is_admin(username) or is_instructor(username)),
             }
-            spawner.volumes.extend([nh_volume])
             spawner.volume_mounts.extend([nh_volume_mount])
 
             # Configure the pod's container's environment variables
