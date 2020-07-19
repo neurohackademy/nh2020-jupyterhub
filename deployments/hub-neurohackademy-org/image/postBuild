@@ -3,8 +3,11 @@
 # Update to a current JupyterLab for a better user experience
 conda update jupyterlab
 
-# Setup a workspace
-jupyter lab workspaces import workspace.json
-
 # Install JupyterLab extensions
 jupyter labextension install jupyterlab-tour
+
+# Failed attempt to pre-configure a workspace. It fails because this will import
+# the workspace to the home folder during build, but this is pointless as it
+# will be overridden when we mount the user storage.
+#
+jupyter lab workspaces import workspace.json
