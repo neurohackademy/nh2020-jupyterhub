@@ -6,9 +6,23 @@ and they can all use `/tmp` for some extra scratch space.
 ## Notebooks for tutorials
 
 As an instructor you probably have some notebooks that you want to provide to
-users. Please add those to https://github.com/neurohackademy/nh2020-curriculum
-and refer to Ariel Rokem (@arokem) for guidance about this. These notebooks will
-be made available to participants, but exactly how is not yet decided.
+users. Please add those to the GitHub repository
+[neurohackademy/nh2020-curriculum](https://github.com/neurohackademy/nh2020-curriculum)
+and refer to Ariel Rokem (@arokem) for guidance about this.
+
+The material in the GitHub repository neurohackademy/nh2020-curriculum will be
+synced to `/nh/curriculum` every five minutes, which anyone can access in a
+read-only manner.
+
+During startup of the user environment, each users will get a read/write copy of
+`/nh/curriculum` merged to `~/curriculum` in a a manner described [in more
+detail
+here](https://jupyterhub.github.io/nbgitpuller/topic/automatic-merging.html).
+
+if you as an instructor made recent changes to the GitHub repository, those will
+be seen in `/nh/curriculum` quickly within 5 minutes, but changes in
+`~/curriculum` will be seen only after the user restarts their environment using
+the JupyterLab File menu under the menu item `Hub control panel`.
 
 ## Datasets for tutorials
 
