@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Update to a current JupyterLab for a better user experience
+conda update jupyterlab
+
+# Setup a workspace
+jupyter lab workspaces import workspace.json
+
+# Install JupyterLab extensions
+jupyter labextension install jupyterlab-tour
