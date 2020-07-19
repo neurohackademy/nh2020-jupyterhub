@@ -79,12 +79,17 @@ jupyterhub:
         - name: nh
           persistentVolumeClaim:
             claimName: nfs-pvc
+        - name: user-etc-singleuser
+          configMap:
+            name: user-etc-singleuser
       ## extraVolumeMounts is for the pod's main container, not the initContainers
       extraVolumeMounts:
         - name: nh
           mountPath: /nh/curriculum
           subPath: curriculum
           readOnly: true
+        - mountPath: /etc/singleser
+          name: user-etc-singleuser
     ## initContainers:
     ## We may want this to ensure whatever dataset is mounted through NFS is
     ## readable for jovyan.
