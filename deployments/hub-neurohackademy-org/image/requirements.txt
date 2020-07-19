@@ -1,7 +1,7 @@
-pandas
-nibabel
-nilearn
+cython
 dask
 datalad
+nibabel
+nilearn
 numba
-cython
+pandas
