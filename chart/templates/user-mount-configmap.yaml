@@ -8,6 +8,6 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: user-etc-singleuser
+  name: user-etc-profile-d
 data:
   {{- (.Files.Glob "files/etc/profile.d/*").AsConfig | nindent 2 }}
