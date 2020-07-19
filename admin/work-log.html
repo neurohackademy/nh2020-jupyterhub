@@ -73,27 +73,41 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  
-  <ul class="nav sidenav_l1">
-<li class="navbar-special">
-<p class="margin-caption">For instructors</p>
-</li>
-  <li class="">
-    <a href="../instructor/access.html">Getting access</a>
-  </li>
-  <li class="">
-    <a href="../instructor/storage.html">Storage</a>
-  </li>
-  <li class="">
-    <a href="user-environment.html">Updating the user environment</a>
-  </li>
-<li class="navbar-special">
-<p class="margin-caption">For admins</p>
-</li>
-  <li class="active">
-    <a href="">Work log</a>
-  </li>
+  <p class="caption">
+ <span class="caption-text">
+  For instructors
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../instructor/access.html">
+   Getting access
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../instructor/storage.html">
+   Storage
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="user-environment.html">
+   Updating the user environment
+  </a>
+ </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  For admins
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Work log
+  </a>
+ </li>
+</ul>
+
 </nav>
 
  <!-- To handle the deprecated key -->
@@ -168,137 +182,156 @@
         <!-- Launch buttons -->
 
     </div>
+
+    <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
-<div class="tocsection onthispage pt-5 pb-3">
-    <i class="fas fa-list"></i> On this page
-</div>
-
-<nav id="bd-toc-nav">
-    <ul class="nav section-nav flex-column">
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#statement-of-work" class="nav-link">Statement of work</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#a-place-for-documentation" class="nav-link">A place for documentation</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h2">
-            <a href="#architecture-plans" class="nav-link">Architecture plans</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#git-repos" class="nav-link">Git repos</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#a-single-user-environment" class="nav-link">A single user environment</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#nginx-ingress-and-cert-manager" class="nav-link">nginx-ingress and cert-manager</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#lecture-datasets" class="nav-link">Lecture datasets</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#a-meta-helm-chart-mostly-depending-on-other-charts" class="nav-link">A meta Helm chart mostly depending on other charts</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gcp" class="nav-link">GCP</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gitops-and-staging-production-splits" class="nav-link">GitOps and staging/production splits</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#git-secret-management" class="nav-link">git secret management</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#hubploy-learning" class="nav-link">hubploy learning</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gcp-networking" class="nav-link">GCP Networking</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gcp-iam" class="nav-link">GCP IAM</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gcp-quotas" class="nav-link">GCP Quotas</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gke" class="nav-link">GKE</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#sops" class="nav-link">SOPS</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#hubploy" class="nav-link">Hubploy</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#registry-access" class="nav-link">Registry access</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#issue-1-no-public-ip-to-egress-from" class="nav-link">Issue 1 - no public IP to egress from</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#issue-2-access-to-container-registry" class="nav-link">Issue 2 - access to container registry</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#hubploy-deployment-commands" class="nav-link">hubploy deployment commands</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#cd-deployment-to-github-pages-for-jupyter-book" class="nav-link">CD: Deployment to GitHub pages for jupyter-book</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#a-documentation-gap" class="nav-link">A documentation gap</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#nfs-server-for-datasets" class="nav-link">NFS server for datasets</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#gcp-health-check-alerting" class="nav-link">GCP Health check alerting</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#spawn-options-to-not-always-use-an-expensive-machine" class="nav-link">Spawn options to not always use an expensive machine</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-    </ul>
-</nav>
-
-
-
-<div class="tocsection editthispage">
-    <a href="https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/book/admin/work-log.md">
-        <i class="fas fa-pencil-alt"></i> Edit this page
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> On this page
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statement-of-work">
+   Statement of work
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-place-for-documentation">
+   A place for documentation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#architecture-plans">
+   Architecture plans
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#git-repos">
+     Git repos
     </a>
-</div>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-single-user-environment">
+     A single user environment
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nginx-ingress-and-cert-manager">
+     nginx-ingress and cert-manager
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lecture-datasets">
+     Lecture datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-meta-helm-chart-mostly-depending-on-other-charts">
+     A meta Helm chart mostly depending on other charts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gcp">
+     GCP
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gitops-and-staging-production-splits">
+     GitOps and staging/production splits
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#git-secret-management">
+     git secret management
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hubploy-learning">
+     hubploy learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gcp-networking">
+     GCP Networking
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gcp-iam">
+     GCP IAM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gcp-quotas">
+     GCP Quotas
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gke">
+     GKE
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sops">
+     SOPS
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hubploy">
+     Hubploy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#registry-access">
+     Registry access
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#issue-1-no-public-ip-to-egress-from">
+       Issue 1 - no public IP to egress from
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#issue-2-access-to-container-registry">
+       Issue 2 - access to container registry
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hubploy-deployment-commands">
+     hubploy deployment commands
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cd-deployment-to-github-pages-for-jupyter-book">
+     CD: Deployment to GitHub pages for jupyter-book
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-documentation-gap">
+     A documentation gap
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nfs-server-for-datasets">
+     NFS server for datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gcp-health-check-alerting">
+     GCP Health check alerting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#spawn-options-to-not-always-use-an-expensive-machine">
+     Spawn options to not always use an expensive machine
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
 
+        </nav>
     </div>
 </div>
     <div id="main-content" class="row">
