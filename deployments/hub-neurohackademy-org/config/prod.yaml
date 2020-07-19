@@ -82,6 +82,9 @@ jupyterhub:
         - name: user-etc-singleuser
           configMap:
             name: user-etc-singleuser
+        - name: user-etc-profile-d
+          configMap:
+            name: user-etc-profile-d
       ## extraVolumeMounts is for the pod's main container, not the initContainers
       extraVolumeMounts:
         - name: nh
@@ -90,6 +93,11 @@ jupyterhub:
           readOnly: true
         - mountPath: /etc/singleuser
           name: user-etc-singleuser
+        - mountPath: /etc/profile-d/home-folder-replacements.sh
+          name: user-etc-profile-d
+          # NOTE: ConfigMap/Secret volumes using subPath doesn't automatically
+          #       update after being mounted. This is fine though.
+          subPath: home-folder-replacements.sh
     ## initContainers:
     ## We may want this to ensure whatever dataset is mounted through NFS is
     ## readable for jovyan.
