@@ -88,7 +88,7 @@ jupyterhub:
           mountPath: /nh/curriculum
           subPath: curriculum
           readOnly: true
-        - mountPath: /etc/singleser
+        - mountPath: /etc/singleuser
           name: user-etc-singleuser
     ## initContainers:
     ## We may want this to ensure whatever dataset is mounted through NFS is
