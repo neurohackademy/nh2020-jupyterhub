@@ -5,3 +5,6 @@ nibabel
 nilearn
 numba
 pandas
+
+# Admin dependencies
+nbgitpuller
