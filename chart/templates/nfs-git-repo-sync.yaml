@@ -1,3 +1,4 @@
+{{- if .Values.nfs.enabled -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -37,3 +38,4 @@ spec:
                   subPath: curriculum
               securityContext:
                 runAsUser: 0
+{{- end }}
