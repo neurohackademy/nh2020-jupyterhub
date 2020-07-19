@@ -204,7 +204,8 @@
 <p>Who successfully can login to their GitHub account to the JupyterHub is
 determined by an <em>Access Control List</em> (ACL). While all users listed in the ACL
 will be able to login, admins become JupyterHub administrators and instructors
-get write permissions to shared storage in <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code>.</p>
+get write permissions to shared storage in <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code> or <code class="docutils literal notranslate"><span class="pre">~/data</span></code> which is is a
+symlink to <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code>.</p>
 <p>As an instructor, please add yourself to the
 <a class="reference external" href="https://github.com/neurohackademy/nh2020-jupyterhub/edit/master/deployments/hub-neurohackademy-org/config/common.yaml">ACL</a>.</p>
 <div class="admonition note">

@@ -288,16 +288,17 @@ server which may have ~40 users on it.</p>
 <div class="section" id="datasets-in-shared-network-attached-storage">
 <h3>Datasets in shared network attached storage<a class="headerlink" href="#datasets-in-shared-network-attached-storage" title="Permalink to this headline">¶</a></h3>
 <p>Both instructors and participants will have access to shared network attached
-storage mounted in <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code>. Anything an instructor writes there will be
-available in a read-only mode for participants. While this is practical, it is
-not well tested at scale and could bottleneck.</p>
+storage mounted in <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code> or <code class="docutils literal notranslate"><span class="pre">~/data</span></code> which is is a symlink to <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code>..
+Anything an instructor writes there will be available in a read-only mode for
+participants. While this is practical, it is not well tested at scale and could
+bottleneck.</p>
 <p>How efficient would it become if hundreds of users accessed this simultaneously
-and they all wanted to read hundreds a gigabyte of data?</p>
-<p>If you choose this option, I suggest a backup solution is considered alongside
-it.</p>
+and they all wanted to read hundreds a gigabyte of data? If you choose this
+option, I suggest a backup solution is considered alongside it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Remember that participants will access <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code> in a read-only mode!</p>
+<p>Remember that participants will access <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code> or <code class="docutils literal notranslate"><span class="pre">~/data</span></code> which is is a
+symlink to <code class="docutils literal notranslate"><span class="pre">/nh/data</span></code>. in a read-only mode!</p>
 </div>
 </div>
 </div>

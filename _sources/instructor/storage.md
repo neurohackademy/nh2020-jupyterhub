@@ -59,16 +59,16 @@ server which may have ~40 users on it.
 ### Datasets in shared network attached storage
 
 Both instructors and participants will have access to shared network attached
-storage mounted in `/nh/data`. Anything an instructor writes there will be
-available in a read-only mode for participants. While this is practical, it is
-not well tested at scale and could bottleneck.
+storage mounted in `/nh/data` or `~/data` which is is a symlink to `/nh/data`..
+Anything an instructor writes there will be available in a read-only mode for
+participants. While this is practical, it is not well tested at scale and could
+bottleneck.
 
 How efficient would it become if hundreds of users accessed this simultaneously
-and they all wanted to read hundreds a gigabyte of data?
-
-If you choose this option, I suggest a backup solution is considered alongside
-it.
+and they all wanted to read hundreds a gigabyte of data? If you choose this
+option, I suggest a backup solution is considered alongside it.
 
 ```{note}
-Remember that participants will access `/nh/data` in a read-only mode!
+Remember that participants will access `/nh/data` or `~/data` which is is a
+symlink to `/nh/data`. in a read-only mode!
 ```
