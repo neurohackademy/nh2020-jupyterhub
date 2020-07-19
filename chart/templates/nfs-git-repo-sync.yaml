@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: nfs-git-repo-sync
