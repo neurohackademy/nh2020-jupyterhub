@@ -67,6 +67,12 @@ jupyterhub:
       limit: 16       # allow for a lot more CPU to be used
     memory:
       guarantee: 24G
+    lifecycleHooks:
+      postStart:
+        exec:
+          command:
+            - "bash"
+            - "/etc/singleuser/k8s-lifecycle-hook-post-start.sh"
     storage:
       ## extraVolumes is for the pod in general
       extraVolumes:
