@@ -204,7 +204,7 @@ jupyterhub:
                         'display_name': '24GB with read only of ~/data like for the participants',
                         'kubespawner_override': { 'mem_guarantee': '24G' },
                     }
-                ]
+                ])
 
 
 
