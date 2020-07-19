@@ -93,7 +93,7 @@ jupyterhub:
           readOnly: true
         - mountPath: /etc/singleuser
           name: user-etc-singleuser
-        - mountPath: /etc/profile-d/home-folder-replacements.sh
+        - mountPath: /etc/profile.d/home-folder-replacements.sh
           name: user-etc-profile-d
           # NOTE: ConfigMap/Secret volumes using subPath doesn't automatically
           #       update after being mounted. This is fine though.
