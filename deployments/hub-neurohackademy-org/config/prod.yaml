@@ -195,6 +195,19 @@ jupyterhub:
                 },
             ]
 
+            acl = read_acl()
+            username = self.user.name
+            if username in acl["instructors"] or username in acl["admins"]:
+                self.profile_list.extend([
+                    {
+                        'default': True,
+                        'display_name': '24GB with read only of ~/data like for the participants',
+                        'kubespawner_override': { 'mem_guarantee': '24G' },
+                    }
+                ]
+
+
+
             # NOTE: We let KubeSpawner inspect profile_list and decide what to
             #       return, it will return a falsy blank string if there is no
             #       profile_list, which makes no options form be presented.
@@ -207,11 +220,12 @@ jupyterhub:
 
 
 
-        # Configure storage details etc. based on the user
-        # ------------------------------------------------
+        # Configure storage details etc. based on the user and profile chosen
+        # -------------------------------------------------------------------
         #
         async def pre_spawn_hook(spawner):
             username = spawner.user.name
+            user_options = spawner.user_options # {'profile': 'display_name of chosen profile'}
             acl = read_acl()
 
             # Configure the pod's labels
@@ -222,11 +236,13 @@ jupyterhub:
             })
 
             # Configure the pod's storage
+            read_only = not (username in acl["admins"] or username in acl["instructors"])
+            read_only = read_only or "read only" in user_options.get("profile")
             nh_volume_mount = {
                 "name": "nh",
                 "mountPath": "/nh/data",  # where it is made available in container
                 "subPath": "data",        # what in the PVC to mount (must be a relative path)
-                "readOnly": not (username in acl["admins"] or username in acl["instructors"]),
+                "readOnly": read_only,
             }
             spawner.volume_mounts.extend([nh_volume_mount])
 
