@@ -78,6 +78,7 @@ jupyterhub:
         - name: nh
           mountPath: /nh/curriculum
           subPath: curriculum
+          readOnly: true
     ## initContainers:
     ## We may want this to ensure whatever dataset is mounted through NFS is
     ## readable for jovyan.

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: CronJob
+metadata:
+  name: nfs-git-repo-sync
+spec:
+  ## schedule: run every 5 minute
+  ## ref: https://crontab.guru/#*/10_*_*_*_*
+  ##
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          volumes:
+            - name: nh
+              persistentVolumeClaim:
+                claimName: nfs-pvc
+          containers:
+            ## git-sync https://github.com/kubernetes/git-sync
+            - name: git-clone-or-pull
+              image: alpine/git:latest
+              command:
+                - sh
+              args:
+                - -c
+                - |
+                    cd /tmp/repo || exit
+                    if [ -d .git ]; then
+                        git pull
+                    else
+                        git clone https://github.com/neurohackademy/nh2020-curriculum .
+                    fi
+              volumeMounts:
+                - name: nh
+                  mountPath: /tmp/repo
+                  subPath: curriculum
+              securityContext:
+                runAsUser: 0
