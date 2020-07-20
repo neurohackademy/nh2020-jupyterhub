@@ -244,7 +244,13 @@ jupyterhub:
                 "subPath": "data",        # what in the PVC to mount (must be a relative path)
                 "readOnly": read_only,
             }
-            spawner.volume_mounts.extend([nh_volume_mount])
+            # NOTE: If we would append spawner.volume_mounts we would risk
+            # getting multiple entries in this in a future spawn. Due to that,
+            # let's first remove mounts like the one we are about to add, then
+            # add it.
+            volume_mounts = [m for m in spawner.volume_mounts if m["mount_path"] != nh_volume_mount["mount_path"]]
+            volume_mounts.append(nh_volume_mount)
+            spawner.volume_mounts = volume_mounts
 
             # Configure the pod's container's environment variables
             spawner.environment.update({})
