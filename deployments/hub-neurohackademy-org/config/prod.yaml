@@ -52,8 +52,8 @@ jupyterhub:
 
   singleuser:
     ## cmd: set this to start-singleuser.sh if we use a docker-stacks image,
-    ## repo2docker does not come with that but the jupyter-singleuser command is
-    ## part of JupyterHub though.
+    ## repo2docker does not come with that but the jupyterhub-singleuser command
+    ## is part of JupyterHub though.
     ##
     # cmd: start-singleuser.sh
     defaultUrl: /lab

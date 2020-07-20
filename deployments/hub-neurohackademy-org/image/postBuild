@@ -10,4 +10,4 @@ jupyter labextension install jupyterlab-tour
 # the workspace to the home folder during build, but this is pointless as it
 # will be overridden when we mount the user storage.
 #
-jupyter lab workspaces import workspace.json
+#jupyter lab workspaces import workspace.json

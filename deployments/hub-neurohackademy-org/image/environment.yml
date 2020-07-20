@@ -1,8 +1,11 @@
-name: base
+name: nh
 channels:
   - conda-forge
 dependencies:
   - git-annex
+  # Admin dependencies
+  - pip
+  - jupyterhub
   - pip:
     - cython
     - dask[complete]
@@ -16,4 +19,3 @@ dependencies:
     - gcsfs
     # Admin dependencies
     - nbgitpuller
-    - jupyterhub
