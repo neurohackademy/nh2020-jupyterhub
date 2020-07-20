@@ -16,3 +16,4 @@ dependencies:
     - gcsfs
     # Admin dependencies
     - nbgitpuller
+    - jupyterhub
