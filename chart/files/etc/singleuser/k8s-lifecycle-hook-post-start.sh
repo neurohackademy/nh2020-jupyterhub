@@ -11,4 +11,4 @@
 gitpuller /nh/curriculum master ~/curriculum || gitpuller https://github.com/neurohackademy/nh2020-curriculum.git master ~/curriculum || true
 
 # Provide a symbolic link to the /nh/data folder in the home directory.
-[ -f ~/data ] || ln -s /nh/data/ ~/data || true
+[ -d ~/data ] || ln -s /nh/data/ ~/data || true
