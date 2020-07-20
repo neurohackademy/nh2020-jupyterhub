@@ -5,6 +5,9 @@ nibabel
 nilearn
 numba
 pandas
+awscli
+s3fs
+gcsfs
 
 # Admin dependencies
 nbgitpuller
