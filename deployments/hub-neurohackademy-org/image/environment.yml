@@ -17,5 +17,7 @@ dependencies:
     - awscli
     - s3fs
     - gcsfs
+    - line_profiler
+    - memory_profiler
     # Admin dependencies
     - nbgitpuller
