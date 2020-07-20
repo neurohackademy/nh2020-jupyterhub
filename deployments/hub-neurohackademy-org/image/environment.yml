@@ -2,11 +2,24 @@ name: nh
 channels:
   - conda-forge
 dependencies:
+  # conda packages for NeuroHackademy
   - git-annex
-  # Admin dependencies
+  # -------------------------------------------------------------------------
+
+  # Base packages otherwise pinned in repo2docker, by adding them here we get
+  # more recent versions such as JupyterLab 2.
+  # ref: https://github.com/jupyter/repo2docker/blob/master/repo2docker/buildpacks/conda/environment.yml
+  - python=3.7
+  - ipywidgets
+  - jupyterhub-singleuser
+  - jupyterlab
+  - nbconvert
+  - nbresuse
+  - notebook
+
   - pip
-  - jupyterhub
   - pip:
+    # pip packages for NeuroHackademy
     - cython
     - dask[complete]
     - datalad
@@ -19,5 +32,7 @@ dependencies:
     - gcsfs
     - line_profiler
     - memory_profiler
-    # Admin dependencies
+    # -----------------------------------------------------------------------
+
+    # Needed by the neurohackademy Helm chart
     - nbgitpuller
