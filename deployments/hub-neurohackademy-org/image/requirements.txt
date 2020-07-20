@@ -1,5 +1,5 @@
 cython
-dask
+dask[complete]
 datalad
 nibabel
 nilearn
