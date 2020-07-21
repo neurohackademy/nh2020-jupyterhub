@@ -17,6 +17,7 @@ acl.yaml:
     - jbpoline      # JB Poline 
     - saravkin      # Sasha Aravkin
     - langliu95     # Lang Liu
+    - tyarkoni      # Tal Yarkoni
 
   # Instructors gain read access to the /nh/data folder
   participants:
