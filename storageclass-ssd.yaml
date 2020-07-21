@@ -1,0 +1,16 @@
+# StorageClass added in GCP environment to allow for a SSD disk to be
+# provisioned to prometheus. This was done as it was what mybinder.org-deploy
+# did: https://github.com/jupyterhub/mybinder.org-deploy/blob/bcd7b0c01a5f8d63d6e80bcf19bc7232007ce36f/config/prod.yaml#L131-L152
+#
+# kubectl apply -f storageclass-ssd.yaml
+#
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd
+parameters:
+  type: pd-ssd
+provisioner: kubernetes.io/gce-pd
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
