@@ -74,6 +74,8 @@ jupyterhub:
             - "bash"
             - "/etc/singleuser/k8s-lifecycle-hook-post-start.sh"
     storage:
+      storage:
+        capacity: 10Gi
       ## extraVolumes is for the pod in general
       extraVolumes:
         - name: nh
@@ -90,6 +92,10 @@ jupyterhub:
         - name: nh
           mountPath: /nh/curriculum
           subPath: curriculum
+          readOnly: true
+        - name: nh
+          mountPath: /nh/data
+          subPath: data
           readOnly: true
         - mountPath: /etc/singleuser
           name: user-etc-singleuser
@@ -152,15 +158,13 @@ jupyterhub:
         # With this setting set to False, the /hub/metrics endpoint will be
         # publically accessible just like at hub.mybinder.org/hub/metrics is.
         c.JupyterHub.authenticate_prometheus = False
-      spawn: |
+      workingDir: |
         # Override the working directory of /src/repo which repo2docker have set
         # to /home/jovyan instead, where we mount of files.
         c.KubeSpawner.extra_container_config = {
             "workingDir": "/home/jovyan",
         }
-
-
-
+      options_form: |
         # Configure what spawn options users should see
         # ---------------------------------------------
         #
@@ -217,9 +221,7 @@ jupyterhub:
             return self._options_form_default()
 
         c.KubeSpawner.options_form = dynamic_options_form
-
-
-
+      pre_spawn_hook: |
         # Configure storage details etc. based on the user and profile chosen
         # -------------------------------------------------------------------
         #

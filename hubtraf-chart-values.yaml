@@ -1,0 +1,78 @@
+# This is only meant for administrative purposes, with manual testing of the
+# Helm chart. For some related information, see
+# https://github.com/neurohackademy/nh2020-jupyterhub/issues/29.
+
+# These are overrides that I want to use while using hubtraf against the
+# deployment. But hubploy currently doesn't support passing an entire file with
+# --values, so I've also summarized these changes into a big one liner in the
+# Helpful scripts section below.
+
+jupyterhub:
+  hub:
+    extraConfig:
+      # --set 'jupyterhub.hub.extraConfig.auth=c.Authenticator.auto_login=False'
+      auth: |
+        c.Authenticator.auto_login=False
+      # --set 'jupyterhub.hub.extraConfig.common_labels=c.KubeSpawner.common_labels.update({'hubtraf': 'delete-me'})'
+      common_labels: |
+        c.KubeSpawner.common_labels.update({'hubtraf': 'delete-me'})
+      # --set 'jupyterhub.hub.extraConfig.options_form=print("Do nothing")'
+      options_form: |
+        print("Do nothing")
+      # --set 'jupyterhub.hub.extraConfig.pre_spawn_hook=print("Do nothing")'
+      pre_spawn_hook: |
+        print("Do nothing")
+      # --set 'jupyterhub.hub.extraConfig.00-acl-parsing=print("Do nothing")'
+      00-acl-parsing: |
+        print("Do nothing")
+
+  auth:
+    # --set 'jupyterhub.auth.type=dummy'
+    type: dummy
+
+  singleuser:
+    # --set-string 'jupyterhub.singleuser.defaultUrl=/tree'
+    defaultUrl: '/tree'
+    storage:
+      # --set 'jupyterhub.singleuser.storage.capacity=1Gi'
+      capacity: 1Gi
+
+  scheduling:
+    userPlaceholder:
+      # --set 'jupyterhub.scheduling.userPlaceholder.replicas=40'
+      replicas: 40
+
+### Helpful scripts
+# ----------------------------------------------------------------------------
+# # Update deployment for use with hubtraf simulation
+# hubploy deploy --namespace default --cleanup-on-fail hub-neurohackademy-org chart prod \
+#   --set 'jupyterhub.hub.extraConfig.auth=c.Authenticator.auto_login=False' \
+#   --set 'jupyterhub.hub.extraConfig.common_labels=c.KubeSpawner.common_labels.update({"hubtraf": "delete-me"})' \
+#   --set 'jupyterhub.hub.extraConfig.options_form=print("Do nothing")' \
+#   --set 'jupyterhub.hub.extraConfig.pre_spawn_hook=print("Do nothing")' \
+#   --set 'jupyterhub.hub.extraConfig.00-acl-parsing=print("Do nothing")' \
+#   --set 'jupyterhub.auth.type=dummy' \
+#   --set 'jupyterhub.singleuser.defaultUrl=/tree' \
+#   --set 'jupyterhub.singleuser.storage.capacity=1Gi' \
+#   --set 'jupyterhub.scheduling.userPlaceholder.replicas=40'
+
+# # Simulate 975 users arriving over 15 minutes time
+# hubtraf-simulate https://hub.neurohackademy.org 975 \
+#   --user-prefix=hubtraf \
+#   --user-session-min-runtime=900 \
+#   --user-session-max-runtime=900 \
+#   --user-session-max-start-delay=900 \
+#   --json
+
+# # Basic monitoring of hubtraf users and k8s nodes
+# hubtraf_monitor {
+#     pods="Pods : $(kubectl get pods --field-selector=status.phase=Pending -l hubtraf=delete-me --no-headers 2>/dev/null | wc -l)/$(kubectl get pods -l hubtraf=delete-me --no-headers 2>/dev/null | wc -l) (Running/Total)"
+#     nodes="Nodes: $(kubectl get nodes --no-headers 2>/dev/null | grep Ready | wc -l)/$(kubectl get nodes --no-headers 2>/dev/null | wc -l) (Ready/Total)"
+#     echo $pods
+#     echo $nodes
+# }
+# hubtraf
+
+# # Cleanup following tests
+# kubectl delete pod,pvc -l hubtraf=delete-me
+# ----------------------------------------------------------------------------
