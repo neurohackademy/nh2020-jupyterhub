@@ -32,6 +32,7 @@ dependencies:
     - gcsfs
     - line_profiler
     - memory_profiler
+    - graphviz
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
