@@ -1,9 +1,10 @@
-# This is only meant for administrative purposes, with manual testing of the
-# Helm chart. For some related information, see
+# This file is not meant to be read programmatically by anything, but only meant
+# for administrative reference and manual use of yuvipanda/hubtraf testing of
+# the Helm chart. For some related information, see
 # https://github.com/neurohackademy/nh2020-jupyterhub/issues/29.
 
-# These are overrides that I want to use while using hubtraf against the
-# deployment. But hubploy currently doesn't support passing an entire file with
+# These are overrides that I want to use while using hubtraf to test the
+# deployment. hubploy currently doesn't support passing an entire file with
 # --values, so I've also summarized these changes into a big one liner in the
 # Helpful scripts section below.
 
@@ -44,35 +45,45 @@ jupyterhub:
 
 ### Helpful scripts
 # ----------------------------------------------------------------------------
-# # Update deployment for use with hubtraf simulation
-# hubploy deploy --namespace default --cleanup-on-fail hub-neurohackademy-org chart prod \
-#   --set 'jupyterhub.hub.extraConfig.auth=c.Authenticator.auto_login=False' \
-#   --set 'jupyterhub.hub.extraConfig.common_labels=c.KubeSpawner.common_labels.update({"hubtraf": "delete-me"})' \
-#   --set 'jupyterhub.hub.extraConfig.options_form=print("Do nothing")' \
-#   --set 'jupyterhub.hub.extraConfig.pre_spawn_hook=print("Do nothing")' \
-#   --set 'jupyterhub.hub.extraConfig.00-acl-parsing=print("Do nothing")' \
-#   --set 'jupyterhub.auth.type=dummy' \
-#   --set 'jupyterhub.singleuser.defaultUrl=/tree' \
-#   --set 'jupyterhub.singleuser.storage.capacity=1Gi' \
-#   --set 'jupyterhub.scheduling.userPlaceholder.replicas=40'
+# Update deployment for use with hubtraf simulation
+hubploy deploy --namespace default --cleanup-on-fail hub-neurohackademy-org chart prod \
+  --set 'jupyterhub.hub.extraConfig.auth=c.Authenticator.auto_login=False' \
+  --set 'jupyterhub.hub.extraConfig.common_labels=c.KubeSpawner.common_labels.update({"hubtraf": "delete-me"})' \
+  --set 'jupyterhub.hub.extraConfig.options_form=print("Do nothing")' \
+  --set 'jupyterhub.hub.extraConfig.pre_spawn_hook=print("Do nothing")' \
+  --set 'jupyterhub.hub.extraConfig.00-acl-parsing=print("Do nothing")' \
+  --set 'jupyterhub.auth.type=dummy' \
+  --set 'jupyterhub.singleuser.defaultUrl=/tree' \
+  --set 'jupyterhub.singleuser.storage.capacity=1Gi' \
+  --set 'jupyterhub.scheduling.userPlaceholder.replicas=40'
 
-# # Simulate 975 users arriving over 15 minutes time
-# hubtraf-simulate https://hub.neurohackademy.org 975 \
-#   --user-prefix=hubtraf \
-#   --user-session-min-runtime=900 \
-#   --user-session-max-runtime=900 \
-#   --user-session-max-start-delay=900 \
-#   --json
+# Quickly adjust the user-placeholder replicas if wanted
+kubectl scale sts/user-placeholder --replicas=120
 
-# # Basic monitoring of hubtraf users and k8s nodes
-# hubtraf_monitor {
-#     pods="Pods : $(kubectl get pods --field-selector=status.phase=Pending -l hubtraf=delete-me --no-headers 2>/dev/null | wc -l)/$(kubectl get pods -l hubtraf=delete-me --no-headers 2>/dev/null | wc -l) (Running/Total)"
-#     nodes="Nodes: $(kubectl get nodes --no-headers 2>/dev/null | grep Ready | wc -l)/$(kubectl get nodes --no-headers 2>/dev/null | wc -l) (Ready/Total)"
-#     echo $pods
-#     echo $nodes
-# }
-# hubtraf
+# Simulate 975 users arriving over 15 minutes time
+hubtraf-simulate https://hub.neurohackademy.org 500 \
+  --user-prefix=hubtraf \
+  --user-session-min-runtime=500 \
+  --user-session-max-runtime=600 \
+  --user-session-max-start-delay=500 \
+  --json
 
-# # Cleanup following tests
-# kubectl delete pod,pvc -l hubtraf=delete-me
+# Basic monitoring of hubtraf users and k8s nodes
+hubtraf_monitor() {
+    pods="Pods : $(kubectl get pods --field-selector=status.phase=Pending -l hubtraf=delete-me --no-headers 2>/dev/null | wc -l)/$(kubectl get pods -l hubtraf=delete-me --no-headers 2>/dev/null | wc -l) (Pending/Total)";
+    nodes="Nodes: $(kubectl get nodes --no-headers 2>/dev/null | grep Ready | wc -l)/$(kubectl get nodes --no-headers 2>/dev/null | wc -l) (Ready/Total)";
+    top=$(kubectl top pod -l "component in (proxy,hub,autohttps)");
+    echo "$pods";
+    echo "$nodes";
+    echo "";
+    echo "$top";
+}
+export -f hubtraf_monitor
+watch -x bash -c hubtraf_monitor
+
+# Cleanup following tests
+kubectl delete pod,pvc -l hubtraf=delete-me
+kubectl delete pod,pvc -l component=hub
+
+kubectl scale sts/user-placeholder --replicas=40
 # ----------------------------------------------------------------------------

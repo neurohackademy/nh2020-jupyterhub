@@ -6,6 +6,24 @@ nfs:
   enabled: false
 
 jupyterhub:
+  proxy:
+    chp:
+      resources:
+        requests:
+          memory: 320Mi
+          cpu: "0.1"
+        limits:
+          memory: 320Mi
+          cpu: "0.5"
+    traefik:
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: "0.25"
+        limits:
+          memory: 512Mi
+          cpu: 1
+
   hub:
     # ref: https://jupyterhub.readthedocs.io/en/stable/reference/services.html#properties-of-a-service
     services:
@@ -15,6 +33,17 @@ jupyterhub:
         # JupyterHub's HTTPS setup without needing something like nginx-ingress
         # + cert-manager and additional ingress k8s resources.
         url: http://grafana
+
+    db:
+      pvc:
+        storageClassName: ssd
+    resources:
+      requests:
+        cpu: "0.5"
+        memory: 1Gi
+      limits:
+        cpu: "2"
+        memory: 1Gi
 
     extraConfig:
       00-acl-parsing: |
