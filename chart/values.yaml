@@ -96,14 +96,15 @@ prometheus:
       enabled: true
     persistentVolume:
       enabled: true
-
+      size: 200Gi
+      storageClass: ssd
     resources:
       limits:
-        cpu: 1
-        memory: 1Gi
+        cpu: 2
+        memory: 12Gi
       requests:
         cpu: 100m
-        memory: 1Gi
+        memory: 12Gi
 
   # alertmanager is meant to be able to alert using email etc. Grafana can also
   # do this by itself to some degree at least as I understand it.
