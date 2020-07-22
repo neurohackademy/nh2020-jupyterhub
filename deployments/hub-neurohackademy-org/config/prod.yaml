@@ -193,9 +193,9 @@ jupyterhub:
             self.profile_list = [
                 {
                     'default': True,
-                    'display_name': 'Large',
-                    'description': '24GB RAM and up to 16 CPU cores.',
-                    'kubespawner_override': { 'mem_guarantee': '24G' },
+                    'display_name': 'Small',
+                    'description': '6GB RAM and up to 16 CPU cores.',
+                    'kubespawner_override': { 'mem_guarantee':' 6G' },
                 },
                 {
                     'display_name': 'Medium',
@@ -203,9 +203,9 @@ jupyterhub:
                     'kubespawner_override': { 'mem_guarantee': '12G' },
                 },
                 {
-                    'display_name': 'Small',
-                    'description': '6GB RAM and up to 16 CPU cores.',
-                    'kubespawner_override': { 'mem_guarantee':' 6G' },
+                    'display_name': 'Large',
+                    'description': '24GB RAM and up to 16 CPU cores.',
+                    'kubespawner_override': { 'mem_guarantee': '24G' },
                 },
             ]
 
@@ -214,7 +214,6 @@ jupyterhub:
             if username in acl["instructors"] or username in acl["admins"]:
                 self.profile_list.extend([
                     {
-                        'default': True,
                         'display_name': 'Large - ~/data in read-only mode',
                         'description': 'As an instructor you otherwise have read/write access to the shared ~/data folder. This option can help you trial only having read access.',
                         'kubespawner_override': { 'mem_guarantee': '24G' },
