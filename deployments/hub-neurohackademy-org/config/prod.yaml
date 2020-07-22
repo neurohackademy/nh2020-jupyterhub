@@ -234,11 +234,13 @@ jupyterhub:
             user_options = spawner.user_options # {'profile': 'display_name of chosen profile'}
             acl = read_acl()
 
+
             # Configure the pod's labels
             spawner.extra_labels.update({
                 "hub.neurohackademy.org/is-admin": str(username in acl["admins"]).lower(),
                 "hub.neurohackademy.org/is-instructor": str(username in acl["instructors"]).lower(),
                 "hub.neurohackademy.org/is-participant": str(username in acl["participants"]).lower(),
+                "hub.neurohackademy.org/profile": user_options.get("profile", "unknown").split(" ")[0].lower(),
             })
 
             # Configure the pod's storage
@@ -259,10 +261,7 @@ jupyterhub:
             spawner.volume_mounts = volume_mounts
 
             # Configure the pod's container's environment variables
-            chosen_profile = user_options.get("profile").split(" ")[0].lower()
-            spawner.environment.update({
-                "hub.neurohackademy.org/profile": chosen_profile
-            })
+            spawner.environment.update({})
 
         c.KubeSpawner.pre_spawn_hook = pre_spawn_hook
 
