@@ -33,6 +33,10 @@ dependencies:
     - gcsfs
     - line_profiler
     - memory_profiler
+    - matplotlib
+    - mne
+    - numpy
+    - scipy
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
