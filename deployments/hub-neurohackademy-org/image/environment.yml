@@ -38,7 +38,6 @@ dependencies:
     - mne
     - numpy
     - scipy
-    - neuropythy
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
