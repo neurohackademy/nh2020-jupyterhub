@@ -153,8 +153,10 @@ jupyterhub:
         # concurrentSpawnLimit
         # - documentation: https://jupyterhub.readthedocs.io/en/stable/api/app.html#jupyterhub.app.JupyterHub.concurrent_spawn_limit
         # - related discussion: https://github.com/jupyterhub/kubespawner/issues/419
-        # - NOTE: 64 is the default value, we may want to increase this.
-        c.JupyterHub.concurrent_spawn_limit = 64
+        # - NOTE: 64 is the default value for z2jh, but for example this
+        #         deployment has increased it to 200:
+        #         https://github.com/2i2c-org/jupyterhub-utoronto/blob/staging/hub/values.yaml#L37
+        c.JupyterHub.concurrent_spawn_limit = 200
       auth: |
         # Don't wait for users to press the orange button to login.
         c.Authenticator.auto_login = True
