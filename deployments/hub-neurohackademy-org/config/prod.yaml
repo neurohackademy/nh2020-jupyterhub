@@ -42,7 +42,7 @@ jupyterhub:
       enabled: true
     userPlaceholder:
       enabled: true
-      replicas: 1
+      replicas: 10
     corePods:
       nodeAffinity:
         matchNodePurpose: require
@@ -63,7 +63,8 @@ jupyterhub:
     ## they get up to 24 GB of ram.
     cpu:
       guarantee: 0.36 # guarantee as much as possible for 110 pods (max per
-                      # node) to fit on a 40 CPU machine
+                      # node because how k8s cluster was setup) to fit on a 40
+                      # CPU machine
       limit: 16       # allow for a lot more CPU to be used
     memory:
       guarantee: 24G
