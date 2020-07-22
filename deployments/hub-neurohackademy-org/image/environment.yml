@@ -33,6 +33,7 @@ dependencies:
     - gcsfs
     - line_profiler
     - memory_profiler
+    - graphviz
     - matplotlib
     - mne
     - numpy
