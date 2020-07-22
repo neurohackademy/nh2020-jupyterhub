@@ -149,6 +149,12 @@ jupyterhub:
       #   c.JupyterHub.template_vars.update({
       #       'announcement': 'Any message we want to pass to instructors?',
       #   })
+      performance: |
+        # concurrentSpawnLimit
+        # - documentation: https://jupyterhub.readthedocs.io/en/stable/api/app.html#jupyterhub.app.JupyterHub.concurrent_spawn_limit
+        # - related discussion: https://github.com/jupyterhub/kubespawner/issues/419
+        # - NOTE: 64 is the default value, we may want to increase this.
+        c.JupyterHub.concurrent_spawn_limit = 64
       auth: |
         # Don't wait for users to press the orange button to login.
         c.Authenticator.auto_login = True
