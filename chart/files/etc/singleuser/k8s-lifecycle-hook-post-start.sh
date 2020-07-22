@@ -12,3 +12,6 @@ gitpuller /nh/curriculum master ~/curriculum || gitpuller https://github.com/neu
 
 # Provide a symbolic link to the /nh/data folder in the home directory.
 [ -d ~/data ] || ln -s /nh/data/ ~/data || true
+
+# Remove empty lost+found directories
+rmdir ~/lost+found/ || true
