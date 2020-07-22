@@ -62,7 +62,7 @@ jupyterhub:
                 with open(path) as f:
                     acl = yaml.safe_load(f)
                     for group, usernames in acl.items(): 
-                        acl[group] = {username.lower() for username in usernames}
+                        acl[group] = {str(username).lower() for username in usernames}
             else:
                 print(f"No Access Control List (ACL) at {path}")
             return acl
