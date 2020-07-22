@@ -186,18 +186,18 @@ jupyterhub:
             self.profile_list = [
                 {
                     'default': True,
-                    'display_name': 'Large - 24GB RAM and up to 16 CP cores',
-                    'description': '',
+                    'display_name': 'Large',
+                    'description': '24GB RAM and up to 16 CPU cores.',
                     'kubespawner_override': { 'mem_guarantee': '24G' },
                 },
                 {
-                    'display_name': 'Medium - 12GB RAM and up to 16 CPU cores',
-                    'description': '',
+                    'display_name': 'Medium',
+                    'description': '12GB RAM and up to 16 CPU cores.',
                     'kubespawner_override': { 'mem_guarantee': '12G' },
                 },
                 {
-                    'display_name': 'Small - 6GB RAM and up to 16 CPU cores',
-                    'description': '',
+                    'display_name': 'Small',
+                    'description': '6GB RAM and up to 16 CPU cores.',
                     'kubespawner_override': { 'mem_guarantee':' 6G' },
                 },
             ]
@@ -243,7 +243,7 @@ jupyterhub:
 
             # Configure the pod's storage
             read_only = not (username in acl["admins"] or username in acl["instructors"])
-            read_only = read_only or "read only" in user_options.get("profile")
+            read_only = read_only or "read" in user_options.get("profile")
             nh_volume_mount = {
                 "name": "nh",
                 "mountPath": "/nh/data",  # where it is made available in container
@@ -259,7 +259,10 @@ jupyterhub:
             spawner.volume_mounts = volume_mounts
 
             # Configure the pod's container's environment variables
-            spawner.environment.update({})
+            chosen_profile = user_options.get("profile").split(" ")[0].lower()
+            spawner.environment.update({
+                "hub.neurohackademy.org/profile": chosen_profile
+            })
 
         c.KubeSpawner.pre_spawn_hook = pre_spawn_hook
 
