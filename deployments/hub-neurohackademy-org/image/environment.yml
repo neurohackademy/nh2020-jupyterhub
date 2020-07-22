@@ -16,6 +16,7 @@ dependencies:
   - nbconvert
   - nbresuse
   - notebook
+  - graphviz
 
   - pip
   - pip:
