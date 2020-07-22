@@ -19,6 +19,7 @@ acl.yaml:
     - langliu95     # Lang Liu
     - tyarkoni      # Tal Yarkoni
     - oesteban      # Oscar Esteban
+    - noahbenson    # Noah Benson
 
   # Instructors gain read access to the /nh/data folder
   participants:
