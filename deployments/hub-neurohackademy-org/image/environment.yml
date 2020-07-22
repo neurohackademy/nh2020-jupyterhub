@@ -4,6 +4,7 @@ channels:
 dependencies:
   # conda packages for NeuroHackademy
   - git-annex
+  - graphviz
   # -------------------------------------------------------------------------
 
   # Base packages otherwise pinned in repo2docker, by adding them here we get
@@ -16,7 +17,6 @@ dependencies:
   - nbconvert
   - nbresuse
   - notebook
-  - graphviz
 
   - pip
   - pip:
@@ -33,7 +33,6 @@ dependencies:
     - gcsfs
     - line_profiler
     - memory_profiler
-    - graphviz
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
