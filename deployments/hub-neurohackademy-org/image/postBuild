@@ -1,0 +1,7 @@
+#!/bin/bash
+
+jupyter labextension install --dev-build=False --minimize=True \
+    @jupyter-widgets/jupyterlab-manager \
+    bqplot \
+    ipyvolume \
+ && echo JupyterLab extensions installed.

@@ -39,6 +39,7 @@ dependencies:
     - numpy
     - scipy
     - neuropythy
+    - ipyvolume==0.6.0a6
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
