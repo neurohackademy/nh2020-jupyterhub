@@ -44,6 +44,7 @@ dependencies:
     - sklearn
     - neuropythy
     - ipyvolume==0.6.0a6
+    - pytest
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
