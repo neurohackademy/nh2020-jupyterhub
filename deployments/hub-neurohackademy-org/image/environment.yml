@@ -28,6 +28,7 @@ dependencies:
     - nilearn
     - transforms3d
     - rise
+    - jupytext
     - numba
     - pandas
     - awscli
@@ -40,6 +41,7 @@ dependencies:
     - mne
     - numpy
     - scipy
+    - sklearn
     - neuropythy
     - ipyvolume==0.6.0a6
     # -----------------------------------------------------------------------
