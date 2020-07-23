@@ -38,7 +38,7 @@ dependencies:
     - mne
     - numpy
     - scipy
-    - git+https://github.com/noahbenson/neuropythy.git@e9c284d51dc5504e0e938d562a2fae668e953053
+    - neuropythy
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
