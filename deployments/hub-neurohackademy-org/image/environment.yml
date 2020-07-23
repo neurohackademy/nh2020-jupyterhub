@@ -26,6 +26,8 @@ dependencies:
     - datalad
     - nibabel
     - nilearn
+    - transforms3d
+    - rise
     - numba
     - pandas
     - awscli
