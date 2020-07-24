@@ -24,6 +24,7 @@ acl.yaml:
   # Instructors gain read access to the /nh/data folder
   participants:
     - consideRatio-demo # Erik Sundell, for debugging purposes
+    - ssyoon
     - aporter1350
     - istallworthy
     - stark248
