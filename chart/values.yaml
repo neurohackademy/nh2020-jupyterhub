@@ -88,6 +88,17 @@ jupyterhub:
 grafana:
   fullnameOverride: grafana
 
+  # NOTE: It can be useful to be able to render an image of a chart, but that
+  # requires some custom configuration at the moment.
+  #
+  # ref: https://github.com/helm/charts/issues/21959#issuecomment-640653320
+  extraContainers: |
+    - name: renderer
+      image: grafana/grafana-image-renderer:latest
+  env:
+    GF_RENDERING_SERVER_URL: http://localhost:8081/render
+    GF_RENDERING_CALLBACK_URL: http://localhost:3000/
+
   # NOTE: We need Recreate when using a persistence PVC. If we use an external
   # database, we can do a RollingUpdate instead.
   deploymentStrategy:
