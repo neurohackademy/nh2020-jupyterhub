@@ -45,6 +45,9 @@ dependencies:
     - neuropythy
     - ipyvolume==0.6.0a6
     - pytest
+    - dipy
+    - nitime
+    - xarray
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
