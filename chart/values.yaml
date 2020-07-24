@@ -89,9 +89,11 @@ grafana:
   fullnameOverride: grafana
 
   # NOTE: It can be useful to be able to render an image of a chart, but that
-  # requires some custom configuration at the moment.
+  #       requires a workaround configuration of the Grafana Helm chart at the
+  #       moment.
   #
-  # ref: https://github.com/helm/charts/issues/21959#issuecomment-640653320
+  #       workaround: https://github.com/helm/charts/issues/21959#issuecomment-640653320
+  #       issue with workaround: https://github.com/grafana/grafana/issues/25716
   extraContainers: |
     - name: renderer
       image: grafana/grafana-image-renderer:latest
