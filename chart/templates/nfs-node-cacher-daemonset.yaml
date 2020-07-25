@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nfs-node-cacher
+spec:
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 100%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: neurohackademy
+      component: nfs-node-cacher
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: neurohackademy
+        component: nfs-node-cacher
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: nh
+          persistentVolumeClaim:
+            claimName: nfs-pvc
+        - name: nh-cache
+          hostPath:
+            path: /tmp/nh/data-cache
+            type: DirectoryOrCreate
+
+      initContainers:
+        - name: chown-mounts-to-jovyan
+          image: busybox
+          securityContext:
+            runAsUser: 0
+          command:
+            - "sh"
+            - "-c"
+            - "chown 1000:1000 /nh/data /nh/data-cache"
+          volumeMounts:
+            - name: nh
+              mountPath: /nh/data
+              subPath: data
+            - name: nh-cache
+              mountPath: /nh/data-cache
+
+      containers:
+        - name: rsync
+          image: instrumentisto/rsync-ssh
+          securityContext:
+            runAsUser: 0
+          command:
+            - "sh"
+            - "-c"
+            - |
+                while true; do
+                  rsync -avP /nh/data /nh/data-cache;
+                  sleep 60;
+                done
+          volumeMounts:
+            - name: nh
+              mountPath: /nh/data
+              subPath: data
+            - name: nh-cache
+              mountPath: /nh/data-cache
+
+      terminationGracePeriodSeconds: 0
+      nodeSelector:
+        hub.jupyter.org/node-purpose: user
+      tolerations:
+      - effect: NoSchedule
+        key: hub.jupyter.org_dedicated
+        operator: Equal
+        value: user
+      - effect: NoSchedule
+        key: hub.jupyter.org/dedicated
+        operator: Equal
+        value: user
