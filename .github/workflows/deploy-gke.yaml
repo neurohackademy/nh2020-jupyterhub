@@ -52,7 +52,7 @@ jobs:
         apiToken: ${{ secrets.GRAFANA_API_TOKEN }}
         text: |
           Deployment triggered by ${{ github.actor }}.
-          - <a href="${{ github.event.repository.html_url }}/runs/${{ github.run_id }}">Inspect CI job run</a>
+          - <a href="${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}">Inspect CI run</a>
           - <a href="${{ github.event.repository.html_url }}/compare/${{ github.event.before }}..${{ github.event.after }}">Compare commits</a>
         tags: deployment,github
     - name: "hubploy: deploy"
