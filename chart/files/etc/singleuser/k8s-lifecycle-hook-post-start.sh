@@ -14,8 +14,11 @@ gitpuller /nh/curriculum master ~/curriculum || gitpuller https://github.com/neu
 [ -d ~/data ] || ln -s /nh/data/ ~/data || true
 
 # Provide a symbolic link to the /nh/data/nilearn_data folder in the home
-# directory.
+# directory. Requested by Elizabeth DuPre and Pierre Bellec.
 [ -d ~/nilearn_data ] || ln -s /nh/data/nilearn_data ~/nilearn_data || true
+
+# Provide a symbolic link to /nh/data/misc/.npythyrc. Requested by Noah Benson.
+[ -f ~/.npythyrc ] || ln -s /nh/data/misc/.npythyrc ~/.npythyrc || true
 
 # Remove empty lost+found directories
 rmdir ~/lost+found/ || true
