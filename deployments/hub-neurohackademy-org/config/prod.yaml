@@ -8,7 +8,7 @@ nfs:
   #
   serverIP: 10.60.0.18
   serverName: nh
-  
+
 jupyterhub:
   debug:
     enabled: true
