@@ -54,7 +54,7 @@ spec:
             - "-c"
             - |
                 while true; do
-                  rsync -avP /nh/data /nh/data-cache;
+                  rsync -avP /nh/data/ /nh/data-cache;
                   sleep 60;
                 done
           volumeMounts:
