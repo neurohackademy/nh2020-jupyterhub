@@ -45,6 +45,16 @@ jobs:
     - name: "hubploy: build"
       run: |
         hubploy build hub-neurohackademy-org --push
+    - name: Create a global Grafana dashboard annotation
+      uses: frankie567/grafana-annotation-action@v1.0.2
+      with:
+        apiHost: https://hub.neurohackademy.org/services/grafana
+        apiToken: ${{ secrets.GRAFANA_API_TOKEN }}
+        text: |
+          Deployment triggered by ${{ github.actor }}.
+          - <a href="${{ github.event.repository.html_url }}/runs/${{ github.run_id }}">Inspect CI job run</a>
+          - <a href="${{ github.event.repository.html_url }}/compare/${{ github.event.before }}..${{ github.event.after }}">Compare commits</a>
+        tags: deployment,github
     - name: "hubploy: deploy"
       run: |
         hubploy deploy --namespace default --cleanup-on-fail hub-neurohackademy-org chart prod
