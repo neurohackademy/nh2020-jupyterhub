@@ -25,6 +25,7 @@ dependencies:
     - dask[complete]
     - datalad
     - nibabel
+    - indexed-gzip
     - nilearn
     - transforms3d
     - rise
