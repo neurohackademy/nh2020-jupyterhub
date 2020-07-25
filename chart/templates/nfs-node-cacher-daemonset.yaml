@@ -49,12 +49,14 @@ spec:
           image: instrumentisto/rsync-ssh
           securityContext:
             runAsUser: 0
+          # NOTE: To learn more about the rsync commands flags, see
+          #       https://www.computerhope.com/unix/rsync.htm
           command:
             - "sh"
             - "-c"
             - |
                 while true; do
-                  rsync -avP /nh/data/ /nh/data-cache;
+                  rsync --archive --executability --delete --verbose --human-readable --progress /nh/data/ /nh/data-cache;
                   sleep 60;
                 done
           volumeMounts:
