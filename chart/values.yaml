@@ -99,7 +99,7 @@ grafana:
       image: grafana/grafana-image-renderer:latest
   env:
     GF_RENDERING_SERVER_URL: http://localhost:8081/render
-    GF_RENDERING_CALLBACK_URL: http://localhost:3000/
+    GF_RENDERING_CALLBACK_URL: http://localhost:3000/services/grafana
 
   # NOTE: We need Recreate when using a persistence PVC. If we use an external
   # database, we can do a RollingUpdate instead.
