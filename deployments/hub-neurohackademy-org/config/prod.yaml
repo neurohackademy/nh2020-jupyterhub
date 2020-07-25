@@ -79,9 +79,13 @@ jupyterhub:
         capacity: 10Gi
       ## extraVolumes is for the pod in general
       extraVolumes:
-        - name: nh
+        - name: nh-nfs
           persistentVolumeClaim:
             claimName: nfs-pvc
+        - name: nh-cache
+          hostPath:
+            path: /tmp/nh/data-cache
+            type: Directory
         - name: user-etc-singleuser
           configMap:
             name: user-etc-singleuser
@@ -90,11 +94,11 @@ jupyterhub:
             name: user-etc-profile-d
       ## extraVolumeMounts is for the pod's main container, not the initContainers
       extraVolumeMounts:
-        - name: nh
+        - name: nh-nfs
           mountPath: /nh/curriculum
           subPath: curriculum
           readOnly: true
-        - name: nh
+        - name: nh-cache
           mountPath: /nh/data
           subPath: data
           readOnly: true
@@ -119,10 +123,10 @@ jupyterhub:
           runAsUser: 0
         ## volumeMounts mounts the pod's volume defined through extraVolumes
         volumeMounts:
-          - name: nh
+          - name: nh-nfs
             mountPath: /nh/data
             subPath: data
-          - name: nh
+          - name: nh-nfs
             mountPath: /nh/curriculum
             subPath: curriculum
 
@@ -254,12 +258,20 @@ jupyterhub:
             # Configure the pod's storage
             read_only = not (username in acl["admins"] or username in acl["instructors"])
             read_only = read_only or "read" in user_options.get("profile")
-            nh_volume_mount = {
-                "name": "nh",
-                "mountPath": "/nh/data",  # where it is made available in container
-                "subPath": "data",        # what in the PVC to mount (must be a relative path)
-                "readOnly": read_only,
-            }
+            nh_volume_mount = {}
+            if read_only:
+                nh_volume_mount = {
+                    "name": "nh-cache",       # nh-cache is a hostPath volume with cached NFS /data
+                    "mountPath": "/nh/data",  # where it is made available in container
+                    "readOnly": read_only,
+                }
+            else:
+                nh_volume_mount = {
+                    "name": "nh-nfs",         # nh is a NFS volume
+                    "mountPath": "/nh/data",  # where it is made available in container
+                    "subPath": "data",        # what in the PVC to mount (must be a relative path)
+                    "readOnly": read_only,
+                }
             # NOTE: If we would append spawner.volume_mounts we would risk
             # getting multiple entries in this in a future spawn. Due to that,
             # let's first remove mounts like the one we are about to add, then
