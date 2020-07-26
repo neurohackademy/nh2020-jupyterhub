@@ -52,6 +52,7 @@ dependencies:
     - mne
     - git+https://github.com/arokem/POT.git@pep518
     - git+https://github.com/arokem/mtw.git@pep518
+    - imageio
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
