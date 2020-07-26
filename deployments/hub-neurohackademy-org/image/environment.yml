@@ -53,6 +53,9 @@ dependencies:
     - git+https://github.com/arokem/POT.git@pep518
     - git+https://github.com/arokem/mtw.git@pep518
     - imageio
+    - voila
+    - plotly
+    - kaleido # plotly static image export: https://github.com/plotly/plotly.py#static-image-export
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
