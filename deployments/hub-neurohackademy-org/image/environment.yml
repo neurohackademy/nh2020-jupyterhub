@@ -1,10 +1,12 @@
 name: nh
 channels:
   - conda-forge
+  - plotly
 dependencies:
   # conda packages for NeuroHackademy
   - git-annex
   - graphviz
+  - plotly
   # -------------------------------------------------------------------------
 
   # Base packages otherwise pinned in repo2docker, by adding them here we get
@@ -53,8 +55,8 @@ dependencies:
     - git+https://github.com/arokem/POT.git@pep518
     - git+https://github.com/arokem/mtw.git@pep518
     - imageio
+    - ipydatawidgets # dependency for one of plotly's jupyterlab extensions
     - voila
-    - plotly
     - kaleido # plotly static image export: https://github.com/plotly/plotly.py#static-image-export
     # -----------------------------------------------------------------------
 
