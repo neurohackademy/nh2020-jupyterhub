@@ -1,7 +1,15 @@
 #!/bin/bash
 
+# ipyvolume depend on bqplot as of 27 July 2020
+# plotly instructions: https://github.com/plotly/plotly.py#jupyterlab-support-python-35
 jupyter labextension install --dev-build=False --minimize=True \
+    @jupyter-voila/jupyterlab-preview \
     @jupyter-widgets/jupyterlab-manager \
     bqplot \
     ipyvolume \
+    jupyterlab-plotly \
+    plotlywidget \
  && echo JupyterLab extensions installed.
+
+# Enable use of a /voila path like /lab and /tree
+jupyter serverextension enable --sys-prefix voila
