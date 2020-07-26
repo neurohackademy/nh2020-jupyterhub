@@ -53,6 +53,8 @@ dependencies:
     - git+https://github.com/arokem/POT.git@pep518
     - git+https://github.com/arokem/mtw.git@pep518
     - imageio
+    - voila
+    - plotly
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart

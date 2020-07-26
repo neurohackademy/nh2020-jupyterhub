@@ -4,4 +4,5 @@ jupyter labextension install --dev-build=False --minimize=True \
     @jupyter-widgets/jupyterlab-manager \
     bqplot \
     ipyvolume \
+    @jupyter-voila/jupyterlab-preview \
  && echo JupyterLab extensions installed.
