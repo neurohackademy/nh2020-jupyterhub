@@ -50,7 +50,7 @@ dependencies:
     - nitime
     - xarray
     - mne
-    - git+https://github.com/arokem/POT.git@pep-518
+    - git+https://github.com/arokem/POT.git@peps518
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
