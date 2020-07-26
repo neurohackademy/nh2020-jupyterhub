@@ -49,6 +49,8 @@ dependencies:
     - dipy
     - nitime
     - xarray
+    - mne
+    - git+https://github.com/rflamary/POT.git
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
