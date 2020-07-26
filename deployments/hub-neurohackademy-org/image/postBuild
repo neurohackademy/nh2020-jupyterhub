@@ -5,4 +5,5 @@ jupyter labextension install --dev-build=False --minimize=True \
     bqplot \
     ipyvolume \
     @jupyter-voila/jupyterlab-preview \
+    jupyterlab-plotly@4.9.0 \
  && echo JupyterLab extensions installed.
