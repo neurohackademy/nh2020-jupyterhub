@@ -42,7 +42,13 @@ jupyterhub:
       enabled: true
     userPlaceholder:
       enabled: true
-      replicas: 10
+      # These replicas will use the default configured CPU and memory requests,
+      # which is overridden by c.KubeSpawner.profile_list choices by the user.
+      # In our case, this means 24GB of memory or four time the size of a the
+      # Small profile_list option that gives 6GB of memory. In other words, 50
+      # replicas is like 200 Small users, which should be enough buffer to
+      # manage a very large amount of simultaneously arriving users.
+      replicas: 50
     corePods:
       nodeAffinity:
         matchNodePurpose: require
