@@ -30,7 +30,7 @@ jupyterhub:
 
   prePuller:
     hook:
-      enabled: true
+      enabled: false
     continuous:
       enabled: true
 
