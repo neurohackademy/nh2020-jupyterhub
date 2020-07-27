@@ -21,6 +21,9 @@ acl.yaml:
     - oesteban      # Oscar Esteban
     - noahbenson    # Noah Benson
     - peerherholz   # Peer Herholz (no instructor, helper in the background)
+    - kirstiejane   # Kirstie Whitaker
+    - prasanna5raut # Prasanna Raut
+    - alexhuth      # Alex Huth
 
   # Instructors gain read access to the /nh/data folder
   participants:
