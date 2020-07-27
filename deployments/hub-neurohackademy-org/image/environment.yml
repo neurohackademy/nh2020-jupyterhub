@@ -63,6 +63,7 @@ dependencies:
     - pydra-ml
     - git+https://github.com/ReproNim/neurodocker.git@e64f58cc2d93620e6537d9efb0104cc87a99e5ca
     - pyld
+    - testkraken
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
