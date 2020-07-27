@@ -20,6 +20,7 @@ acl.yaml:
     - tyarkoni      # Tal Yarkoni
     - oesteban      # Oscar Esteban
     - noahbenson    # Noah Benson
+    - peerherholz   # Peer Herholz (no instructor, helper in the background)
 
   # Instructors gain read access to the /nh/data folder
   participants:
