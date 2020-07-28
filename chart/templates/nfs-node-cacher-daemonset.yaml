@@ -68,10 +68,10 @@ spec:
           resources:
             requests:
               cpu: "0.5"
-              memory: 4Gi
+              memory: 16Gi
             limits:
-              cpu: "1"
-              memory: 4Gi
+              cpu: "16"
+              memory: 16Gi
 
       terminationGracePeriodSeconds: 0
       nodeSelector:
