@@ -31,7 +31,7 @@ dependencies:
     - nilearn
     - transforms3d
     - rise
-    - jupytext
+    - jupytext[myst]
     - myst-nb
     - numba
     - pandas
