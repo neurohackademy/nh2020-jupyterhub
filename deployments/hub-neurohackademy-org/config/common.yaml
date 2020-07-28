@@ -24,6 +24,7 @@ acl.yaml:
     - kirstiejane   # Kirstie Whitaker
     - prasanna5raut # Prasanna Raut
     - alexhuth      # Alex Huth
+    - satra         # Satrajit Ghosh
 
   # Instructors gain read access to the /nh/data folder
   participants:
