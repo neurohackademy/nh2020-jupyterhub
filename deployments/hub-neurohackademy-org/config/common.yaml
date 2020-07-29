@@ -16,12 +16,16 @@ acl.yaml:
     - kels271828    # Kelsey Maass
     - jbpoline      # JB Poline
     - saravkin      # Sasha Aravkin
+    - pbellec       # Pierre Bellec
     - langliu95     # Lang Liu
     - tyarkoni      # Tal Yarkoni
     - oesteban      # Oscar Esteban
     - noahbenson    # Noah Benson
     - peerherholz   # Peer Herholz (no instructor, helper in the background)
     - kirstiejane   # Kirstie Whitaker
+    - prasanna5raut # Prasanna Raut
+    - alexhuth      # Alex Huth
+    - satra         # Satrajit Ghosh
 
   # Instructors gain read access to the /nh/data folder
   participants:
@@ -1278,3 +1282,4 @@ acl.yaml:
     - nazbeh
     - alainapearce
     - heenamanglani7
+    - bfuchs18

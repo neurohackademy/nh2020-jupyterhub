@@ -31,7 +31,8 @@ dependencies:
     - nilearn
     - transforms3d
     - rise
-    - jupytext
+    - jupytext[myst]
+    - myst-nb
     - numba
     - pandas
     - awscli
@@ -58,6 +59,14 @@ dependencies:
     - ipydatawidgets # dependency for one of plotly's jupyterlab extensions
     - voila
     - kaleido # plotly static image export: https://github.com/plotly/plotly.py#static-image-export
+    - nipype
+    - git+https://github.com/nipype/pydra.git@50051730c4bf894ce9ba4833f8c267b5993e0ce0
+    - pydra-ml
+    - git+https://github.com/ReproNim/neurodocker.git@e64f58cc2d93620e6537d9efb0104cc87a99e5ca
+    - pyld
+    - testkraken
+    - seaborn
+    - statsmodels
     - pycortex
     - tables
     # -----------------------------------------------------------------------
