@@ -59,6 +59,7 @@ dependencies:
     - voila
     - kaleido # plotly static image export: https://github.com/plotly/plotly.py#static-image-export
     - pycortex
+    - tables
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
