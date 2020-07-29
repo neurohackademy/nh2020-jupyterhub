@@ -67,7 +67,7 @@ dependencies:
     - testkraken
     - seaborn
     - statsmodels
-    - pycortex
+    - git+https://github.com/consideRatio/pycortex.git@pep518
     - tables
     # -----------------------------------------------------------------------
 
