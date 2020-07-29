@@ -67,8 +67,9 @@ dependencies:
     - testkraken
     - seaborn
     - statsmodels
-    - pycortex
+    - git+https://github.com/consideRatio/pycortex.git@pep518
     - tables
+    - dask_labextension # also install jupyterlab extension and enable the serverextension in postBuild!
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
