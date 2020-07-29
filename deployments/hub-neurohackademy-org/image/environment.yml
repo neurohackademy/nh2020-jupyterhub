@@ -67,6 +67,8 @@ dependencies:
     - testkraken
     - seaborn
     - statsmodels
+    - pycortex
+    - tables
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart

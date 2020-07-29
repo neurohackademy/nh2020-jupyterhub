@@ -2,3 +2,4 @@ dnsutils
 iputils-ping
 vim
 nano
+inkscape
