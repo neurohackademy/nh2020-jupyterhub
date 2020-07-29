@@ -15,6 +15,6 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: user-etc-jupyter
+  name: user-usr-local-etc-jupyter
 data:
-  {{- (.Files.Glob "files/etc/jupyter/*").AsConfig | nindent 2 }}
+  {{- (.Files.Glob "files/usr/local/etc/jupyter/*").AsConfig | nindent 2 }}

@@ -98,9 +98,9 @@ jupyterhub:
         - name: user-etc-profile-d
           configMap:
             name: user-etc-profile-d
-        - name: user-etc-jupyter
+        - name: user-usr-local-etc-jupyter
           configMap:
-            name: user-etc-jupyter
+            name: user-usr-local-etc-jupyter
       ## extraVolumeMounts is for the pod's main container, not the initContainers
       extraVolumeMounts:
         - name: nh-nfs
@@ -115,11 +115,11 @@ jupyterhub:
           name: user-etc-singleuser
         - mountPath: /etc/profile.d/home-folder-replacements.sh
           name: user-etc-profile-d
-        - mountPath: /etc/jupyter
-          name: user-etc-jupyter
           # NOTE: ConfigMap/Secret volumes using subPath doesn't automatically
           #       update after being mounted. This is fine though.
           subPath: home-folder-replacements.sh
+        - mountPath: /usr/local/etc/jupyter
+          name: user-usr-local-etc-jupyter
     ## initContainers:
     ## We may want this to ensure whatever dataset is mounted through NFS is
     ## readable for jovyan.
