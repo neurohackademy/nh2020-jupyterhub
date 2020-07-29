@@ -7,6 +7,7 @@
 jupyter labextension install --dev-build=False --minimize=True \
     @jupyter-voila/jupyterlab-preview \
     @jupyter-widgets/jupyterlab-manager \
+    @jupyterlab/server-proxy \
     bqplot \
     ipyvolume \
     jupyterlab-datawidgets \
