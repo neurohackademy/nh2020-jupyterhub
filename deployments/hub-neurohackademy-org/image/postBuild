@@ -9,6 +9,7 @@ jupyter labextension install --dev-build=False --minimize=True \
     @jupyter-widgets/jupyterlab-manager \
     @jupyterlab/server-proxy \
     bqplot \
+    dask-labextension \
     ipyvolume \
     jupyterlab-datawidgets \
     jupyterlab-plotly \
@@ -17,3 +18,4 @@ jupyter labextension install --dev-build=False --minimize=True \
 
 # Enable use of a /voila path like /lab and /tree
 jupyter serverextension enable --sys-prefix voila
+jupyter serverextension enable --sys-prefix --py dask_labextension
