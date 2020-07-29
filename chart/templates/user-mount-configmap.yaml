@@ -11,3 +11,10 @@ metadata:
   name: user-etc-profile-d
 data:
   {{- (.Files.Glob "files/etc/profile.d/*").AsConfig | nindent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-etc-jupyter
+data:
+  {{- (.Files.Glob "files/etc/jupyter/*").AsConfig | nindent 2 }}
