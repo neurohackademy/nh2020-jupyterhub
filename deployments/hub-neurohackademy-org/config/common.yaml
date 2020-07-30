@@ -26,6 +26,7 @@ acl.yaml:
     - prasanna5raut # Prasanna Raut
     - alexhuth      # Alex Huth
     - satra         # Satrajit Ghosh
+    - GaelVaroquaux  # Self-explanatory 
 
   # Instructors gain read access to the /nh/data folder
   participants:
