@@ -72,6 +72,7 @@ dependencies:
     - dask_labextension # also install jupyterlab extension and enable the serverextension in postBuild!
     - templateflow
     - pybids
+    - nitransforms
     # -----------------------------------------------------------------------
 
     # Needed by the neurohackademy Helm chart
