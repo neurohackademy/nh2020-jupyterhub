@@ -48,7 +48,7 @@ jupyterhub:
       # Small profile_list option that gives 6GB of memory. In other words, 50
       # replicas is like 200 Small users, which should be enough buffer to
       # manage a very large amount of simultaneously arriving users.
-      replicas: 50
+      replicas: 0
     corePods:
       nodeAffinity:
         matchNodePurpose: require
