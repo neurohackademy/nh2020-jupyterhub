@@ -54,7 +54,9 @@ jupyterhub:
         matchNodePurpose: require
     userPods:
       nodeAffinity:
-        matchNodePurpose: require
+        # POSTMORTEM: Changed this from require to prefer in order to save
+        #             resources while still allowing for a few pods to spawn.
+        matchNodePurpose: prefer
 
   singleuser:
     ## cmd: set this to start-singleuser.sh if we use a docker-stacks image,
@@ -207,6 +209,8 @@ jupyterhub:
         #       ref: https://github.com/jupyterhub/jupyterhub/issues/2390
         #
         async def dynamic_options_form(self):
+            # POSTMORTEM: Changed this to True in order to save resources while
+            #             still allowing for a few pods to spawn.
             resource_saver_mode = True
             if resource_saver_mode:
                 self.profile_list = [
