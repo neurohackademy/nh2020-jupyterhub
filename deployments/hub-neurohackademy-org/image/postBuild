@@ -21,7 +21,10 @@ jupyter serverextension enable --sys-prefix voila
 jupyter serverextension enable --sys-prefix --py dask_labextension
 
 # Install Google Cloud SDK for gcloud / gsutil and ability for us to backup data
-# to the gs://nh2020-data/ bucket.
-sudo apt-get install apt-transport-https ca-certificates gnupg
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-sudo apt-get update && sudo apt-get install google-cloud-sdk
+# to the gs://nh2020-data/ bucket like this.
+#
+# gsutil cp -r ~/data gs://nh2020-data
+#
+apt-get install apt-transport-https ca-certificates gnupg
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+apt-get update && apt-get install google-cloud-sdk
