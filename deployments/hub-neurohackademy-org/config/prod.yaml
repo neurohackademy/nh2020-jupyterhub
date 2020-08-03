@@ -207,6 +207,21 @@ jupyterhub:
         #       ref: https://github.com/jupyterhub/jupyterhub/issues/2390
         #
         async def dynamic_options_form(self):
+            resource_saver_mode = True
+            if resource_saver_mode:
+                self.profile_list = [
+                    {
+                        'default': True,
+                        'display_name': 'Micro',
+                        'description': 'Up to 2GB RAM.',
+                        'kubespawner_override': {
+                            'mem_guarantee':' 0.1G',
+                            'mem_limit':' 2G',
+                        },
+                    },
+                ]
+                return self._options_form_default()
+
             self.profile_list = [
                 {
                     'default': True,
