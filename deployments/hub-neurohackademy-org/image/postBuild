@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Install gsutil and provide us with an ability to backup data to the
+# gs://nh2020-data/ bucket like this:
+#
+#   gsutil cp -r ~/data gs://nh2020-data
+#
+curl -L -o /tmp/gsutil.tar.gz https://storage.googleapis.com/pub/gsutil.tar.gz
+tar xfz /tmp/gsutil.tar.gz -C /tmp
+pip install -e /tmp/gsutil
+gsutil --version
+
 # ipyvolume depend on bqplot as of 27 July 2020
 # plotly instructions: https://github.com/plotly/plotly.py#jupyterlab-support-python-35
 #   - I think jupyterlab-datawidgets is a dependency as well through threejs or
@@ -19,12 +29,3 @@ jupyter labextension install --dev-build=False --minimize=True \
 # Enable use of a /voila path like /lab and /tree
 jupyter serverextension enable --sys-prefix voila
 jupyter serverextension enable --sys-prefix --py dask_labextension
-
-# Install Google Cloud SDK for gcloud / gsutil and ability for us to backup data
-# to the gs://nh2020-data/ bucket like this.
-#
-# gsutil cp -r ~/data gs://nh2020-data
-#
-apt-get install apt-transport-https ca-certificates gnupg
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-apt-get update && apt-get install google-cloud-sdk
