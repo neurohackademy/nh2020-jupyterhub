@@ -5,6 +5,14 @@ acl.yaml: {}
 nfs:
   enabled: false
 
+tags:
+  # Controls whether Prometheus and Grafana should be be installed as part of
+  # this meta Helm chart. The chart is configured to use them if they are
+  # available. Its also worth noting that access to Grafana relies on
+  # JupyterHub's configurable proxy in this setup, so JupyterHub needs to run to
+  # be able to access Grafana.
+  metrics: true
+
 jupyterhub:
   hub:
     # NOTE: readinessProbe is disabled because of bad default values make a hub
@@ -121,7 +129,7 @@ grafana:
       memory: 1Gi
     requests:
       cpu: 100m
-      memory: 1Gi
+      memory: 100Mi
 
 # Reference on the configuration options:
 # https://github.com/helm/charts/blob/master/stable/prometheus/values.yaml
@@ -153,7 +161,9 @@ prometheus:
         memory: 12Gi
       requests:
         cpu: 100m
-        memory: 12Gi
+        # IMPORTANT: This value was lowered to 100Mi from 12Gi after the course
+        # ended to allow prometheus to run in a cheaper node.
+        memory: 100Mi
 
   # alertmanager is meant to be able to alert using email etc. Grafana can also
   # do this by itself to some degree at least as I understand it.
