@@ -67,10 +67,10 @@ jupyterhub:
 
     resources:
       requests:
-        cpu: "0.5"
+        cpu: 50m
         memory: 1Gi
       limits:
-        cpu: "1.1"
+        cpu: 1000m
         memory: 1Gi
 
   proxy:
