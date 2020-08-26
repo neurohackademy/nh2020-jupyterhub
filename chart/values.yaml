@@ -105,6 +105,13 @@ grafana:
   extraContainers: |
     - name: renderer
       image: grafana/grafana-image-renderer:latest
+      resources:
+        requests:
+          memory: 128Mi
+          cpu: 10m
+        limits:
+          memory: 512Mi
+          cpu: 250m
   env:
     GF_RENDERING_SERVER_URL: http://localhost:8081/render
     GF_RENDERING_CALLBACK_URL: http://localhost:3000/services/grafana
@@ -130,6 +137,15 @@ grafana:
     requests:
       cpu: 50m
       memory: 100Mi
+
+  initChownData:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 25m
+        memory: 64Mi
 
 # Reference on the configuration options:
 # https://github.com/helm/charts/blob/master/stable/prometheus/values.yaml

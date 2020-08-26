@@ -45,16 +45,22 @@ jobs:
     - name: "hubploy: build"
       run: |
         hubploy build hub-neurohackademy-org --push
-    - name: Create a global Grafana dashboard annotation
-      uses: frankie567/grafana-annotation-action@v1.0.2
-      with:
-        apiHost: https://hub.neurohackademy.org/services/grafana
-        apiToken: ${{ secrets.GRAFANA_API_TOKEN }}
-        text: |
-          Deployment triggered by ${{ github.actor }}.
-          - <a href="${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}">Inspect CI run</a>
-          - <a href="${{ github.event.repository.html_url }}/compare/${{ github.event.before }}..${{ github.event.after }}">Compare commits</a>
-        tags: deployment,github
+    # GitHub Actions doesn't yet provide a simple way to allow-failure of a
+    # step, so this should be commented in when grafana is up and running after
+    # an initial deployment.
+    #
+    # ref: https://github.com/actions/toolkit/issues/399
+    #
+    # - name: Create a global Grafana dashboard annotation
+    #   uses: frankie567/grafana-annotation-action@v1.0.2
+    #   with:
+    #     apiHost: https://hub.neurohackademy.org/services/grafana
+    #     apiToken: ${{ secrets.GRAFANA_API_TOKEN }}
+    #     text: |
+    #       Deployment triggered by ${{ github.actor }}.
+    #       - <a href="${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}">Inspect CI run</a>
+    #       - <a href="${{ github.event.repository.html_url }}/compare/${{ github.event.before }}..${{ github.event.after }}">Compare commits</a>
+    #     tags: deployment,github
     - name: "hubploy: deploy"
       run: |
         hubploy deploy --namespace default --cleanup-on-fail hub-neurohackademy-org chart prod
