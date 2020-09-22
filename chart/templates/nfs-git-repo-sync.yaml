@@ -1,4 +1,8 @@
-{{- if .Values.nfs.enabled -}}
+{{- if and .Values.nfs.enabled .Values.nfs.gitRepoSync.enabled -}}
+{{- /*
+    Syncs the git repo at https://github.com/neurohackademy/nh2020-curriculum
+    to the NFS location /nh/curriculum.
+*/ -}}
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
