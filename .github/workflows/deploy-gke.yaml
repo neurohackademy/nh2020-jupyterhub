@@ -14,6 +14,7 @@ on:
 #   encrypted GCR / GKE credentials
 # - installs sops and hubploy
 # - use hubploy to build an image and deploys the Helm chart to GKE
+# - annotates a grafana dashboard that a deployment starts
 jobs:
   deploy-gke:
     # Available runners: https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners
@@ -45,12 +46,12 @@ jobs:
     - name: "hubploy: build"
       run: |
         hubploy build hub-neurohackademy-org --push
-    # GitHub Actions doesn't yet provide a simple way to allow-failure of a
-    # step, so this should be commented in when grafana is up and running after
-    # an initial deployment.
-    #
-    # ref: https://github.com/actions/toolkit/issues/399
-    #
+    ## GitHub Actions doesn't yet provide a simple way to allow-failure of a
+    ## step, so this should be commented in when grafana is up and running after
+    ## an initial deployment.
+    ##
+    ## ref: https://github.com/actions/toolkit/issues/399
+    ##
     # - name: Create a global Grafana dashboard annotation
     #   uses: frankie567/grafana-annotation-action@v1.0.2
     #   with:
