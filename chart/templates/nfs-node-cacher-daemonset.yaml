@@ -1,3 +1,8 @@
+{{- if and .Values.nfs.enabled .Values.nfs.nodeCacher.enabled -}}
+{{- /*
+    Syncs the NFS location /nh/data to a node local location /nh/data-cache
+    using rsync.
+*/ -}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -85,3 +90,4 @@ spec:
         key: hub.jupyter.org/dedicated
         operator: Equal
         value: user
+{{- end }}

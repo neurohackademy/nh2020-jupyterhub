@@ -1,5 +1,5 @@
 nfs:
-  enabled: true
+  enabled: false
   # Use the output from the command below to set serverIP and serverName.
   # Inspect fileShares.0.name for the serverName and networks.0.ipAddresses.0
   # for the serverIP.
@@ -8,27 +8,35 @@ nfs:
   #
   serverIP: 10.60.0.18
   serverName: nh
+  ## gitRepoSync ensures /nh/curriculum (NFS) is available on all nodes. It is
+  ## relevant to ensure that things don't break if GitHub is temporarily
+  ## unavailable etc.
+  gitRepoSync:
+    enabled: false
+  ## nodeCacher ensures /nh/data-cache (node local copy of /nh/data (NFS)) is
+  ## available on all nodes. It mounts the NFS share /nh/data and ensures a
+  ## cache is updated in /nh/data-cache on each node. This was introduced as a
+  ## way to ensure we don't run into issues where access to data in the NFS
+  ## server is being read too intensively by users that end up needing to wait
+  ## several minutes on read operations.
+  ##
+  ## ref: https://github.com/neurohackademy/nh2020-jupyterhub/issues/114
+  nodeCacher:
+    enabled: false
 
 jupyterhub:
   debug:
     enabled: true
 
-  ## ingress: should be enabled if we transition to use nginx-ingress +
-  ## cert-manager.
-  ##
-  # ingress:
-  #   enabled: true
-  #   annotations:
-  #     kubernetes.io/tls-acme: "true"
-  #     kubernetes.io/ingress.class: nginx
-  #   hosts:
-  #     - hub.neurohackademy.org
-  #   tls:
-  #     - secretName: jupyterhub-tls
-  #       hosts:
-  #         - hub.neurohackademy.org
-
   prePuller:
+    # Warning, enabling prePuller.hook could make a future chart upgrade fail
+    # because this will require a new pod to be created on all nodes where any
+    # users run, but sometimes the nodes can bottleneck with the pod count. The
+    # downside of not enabling it though is that users starting may end up
+    # needing to wait for the new image instead of quickly starting with an old
+    # image.
+    #
+    # ref: https://github.com/neurohackademy/nh2020-jupyterhub/issues/86
     hook:
       enabled: false
     continuous:
@@ -69,6 +77,14 @@ jupyterhub:
     ## cpu/memory requests:
     ## We want to fit as many users on a m1-ultramem-40 node but still ensure
     ## they get up to 24 GB of ram.
+    ##
+    ## NOTE: We provided far more resources than we ended up needing. At most
+    ##       about 6GB of memory was used by a pod, and we ran into the 110 pods
+    ##       per node limit.
+    ##
+    ## NOTE: These requests / limits should probably be set like the default
+    ##       option in the profile_list as these impact the user-placeholder
+    ##       pods.
     cpu:
       guarantee: 0.36 # guarantee as much as possible for 110 pods (max per
                       # node because how k8s cluster was setup) to fit on a 40
@@ -87,9 +103,11 @@ jupyterhub:
         capacity: 10Gi
       ## extraVolumes is for the pod in general
       extraVolumes:
-        - name: nh-nfs
-          persistentVolumeClaim:
-            claimName: nfs-pvc
+        ## NFS enabled or not?
+        ## Comment out the nh-nfs volume if nfs.enabled: false
+        # - name: nh-nfs
+        #   persistentVolumeClaim:
+        #     claimName: nfs-pvc
         - name: nh-cache
           hostPath:
             path: /tmp/nh/data-cache
@@ -105,10 +123,12 @@ jupyterhub:
             name: user-usr-local-etc-jupyter
       ## extraVolumeMounts is for the pod's main container, not the initContainers
       extraVolumeMounts:
-        - name: nh-nfs
-          mountPath: /nh/curriculum
-          subPath: curriculum
-          readOnly: true
+        ## NFS enabled or not?
+        ## Comment out the nh-nfs volume if nfs.enabled: false
+        # - name: nh-nfs
+        #   mountPath: /nh/curriculum
+        #   subPath: curriculum
+        #   readOnly: true
         - name: nh-cache
           mountPath: /nh/data
           subPath: data
@@ -285,6 +305,11 @@ jupyterhub:
                 "hub.neurohackademy.org/profile": user_options.get("profile", "unknown").split(" ")[0].lower(),
             })
 
+            # FIXME: Allow "nfs.enabled: false" to function, which it currently
+            #        won't because we try to mount something that doesn't exist
+            #        then. We could inspect if there is a nh-nfs volume defined
+            #        to do this I think.
+
             # Configure the pod's storage
             read_only = not (username in acl["admins"] or username in acl["instructors"])
             read_only = read_only or "read" in user_options.get("profile")
@@ -321,11 +346,24 @@ jupyterhub:
       hosts: [hub.neurohackademy.org]
     service:
       type: LoadBalancer
+      # NOTE: This address was reserved using the gcloud CLI for the nh2020 hub
+      #       and may still be. There is a cost to having an address reserved if
+      #       its not used though so perhaps we have deleted it.
+      #
+      #   gcloud compute addresses list
+      #
       loadBalancerIP: 34.75.11.207
 
   cull:
     enabled: true
+    # NOTE: This should probably be set to a value lower than or equal to 3600
+    #       seconds given that its easy to startup later, notebooks are
+    #       automatically saved, and it won't shutdown if something is running.
     timeout: 7200 # 2 hours in seconds
+    # NOTE: To have this at zero is probably a very bad idea as it make us fail
+    #       to scale down nodes. Typically there is always one straggler on a
+    #       node stuck in some code execution that doesn't end if it has housed
+    #       a hundred of users.
     maxAge: 0 # Allow pods to run forever
 
 # Reference on the Grafana Helm chart's configuration options:

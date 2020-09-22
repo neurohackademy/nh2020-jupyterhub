@@ -4,6 +4,12 @@ acl.yaml: {}
 
 nfs:
   enabled: false
+  serverIP: ""
+  serverName: ""
+  gitRepoSync:
+    enabled: false
+  nodeCacher:
+    enabled: false
 
 tags:
   # Controls whether Prometheus and Grafana should be be installed as part of
