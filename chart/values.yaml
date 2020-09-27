@@ -164,7 +164,7 @@ prometheus:
     enabled: true
 
     # data retention period
-    retention: 90d
+    retention: 3y
 
     # NOTE: We prefer StatefulSet to be used when using a persistence PVC. If we
     #       use an external database, we can use a Deployment with rolling
